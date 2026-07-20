@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The AMG SpeedShift MCT — The Automatic That Threw Away Its Torque Converter</title>
-<meta name="description" content="How Mercedes-AMG got a torque-converter automatic to shift almost as fast as a dual-clutch — by deleting one component.">
+<title>Weird Gearboxes</title>
+<meta name="description" content="Long-form pieces on the strange, imperfect transmissions that got us to the gearboxes we have now.">
 <meta name="theme-color" content="#0B0B0B">
-<meta property="og:title" content="The AMG SpeedShift MCT: The Automatic That Threw Away Its Torque Converter">
-<meta property="og:description" content="How Mercedes-AMG got a torque-converter automatic to shift almost as fast as a dual-clutch — by deleting one component.">
-<meta property="og:type" content="article">
+<meta property="og:title" content="Weird Gearboxes">
+<meta property="og:description" content="Long-form pieces on the strange, imperfect transmissions that got us to the gearboxes we have now.">
+<meta property="og:type" content="website">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -44,42 +44,27 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{-webkit-text-size-adjust:100%}
 
 body{
   margin:0;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
   background:var(--neutral);
   color:var(--primary);
   font-family:var(--font-body);
   font-size:0.95rem;
   line-height:1.5;
   -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
 }
 
 img{max-width:100%;display:block}
-a{color:var(--tertiary);text-decoration:none;border-bottom:1px solid rgba(225,6,0,.35)}
-a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
+a{color:var(--tertiary);text-decoration:none}
 :focus-visible{outline:2px solid var(--tertiary);outline-offset:3px}
 
-/* ============================================================
-   Reading progress
-   ============================================================ */
-.progress{
-  position:fixed;top:0;left:0;right:0;height:3px;
-  background:transparent;z-index:100;pointer-events:none;
-}
-.progress__bar{
-  height:100%;width:0%;
-  background:var(--tertiary);
-  transform-origin:left center;
-}
-
-/* ============================================================
-   Shell
-   ============================================================ */
 .wrap{
+  width:100%;
   max-width:var(--maxw);
   margin:0 auto;
   padding-inline:var(--gutter);
@@ -95,473 +80,115 @@ a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
 }
 
 /* ============================================================
-   Masthead / hero
+   Masthead
    ============================================================ */
 .masthead{
   border-bottom:1px solid var(--line);
   padding-block:calc(var(--s-lg) * 2.5) calc(var(--s-lg) * 2);
-  position:relative;
 }
 .masthead__kicker{
   display:flex;align-items:center;gap:var(--s-md);
   margin-bottom:var(--s-lg);
 }
-.masthead__kicker::after{
-  content:"";height:1px;flex:1;background:var(--line);
-}
-.masthead__rule{
-  width:56px;height:3px;background:var(--tertiary);flex:none;
-}
-h1,.h1{
+.masthead__kicker::after{content:"";height:1px;flex:1;background:var(--line)}
+.masthead__rule{width:56px;height:3px;background:var(--tertiary);flex:none}
+
+h1{
   font-family:var(--font-display);
   font-weight:700;
   letter-spacing:0.02em;
   line-height:1.02;
-  margin:0;
   text-transform:uppercase;
-}
-.masthead h1{
-  font-size:clamp(2.2rem,6vw,5rem);
-  max-width:15ch;
-}
-.masthead h1 em{
-  font-style:normal;
-  display:block;
-  margin-top:0.5em;
-  font-size:clamp(0.95rem,1.7vw,1.5rem);
-  font-weight:500;
-  line-height:1.18;
-  letter-spacing:0.06em;
-  color:var(--secondary);
-  max-width:26ch;
+  font-size:clamp(2.6rem,9vw,5rem);
+  margin:0;
+  max-width:12ch;
 }
 .masthead__dek{
   margin:var(--s-lg) 0 0;
-  max-width:52ch;
+  max-width:56ch;
   font-size:clamp(1rem,1.6vw,1.2rem);
   line-height:1.55;
-  color:var(--primary);
-}
-.masthead__meta{
-  margin-top:calc(var(--s-lg) * 1.25);
-  display:flex;flex-wrap:wrap;gap:var(--s-md) var(--s-lg);
-}
-.masthead__meta span{position:relative}
-
-.masthead__grid{
-  display:grid;
-  grid-template-columns:60fr 40fr;
-  gap:calc(var(--s-lg) * 1.5);
-  align-items:end;
-}
-.masthead__art{align-self:end}
-.masthead__art .figure__frame{aspect-ratio:3/2}
-@media (max-width:900px){
-  .masthead__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
 }
 
 /* ============================================================
-   Section grid — 60 / 40 text-to-media split
+   Post list
    ============================================================ */
-.section{
-  border-bottom:1px solid var(--line);
-  padding-block:calc(var(--s-lg) * 2);
+main{flex:1}
+.posts{padding-block:calc(var(--s-lg) * 2)}
+.posts__head{
+  display:flex;align-items:baseline;gap:var(--s-md);
+  margin-bottom:var(--s-lg);
 }
-.section__grid{
+.posts__head::after{content:"";height:1px;flex:1;background:var(--line)}
+
+.post{
   display:grid;
   grid-template-columns:60fr 40fr;
   gap:calc(var(--s-lg) * 1.5);
-  align-items:start;
+  align-items:center;
+  padding-block:calc(var(--s-lg) * 1.25);
+  border-top:1px solid var(--line);
+  color:inherit;
 }
-.section__text > *:first-child{margin-top:0}
-.section__text > *:last-child{margin-bottom:0}
-
-.section__media{
-  position:sticky;
-  top:calc(var(--s-lg) * 2);
-  display:flex;
-  flex-direction:column;
-  gap:var(--s-md);
-}
-
-@media (max-width:900px){
-  .section__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
-  .section__media{position:static;top:auto}
-}
-
-/* ============================================================
-   Prose
-   ============================================================ */
-.section__num{
-  display:block;
+.post:last-of-type{border-bottom:1px solid var(--line)}
+.post__no{
   font-family:var(--font-display);
   font-size:0.78rem;
   letter-spacing:0.16em;
   color:var(--tertiary);
+  display:block;
   margin-bottom:var(--s-sm);
 }
-h2{
+.post__title{
   font-family:var(--font-display);
-  font-size:clamp(1.75rem,3.4vw,2.5rem);
+  font-size:clamp(1.6rem,3.6vw,2.5rem);
   font-weight:700;
-  line-height:1.08;
+  line-height:1.06;
   text-transform:uppercase;
-  margin:0 0 var(--s-lg);
+  margin:0 0 var(--s-md);
   max-width:20ch;
+  transition:color .18s ease;
 }
-h3{
-  font-family:var(--font-display);
-  font-size:1.15rem;
-  font-weight:600;
-  letter-spacing:0.04em;
-  text-transform:uppercase;
-  margin:calc(var(--s-lg) * 1.25) 0 var(--s-md);
-  padding-top:var(--s-md);
-  border-top:1px solid var(--line);
-}
-p{margin:0 0 var(--s-md);max-width:68ch}
-.section__text p{font-size:1.02rem;line-height:1.72;color:#DCDCDC}
-.section__text strong{color:var(--primary);font-weight:600}
-.section__text em{color:var(--primary)}
-
-ul{margin:0 0 var(--s-md);padding:0;list-style:none;max-width:68ch}
-ul li{
-  position:relative;
-  padding-left:calc(var(--s-md) + 10px);
-  margin-bottom:var(--s-md);
+.post__dek{
+  margin:0 0 var(--s-md);
+  max-width:60ch;
   font-size:1.02rem;
-  line-height:1.72;
+  line-height:1.7;
   color:#DCDCDC;
 }
-ul li::before{
-  content:"";
-  position:absolute;
-  left:0;top:0.75em;
-  width:10px;height:1px;
-  background:var(--secondary);
-}
-
-/* ============================================================
-   Stat callouts
-   ============================================================ */
-.stat{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-left:3px solid var(--tertiary);
-  border-radius:var(--r-lg);
-  padding:24px;
-}
-.stat__value{
-  font-family:var(--font-display);
-  font-size:clamp(2.4rem,5.2vw,3.4rem);
-  font-weight:700;
-  line-height:0.95;
-  letter-spacing:0.01em;
-  color:var(--primary);
-  display:block;
-}
-.stat__value small{
-  font-size:0.38em;
-  letter-spacing:0.08em;
-  color:var(--secondary);
-  margin-left:6px;
-}
-.stat__label{
-  display:block;
+.post__meta{display:flex;flex-wrap:wrap;gap:var(--s-sm) var(--s-lg)}
+.post__cta{
+  display:inline-block;
   margin-top:var(--s-md);
   font-family:var(--font-display);
   font-size:0.78rem;
   letter-spacing:0.16em;
   text-transform:uppercase;
-  color:var(--secondary);
+  color:var(--tertiary);
+  border-bottom:1px solid transparent;
 }
-.stat__note{
-  margin:var(--s-sm) 0 0;
-  font-size:0.85rem;
-  line-height:1.5;
-  color:var(--secondary);
-  max-width:none;
-}
-.stat-grid{display:grid;gap:var(--s-md)}
-@media (min-width:520px) and (max-width:900px){
-  .stat-grid{grid-template-columns:1fr 1fr}
-}
+.post:hover .post__cta,.post:focus-visible .post__cta{border-bottom-color:var(--tertiary)}
 
-/* Pull quote */
-.pullquote{
-  background:transparent;
-  border:none;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-  padding:var(--s-lg) 0;
-  margin:0;
-}
-.pullquote p{
-  font-family:var(--font-display);
-  font-weight:500;
-  font-size:clamp(1.2rem,2.4vw,1.6rem);
-  line-height:1.25;
-  letter-spacing:0.01em;
-  color:var(--primary);
-  margin:0;
-  text-transform:uppercase;
-}
-
-/* ============================================================
-   Figures + graceful "coming soon" placeholders
-   ============================================================ */
-.figure{margin:0}
-.figure__frame{
+.post__art{
   position:relative;
   background:var(--surface);
-  border:1px solid var(--line);
+  border:1px dashed var(--line);
   border-radius:var(--r-lg);
-  overflow:hidden;
-  aspect-ratio:4/3;
-}
-.figure__frame img{
-  width:100%;height:100%;
-  object-fit:cover;
-}
-.figure__ph{
-  position:absolute;inset:0;
-  display:none;
-  flex-direction:column;
+  aspect-ratio:3/2;
+  display:flex;
   align-items:center;
   justify-content:center;
-  gap:var(--s-sm);
-  text-align:center;
-  padding:var(--s-lg);
-  background:var(--surface);
-  border:1px dashed var(--line);
-}
-.figure__ph .label{color:var(--secondary)}
-.figure__ph-file{
-  font-family:var(--font-body);
-  font-size:0.78rem;
-  color:#5E5E5E;
-  word-break:break-all;
-}
-/* JS marks the frame when the asset fails to load */
-.figure.is-missing img{display:none}
-.figure.is-missing .figure__ph{display:flex}
-.figure figcaption{
-  margin-top:var(--s-sm);
-  font-size:0.82rem;
-  line-height:1.5;
-  color:var(--secondary);
-}
-
-/* ============================================================
-   Interactive cutaway
-   ============================================================ */
-.cutaway{margin:0}
-.cutaway__stage{
-  position:relative;
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:var(--r-lg);
   overflow:hidden;
-  aspect-ratio:16/10;
 }
-.cutaway__stage img{
-  width:100%;height:100%;
-  object-fit:cover;
-}
-.cutaway.is-missing img{display:none}
-.cutaway.is-missing .figure__ph{display:flex}
+.post__art img{width:100%;height:100%;object-fit:cover}
+.post__art.is-missing img{display:none}
+.post__art .ph{display:none;text-align:center;padding:var(--s-lg)}
+.post__art.is-missing .ph{display:block}
 
-.hotspot{
-  position:absolute;
-  width:30px;height:30px;
-  margin:-15px 0 0 -15px;
-  padding:0;
-  border:1px solid var(--tertiary);
-  border-radius:50%;
-  background:rgba(11,11,11,.72);
-  color:var(--primary);
-  font-family:var(--font-display);
-  font-size:0.72rem;
-  letter-spacing:0.04em;
-  line-height:28px;
-  text-align:center;
-  cursor:pointer;
-  transition:background .18s ease,transform .18s ease;
-  z-index:2;
+@media (max-width:820px){
+  .post{grid-template-columns:1fr;gap:var(--s-lg);align-items:start}
+  .post__art{order:-1}
 }
-.hotspot::after{
-  content:"";
-  position:absolute;inset:-9px;
-  border-radius:50%;
-  border:1px solid rgba(225,6,0,.28);
-  animation:pulse 2.6s ease-out infinite;
-}
-@keyframes pulse{
-  0%{transform:scale(.7);opacity:.9}
-  70%{transform:scale(1.25);opacity:0}
-  100%{opacity:0}
-}
-.hotspot:hover,.hotspot:focus-visible,.hotspot[aria-expanded="true"]{
-  background:var(--tertiary);
-  color:var(--on-primary);
-  transform:scale(1.12);
-}
-.hotspot[aria-expanded="true"]::after{animation:none;opacity:0}
-
-.cutaway__readout{
-  border:1px solid var(--line);
-  border-top:none;
-  border-radius:0 0 var(--r-lg) var(--r-lg);
-  background:var(--surface);
-  padding:20px 24px;
-  min-height:132px;
-}
-.cutaway__readout .label{display:block;margin-bottom:var(--s-sm)}
-.cutaway__readout h4{
-  font-family:var(--font-display);
-  font-size:1.15rem;
-  font-weight:600;
-  letter-spacing:0.04em;
-  text-transform:uppercase;
-  margin:0 0 var(--s-sm);
-  color:var(--primary);
-}
-.cutaway__readout p{
-  margin:0;
-  font-size:0.9rem;
-  line-height:1.6;
-  color:var(--secondary);
-  max-width:none;
-}
-.cutaway__stage{border-radius:var(--r-lg) var(--r-lg) 0 0}
-.cutaway__hint{
-  margin-top:var(--s-sm);
-  font-size:0.78rem;
-  color:#5E5E5E;
-}
-
-/* Fallback part list — always available, and the only UI if JS is off */
-.cutaway__list{
-  margin:var(--s-md) 0 0;
-  display:grid;
-  gap:var(--s-sm);
-}
-.cutaway__list li{
-  padding-left:0;
-  margin:0;
-  font-size:0.86rem;
-  line-height:1.5;
-  color:var(--secondary);
-}
-.cutaway__list li::before{display:none}
-.cutaway__list b{color:var(--primary);font-weight:600}
-
-kbd{
-  font-family:var(--font-body);
-  font-size:0.72rem;
-  border:1px solid var(--line);
-  border-radius:var(--r-md);
-  padding:1px 5px;
-  color:var(--secondary);
-}
-
-/* On phones the markers crowd each other — drop them and lead with the
-   plain part list, which carries exactly the same information. */
-@media (min-width:561px){
-  .cutaway__list,.cutaway__list-label{display:none}
-}
-@media (max-width:560px){
-  .cutaway__hint,.hotspot,.cutaway__readout{display:none}
-  .cutaway__stage{border-radius:var(--r-lg)}
-  .cutaway__list-label{display:block;margin-top:var(--s-lg)}
-  .cutaway__list{
-    margin-top:var(--s-md);
-    border-top:1px solid var(--line);
-  }
-  .cutaway__list li{
-    padding:var(--s-md) 0;
-    border-bottom:1px solid var(--line);
-  }
-  .cutaway__list b{display:block;margin-bottom:4px}
-}
-
-/* ============================================================
-   Audio
-   ============================================================ */
-.audio{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:var(--r-lg);
-  padding:24px;
-}
-.audio__title{
-  font-family:var(--font-display);
-  font-size:1.15rem;
-  font-weight:600;
-  letter-spacing:0.04em;
-  text-transform:uppercase;
-  margin:var(--s-sm) 0 var(--s-md);
-}
-.audio audio{
-  width:100%;
-  border-radius:var(--r-md);
-  filter:invert(1) hue-rotate(180deg) contrast(.92);
-}
-.audio__ph{
-  display:none;
-  align-items:center;
-  gap:var(--s-md);
-  border:1px dashed var(--line);
-  border-radius:var(--r-md);
-  padding:var(--s-md);
-  color:var(--secondary);
-  font-size:0.86rem;
-}
-.audio.is-missing audio{display:none}
-.audio.is-missing .audio__ph{display:flex}
-.audio__note{margin:var(--s-md) 0 0;font-size:0.82rem;color:var(--secondary);max-width:none}
-
-/* ============================================================
-   Sources
-   ============================================================ */
-.sources{padding-block:calc(var(--s-lg) * 2)}
-.sources ol{
-  margin:0;padding:0;list-style:none;
-  counter-reset:src;
-  display:grid;
-  gap:var(--s-md);
-}
-@media (min-width:900px){
-  .sources ol{grid-template-columns:1fr 1fr;gap:var(--s-md) var(--s-lg)}
-}
-.sources li{
-  counter-increment:src;
-  position:relative;
-  padding:var(--s-md) 0 var(--s-md) 42px;
-  border-top:1px solid var(--line);
-  font-size:0.88rem;
-  line-height:1.6;
-  color:var(--secondary);
-}
-.sources li::before{
-  content:counter(src,decimal-leading-zero);
-  position:absolute;left:0;top:var(--s-md);
-  font-family:var(--font-display);
-  font-size:0.78rem;
-  letter-spacing:0.12em;
-  color:var(--tertiary);
-}
-.sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
-.sources .src-note{display:block;margin-bottom:8px}
-.sources li a{
-  display:inline-block;
-  font-size:0.8rem;
-  word-break:break-word;
-  border-bottom-color:transparent;
-  color:#7A7A7A;
-}
-.sources li a::before{content:"↗ ";color:var(--tertiary)}
-.sources li a:hover,.sources li a:focus-visible{color:var(--tertiary);border-bottom-color:var(--tertiary)}
 
 /* ============================================================
    Foot
@@ -569,529 +196,69 @@ kbd{
 .foot{
   border-top:1px solid var(--line);
   padding-block:var(--s-lg);
-  display:flex;
-  flex-wrap:wrap;
-  gap:var(--s-md);
-  justify-content:space-between;
-  align-items:center;
-}
-
-/* ============================================================
-   Scroll reveal
-   ============================================================ */
-.reveal{
-  opacity:0;
-  transform:translateY(22px);
-  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
-  will-change:opacity,transform;
-}
-.reveal.is-in{opacity:1;transform:none}
-.reveal[data-delay="1"]{transition-delay:.09s}
-.reveal[data-delay="2"]{transition-delay:.18s}
-
-@media (prefers-reduced-motion:reduce){
-  .reveal{opacity:1;transform:none;transition:none}
-  .hotspot::after{animation:none}
-}
-/* Never hide content if JS never runs */
-.no-js .reveal{opacity:1;transform:none}
-
-/* Above the fold: animate on paint, don't wait for the observer to boot. */
-.rise{
-  opacity:0;
-  animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards;
-}
-.rise[data-delay="1"]{animation-delay:.12s}
-.rise[data-delay="2"]{animation-delay:.24s}
-@keyframes rise{
-  from{opacity:0;transform:translateY(22px)}
-  to{opacity:1;transform:none}
-}
-@media (prefers-reduced-motion:reduce){
-  .rise{opacity:1;animation:none}
+  display:flex;flex-wrap:wrap;gap:var(--s-md);
+  justify-content:space-between;align-items:center;
 }
 </style>
 </head>
 
-<body class="no-js">
-
-<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+<body>
 
 <header class="masthead">
   <div class="wrap">
-    <div class="masthead__kicker rise">
+    <div class="masthead__kicker">
       <span class="masthead__rule"></span>
-      <span class="label">Weird Gearboxes &nbsp;/&nbsp; No. 01</span>
+      <span class="label">An occasional blog</span>
     </div>
-
-    <div class="masthead__grid">
-      <div class="masthead__lede">
-        <h1 class="rise" data-delay="1">The AMG SpeedShift MCT <em>The automatic that threw away its torque converter</em></h1>
-        <p class="masthead__dek rise" data-delay="2">How Mercedes-AMG got a torque-converter automatic gearbox to shift almost as fast as a dual-clutch — by deleting one component.</p>
-        <div class="masthead__meta rise" data-delay="2">
-          <span class="label">Mercedes-AMG</span>
-          <span class="label">722.9 &nbsp;·&nbsp; 725.0</span>
-          <span class="label">2008 — present</span>
-        </div>
-      </div>
-
-      <figure class="figure masthead__art rise" data-delay="2">
-        <div class="figure__frame">
-          <img src="Mercedes%20Benz%20MCT/assets/fig-00-hero.jpg" alt="The AMG SpeedShift MCT transmission.">
-          <div class="figure__ph">
-            <span class="label">Lead image coming soon</span>
-            <span class="figure__ph-file">Mercedes Benz MCT/assets/fig-00-hero.jpg</span>
-          </div>
-        </div>
-      </figure>
-    </div>
+    <h1>Weird Gearboxes</h1>
+    <p class="masthead__dek">Long-form pieces on the strange, imperfect transmissions of the recent past — the stepping stones that got us to the gearboxes we have now.</p>
   </div>
 </header>
 
 <main>
-
-  <!-- 01 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">01</span>
-        <h2>The problem AMG was trying to solve</h2>
-        <p>By the mid-2000s the automatic transmission was in the middle of an arms race. Volkswagen and Audi had launched the first DSG dual-clutch boxes, BMW was persisting with its jerky single-clutch SMG, and Ferrari and Lamborghini were running automated single-clutch “F1” units. Everyone was chasing the same thing: a lightning-fast, uninterrupted gear change.</p>
-        <p>Mercedes-AMG at that time had a good automatic for its regular vehicles, but it was a <em>torque-converter</em> automatic, which was traditionally not the sportiest type of gearbox. However, in 2005 AMG introduced <strong>AMG SpeedShift</strong> on the SLK 55 AMG — a performance-tuned version of the then-new 7-speed 7G-Tronic (transmission family <strong>722.9</strong>), sharing its gear ratios but with sharper AMG software. The performance torque-converter version was later branded <strong>SpeedShift TCT</strong> (“Torque Converter Technology”) and <strong>7G-Tronic Sport</strong>.</p>
-        <p>The catch: a torque converter, however well tuned, uses a fluid coupling. That fluid slips, it stores rotational inertia, and it puts a soft, “slushy” layer between the engine and the wheels. It was never going to match a DCT’s directness or shift speed.</p>
-      </div>
-
-      <div class="section__media">
-        <figure class="figure reveal" data-delay="1">
-          <div class="figure__frame">
-            <img src="Mercedes%20Benz%20MCT/assets/fig-01-7g-tronic.jpg" alt="The 7-speed 7G-Tronic (722.9) torque-converter automatic AMG started from.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">Mercedes Benz MCT/assets/fig-01-7g-tronic.jpg</span>
-            </div>
-          </div>
-          <figcaption>The starting point: the 7-speed 722.9 / 7G-Tronic, a conventional torque-converter automatic.</figcaption>
-        </figure>
-        <blockquote class="pullquote reveal" data-delay="2">
-          <p>Fluid slips. Fluid stores inertia. Fluid sits between you and the wheels.</p>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- 02 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">02</span>
-        <h2>The unusual fix: delete the torque converter</h2>
-        <p>Rather than engineer a whole new dual-clutch box, AMG did something more surgical. They took the existing 7-speed <strong>722.9</strong> planetary architecture and <strong>replaced the torque converter and its lock-up clutch with a single compact wet start-off clutch</strong> — in German, a <em>Nass-Anfahrkupplung</em> (NAK). The result debuted in <strong>2008</strong> in the <strong>R230 SL 63 AMG</strong>, coupled with the legendary 6.3 litre AMG V8, and was the first transmission of its kind fitted to a production car. It was called <strong>AMG SpeedShift MCT</strong> — Multi-Clutch Technology.</p>
-        <p>One might assume the “Multi-Clutch” name refers to a dual-clutch box, but that’s not the case. The new gearbox had a <strong>single input shaft</strong> and a <strong>single multi-plate wet clutch</strong> doing the job the torque converter used to do — getting the car moving from a standstill and locking up at high speed. Instead, “Multi-Clutch” referred to the multiple internal clutches and brakes of the <em>planetary</em> gearset — the same clutches (K1/K2/K3) and brakes (B1/B2/B3/BR) that the standard 722.9 torque-converter gearbox already used to select each of its seven gears.</p>
-
-        <h3>Why a wet clutch beat the converter</h3>
-        <p>The start-off clutch ran in an <strong>oil bath</strong> (a sump), which cooled it and protected its service life under repeated hard launches. More importantly for performance, that clutch had a <strong>much lower rotational inertia</strong> than a fluid-filled torque converter — around 60% lower, in fact. Less inertia and no fluid slip means:</p>
-        <ul>
-          <li><strong>Sharper throttle response</strong> and a direct, mechanical connection between engine and wheels.</li>
-          <li><strong>No converter slip losses</strong>, which also <strong>helps fuel economy</strong> — an unusual side-benefit for a performance box.</li>
-          <li>The clutch engagement could be <strong>fully computer-controlled</strong>, which unlocked aggressive, precisely-metered shifts.</li>
-        </ul>
-      </div>
-
-      <div class="section__media">
-        <!-- Interactive cutaway -->
-        <figure class="cutaway reveal" data-delay="1" id="cutaway">
-          <div class="cutaway__stage" id="cutawayStage">
-            <img src="Mercedes%20Benz%20MCT/assets/mct-cutaway.jpg" alt="Cutaway of the AMG SpeedShift MCT transmission with labelled internal components.">
-            <div class="figure__ph">
-              <span class="label">Cutaway coming soon</span>
-              <span class="figure__ph-file">Mercedes Benz MCT/assets/mct-cutaway.jpg</span>
-            </div>
-            <!-- hotspots injected here by JS -->
-          </div>
-          <div class="cutaway__readout" id="cutawayReadout" aria-live="polite">
-            <span class="label">Interactive cutaway</span>
-            <h4 id="cutawayTitle">Explore the gearbox</h4>
-            <p id="cutawayBody">Hover or tap a marker to see what each part does — and which one AMG threw away.</p>
-          </div>
-          <p class="cutaway__hint">Tap a numbered marker · use <kbd>Tab</kbd> and <kbd>Enter</kbd> to step through them.</p>
-          <span class="label cutaway__list-label">Inside the gearbox</span>
-          <ul class="cutaway__list" id="cutawayList"></ul>
-        </figure>
-
-        <div class="stat reveal" data-delay="2">
-          <span class="stat__value">~60<small>% lower</small></span>
-          <span class="stat__label">Rotational inertia vs. a torque converter</span>
-          <p class="stat__note">Less mass to spin up means sharper throttle response — and no fluid slip losses.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">03</span>
-        <h2>The numbers that made it matter</h2>
-        <ul>
-          <li><strong>Shift time: as low as 100 ms (0.1 s)</strong>, depending on the drive mode.</li>
-          <li><strong>Weight: about 80 kg</strong>, roughly <strong>18% lighter</strong> than AMG’s torque-converter 7G-Tronic, but more importantly, the <strong>inertia of all the rotating parts was cut by ~30%</strong>.</li>
-        </ul>
-      </div>
-
-      <div class="section__media">
-        <div class="stat-grid">
-          <div class="stat reveal">
-            <span class="stat__value">100<small>ms</small></span>
-            <span class="stat__label">Fastest shift time</span>
-            <p class="stat__note">One tenth of a second, in the most aggressive drive mode.</p>
-          </div>
-          <div class="stat reveal" data-delay="1">
-            <span class="stat__value">80<small>kg</small></span>
-            <span class="stat__label">Transmission weight — ~18% lighter</span>
-            <p class="stat__note">Compared with AMG’s torque-converter 7G-Tronic.</p>
-          </div>
-          <div class="stat reveal" data-delay="2">
-            <span class="stat__value">~30<small>% less</small></span>
-            <span class="stat__label">Inertia of all rotating parts</span>
-            <p class="stat__note">The figure that mattered more than the weight saving.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">04</span>
-        <h2>The party tricks: RaceStart, rev-matching, and gear-skipping</h2>
-        <p>Because the clutches were electronically orchestrated, the MCT could do things a torque-converter automatic couldn’t:</p>
-        <ul>
-          <li><strong>Automatic double-declutch (rev-matching) downshifts</strong> — the box blipped the engine to match revs on the way down, exactly like a skilled driver heel-and-toeing a manual. Mercedes marketed this as the <em>Zwischengas</em> function.</li>
-          <li><strong>Multiple-gear downshifts in a single move</strong> — it could skip straight from, say, 7th to 4th to grab peak torque without stepping through every intermediate ratio.</li>
-          <li><strong>RaceStart</strong> — a launch-control function that managed torque and traction for a clean, repeatable standing start, coordinated by AMG’s new central <strong>AMG DRIVE UNIT</strong> controller.</li>
-        </ul>
-      </div>
-
-      <div class="section__media">
-        <figure class="figure reveal" data-delay="1">
-          <div class="figure__frame">
-            <img src="Mercedes%20Benz%20MCT/assets/fig-02-racestart.jpg" alt="The AMG DRIVE UNIT controller and RaceStart launch-control function.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">Mercedes Benz MCT/assets/fig-02-racestart.jpg</span>
-            </div>
-          </div>
-          <figcaption>RaceStart and the <em>Zwischengas</em> blip were both orchestrated by the central AMG DRIVE UNIT.</figcaption>
-        </figure>
-        <blockquote class="pullquote reveal" data-delay="2">
-          <p>7th to 4th in one move — no stepping through the ratios in between.</p>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- 05 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">05</span>
-        <h2>How close did it actually get to a DCT?</h2>
-        <p>Based on the consensus from long-term MBWorld owners:</p>
-        <ul>
-          <li>A DCT can shift a <em>sequential</em> change (next gear pre-selected) in roughly <strong>50 ms</strong> — still faster than the MCT’s ~100 ms for a single shift. <strong>On a track, where shifts are predictable, a DCT wins.</strong></li>
-          <li>But a DCT is only that fast when the <em>next</em> gear is pre-armed. Ask it for an <strong>out-of-sequence</strong> change (a big multi-gear downshift) and it slows right down. The <strong>MCT shifts an out-of-sequence, multi-gear change as fast as a single one</strong> — which is why several owners prefer it on the road.</li>
-          <li>The trade-off for that directness is refinement. Because there’s a real clutch and a relatively light flywheel instead of a fluid coupling, the box is <strong>more direct and, at light throttle, occasionally jerky</strong> — owners describe small jolts between gears in normal driving, and note it rewards deliberate throttle inputs. That’s the physics of a direct connection, not a fault.</li>
-        </ul>
-      </div>
-
-      <div class="section__media">
-        <div class="stat-grid">
-          <div class="stat reveal">
-            <span class="stat__value">50<small>ms</small></span>
-            <span class="stat__label">DCT — sequential shift</span>
-            <p class="stat__note">Only when the next gear is already pre-armed.</p>
-          </div>
-          <div class="stat reveal" data-delay="1">
-            <span class="stat__value">~100<small>ms</small></span>
-            <span class="stat__label">MCT — any shift, sequential or not</span>
-            <p class="stat__note">A 7th-to-4th downshift costs the MCT no more than a single-gear change.</p>
-          </div>
-        </div>
-        <blockquote class="pullquote reveal" data-delay="2">
-          <p>On track, the DCT wins. On the road, out of sequence, it doesn’t.</p>
-        </blockquote>
-      </div>
-    </div>
-  </section>
-
-  <!-- 06 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">06</span>
-        <h2>Servicing: it behaves like a clutch, not a converter</h2>
-        <p>One practical consequence of deleting the torque converter shows up at service time. On a normal 722.9 / 7G-Tronic, fluid is trapped inside the converter and needs its own drain. <strong>The MCT has no converter, so effectively all the fluid drains through the main plug.</strong> As with the 722.9 it’s based on, the fill is temperature-critical and procedure-critical — Mercedes’ own 722.9 training material specifies filling to an overflow level with the fluid brought to a defined temperature window, and MCT owners echo that the box needs proper warm-up cycles and an exact fill or it will misbehave. Do it wrong and you get the slipping and shudder complaints that populate the AMG forums.</p>
-      </div>
-
-      <div class="section__media">
-        <figure class="figure reveal" data-delay="1">
-          <div class="figure__frame">
-            <img src="Mercedes%20Benz%20MCT/assets/fig-03-service.jpg" alt="722.9 transmission oil pan and overflow fill procedure.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">Mercedes Benz MCT/assets/fig-03-service.jpg</span>
-            </div>
-          </div>
-          <figcaption>No converter to drain separately — but a temperature-critical overflow fill that has to be done exactly right.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- 07 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">07</span>
-        <h2>The sequel: the 9-speed MCT</h2>
-        <p>The concept outlived the 7-speed. From 2017 onwards, starting with the <strong>W213 E63</strong>, AMG applied the same idea to the newer <strong>9G-Tronic</strong> (transmission generation <strong>NAG3 / 725.0</strong>), again swapping the torque converter for a wet start-off clutch, to create the <strong>world’s first 9-speed multi-clutch automatic</strong>, rated to handle around <strong>900 N·m</strong>. It kept the double-declutch and RaceStart features, added a fuel-saving <strong>coasting</strong> function that opened the clutch when cruising off-throttle, and — according to owners — communicated far more directly over the car’s CAN bus than the older 7-speed, which had a laggier control path and noticeably delayed paddle response.</p>
-        <p>This concept was so successful that today, in the world of rapid DCTs and equally rapid traditional Torque Converter Gearboxes, you can still buy a brand new AMG with a modern, polished version of <strong>9G-Tronic</strong>, which traces its roots back to the <strong>7G-Tronic SpeedShift</strong>.</p>
-      </div>
-
-      <div class="section__media">
-        <div class="stat reveal" data-delay="1">
-          <span class="stat__value">900<small>N·m</small></span>
-          <span class="stat__label">Torque rating — 9-speed MCT (725.0)</span>
-          <p class="stat__note">The world’s first 9-speed multi-clutch automatic, launched in the W213 E63.</p>
-        </div>
-        <figure class="figure reveal" data-delay="2">
-          <div class="figure__frame">
-            <img src="Mercedes%20Benz%20MCT/assets/fig-04-9g-mct.jpg" alt="The 9-speed AMG SPEEDSHIFT MCT (725.0) transmission.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">Mercedes Benz MCT/assets/fig-04-9g-mct.jpg</span>
-            </div>
-          </div>
-          <figcaption>Same trick, one generation on: the 9G-Tronic with its converter swapped for a wet start-off clutch.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- 08 — Bottom line + audio -------------------------------------- -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">08</span>
-        <h2>Bottom line</h2>
-        <p>I secretly love the imperfect automatic gearboxes that surfaced in the 2000s, because they were the stepping stones that eventually led to the current, <em>perfect</em> auto-boxes. Many such gearboxes have their own quirks and uniqueness. The AMG SpeedShift MCT is just one of them.</p>
-        <p>It is a lovely piece of lateral thinking: instead of adopting the industry’s fashionable DCT, AMG kept the proven, torque-tolerant planetary gearset of the 722.9 and attacked the <em>one</em> component holding it back — the torque converter. Swapping it for a computer-controlled wet clutch bought most of a DCT’s directness and speed, added rev-matched multi-gear downshifts a DCT struggles with, saved weight and fuel, and did it all through a single input shaft.</p>
-        <blockquote class="pullquote">
-          <p>It’s the automatic that got fast by giving up the thing that made it an automatic.</p>
-        </blockquote>
-      </div>
-
-      <div class="section__media">
-        <div class="audio reveal" data-delay="1" id="audioBlock">
-          <span class="label">Listen</span>
-          <h3 class="audio__title">The MCT, out loud</h3>
-          <audio id="mctAudio" controls preload="metadata" src="Mercedes%20Benz%20MCT/assets/mct-audio.mp3">
-            Your browser doesn’t support the audio element.
-          </audio>
-          <div class="audio__ph">
-            <span class="label">Audio coming soon</span>
-            <span>A clip will be added here shortly.</span>
-          </div>
-          <p class="audio__note">A 6.3 V8 shifting through a gearbox with no torque converter in the way.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Sources -------------------------------------------------------- -->
-  <section class="sources">
+  <section class="posts">
     <div class="wrap">
-      <div class="reveal">
-        <span class="section__num">09</span>
-        <h2>Sources</h2>
+      <div class="posts__head">
+        <span class="label">Posts</span>
       </div>
-      <ol class="reveal" data-delay="1">
-        <li><b>Mercedes-Benz 7G-Tronic transmission — Wikipedia</b><span class="src-note">TCT / AMG SpeedShift, SLK 55 AMG 2005, 722.9 family, magnesium casing, emergency modes.</span><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission</a></li>
-        <li><b>“Mercedes-AMG’s MCT Transmission Explained In Layman’s Terms” — autoevolution</b><span class="src-note">Wet start-off clutch, single input shaft, mode percentages, 100 ms, not a DCT, 9-speed.</span><a href="https://www.autoevolution.com/news/mercedes-amg-s-mct-transmission-explained-in-layman-s-terms-112461.html" target="_blank" rel="noopener">autoevolution.com — MCT explained in layman’s terms</a></li>
-        <li><b>“Mercedes-AMG’s MCT Transmission: Design Peculiarities and Principle of Operation” — go4trans</b><span class="src-note">80 kg, ~18% lighter, ~30% lower inertia, 7,200 rpm, oil-bath clutch, fuel economy.</span><a href="https://go4trans.com/technical-transmission-general-articles/mercedes-amgs-mct-transmission-design-peculiarities-and-principle-of-operation/" target="_blank" rel="noopener">go4trans.com — design peculiarities and principle of operation</a></li>
-        <li><b>Mercedes-Benz 9G-Tronic transmission — Wikipedia</b><span class="src-note">NAK / Nass-Anfahrkupplung, computer-controlled double-clutching, AMG Drive Unit, RaceStart, 900 N·m, first in E63 4Matic+.</span><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission</a></li>
-        <li><b>“New 7-speed AMG SPEEDSHIFT MCT” — paultan.org, 11 Feb 2008</b><span class="src-note">Debut on SL 63 AMG, wet start-up clutch replacing converter, four drive modes, single clutch — not a DCT.</span><a href="https://paultan.org/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">paultan.org — new 7-speed AMG SPEEDSHIFT MCT debuts</a> · <a href="https://web.archive.org/web/20090131170842/http://paultan.org/archives/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">archived copy</a></li>
-        <li><b>2008 Mercedes-Benz SL 63 AMG (R230) — autoevolution</b><span class="src-note">MCT debut car, 100 ms shifts, four modes, RaceStart, M156 engine.</span><a href="https://www.autoevolution.com/cars/mercedes-benz-sl-63-amg-r230-2008.html" target="_blank" rel="noopener">autoevolution.com — SL 63 AMG (R230) 2008</a></li>
-        <li><b>“Getriebe fragen c55/c63” — mercedes-forum.com</b><span class="src-note">C63 W204 uses SpeedShift PLUS 7G-Tronic with torque converter + Zwischengas; NAK/MCT was in the SL 63, not the early C-Class.</span><a href="https://www.mercedes-forum.com/threads/getriebe-fragen-c55-c63.61223/" target="_blank" rel="noopener">mercedes-forum.com — Getriebe fragen c55/c63</a></li>
-        <li><b>“2016 Mercedes-Benz E 63 S AMG SPEEDSHIFT MCT Transmission” — MB of Scottsdale blog</b><span class="src-note">Wet clutch, lower rotational inertia vs converter, smoother/more responsive.</span><a href="https://www.mbscottsdale.com/blog/2016-mercedes-benz-e-63-s-amg-speedshift-mct-transmission/" target="_blank" rel="noopener">mbscottsdale.com — E 63 S AMG SPEEDSHIFT MCT</a></li>
-        <li><b>“AMG SPEEDSHIFT MCT 9G Automatic Transmission” — MBWorld.org forum</b><span class="src-note">Single multi-plate clutch vs converter, DCT ~50 ms vs MCT &lt;100 ms, out-of-sequence shift advantage, CAN-bus directness, fluid-drain difference, MCT introduced with 2008 SL63, C63 got it at facelift; owner impressions of direct feel, occasional low-throttle jolts, light flywheel, throttle-modulation needed.</span><a href="https://mbworld.org/forums/c63-c63s-amg/923640-amg-speedshift-mct-9g-automatic-transmission.html" target="_blank" rel="noopener">mbworld.org — AMG SPEEDSHIFT MCT 9G automatic transmission</a></li>
-        <li><b>“AMG Speedshift-Getriebe?” — Motor-Talk</b><span class="src-note">MCT debut 2008 in SL 63 AMG; wet start-off clutch in oil bath, low inertia, fuel saving.</span><a href="https://www.motor-talk.de/forum/amg-speedshift-getriebe-t6536718.html" target="_blank" rel="noopener">motor-talk.de — AMG Speedshift-Getriebe?</a></li>
-        <li><b>Mercedes-Benz 722.9 Automatic Transmission — Technical Training (Tech 331), attached PDF</b><span class="src-note">Base 722.9 architecture, magnesium housing, temperature-critical overflow fill procedure, drain/fill via oil pan. Also cross-referenced: “Getriebe rutscht kurz e63 AMG m157” — stern-freunde.de (NAK diagnosis, slip/hotspot discussion).</span><a href="https://stern-freunde.de/forum/thread/9299-getriebe-rutscht-kurz-e63-amg-m157-oder-auch-nicht/" target="_blank" rel="noopener">stern-freunde.de — Getriebe rutscht kurz e63 AMG m157</a></li>
-        <li><b>PistonHeads — C63 AMG buying guide, powertrain section</b><span class="src-note"></span><a href="https://www.pistonheads.com/news/ph-buying-guide-contents/c63-amg-buying-guide-powertrain/31870" target="_blank" rel="noopener">pistonheads.com — C63 AMG buying guide: powertrain</a></li>
-        <li><b>YouTube video</b><span class="src-note">Clutch vs. torque-converter inertia comparison, ~60% lower inertia figure.</span><a href="https://youtu.be/NVBmUNqs30g?si=sZWFOqCrkkuXMIMg" target="_blank" rel="noopener">youtu.be/NVBmUNqs30g</a></li>
-      </ol>
+
+      <a class="post" href="mercedes-mct/">
+        <div>
+          <span class="post__no">No. 01</span>
+          <h2 class="post__title">The AMG SpeedShift MCT</h2>
+          <p class="post__dek">How Mercedes-AMG got a torque-converter automatic to shift almost as fast as a dual-clutch — by deleting one component. The wet start-off clutch, 100 ms shifts, RaceStart, and why “Multi-Clutch” never meant what you think it meant.</p>
+          <div class="post__meta">
+            <span class="label">Mercedes-AMG</span>
+            <span class="label">722.9 &nbsp;·&nbsp; 725.0</span>
+            <span class="label">Interactive cutaway</span>
+          </div>
+          <span class="post__cta">Read the piece →</span>
+        </div>
+        <div class="post__art" id="art01">
+          <img src="mercedes-mct/assets/fig-00-hero.jpg" alt="The AMG SpeedShift MCT transmission.">
+          <div class="ph"><span class="label">Weird Gearboxes &nbsp;/&nbsp; No. 01</span></div>
+        </div>
+      </a>
     </div>
   </section>
-
 </main>
 
 <footer>
   <div class="wrap foot">
-    <span class="label">Weird Gearboxes &nbsp;/&nbsp; AMG SpeedShift MCT</span>
-    <span class="label">722.9 &nbsp;·&nbsp; NAK &nbsp;·&nbsp; 725.0</span>
+    <span class="label">Weird Gearboxes</span>
+    <span class="label">github.com/modular-v8/blogs</span>
   </div>
 </footer>
 
 <script>
 (function () {
   "use strict";
-
-  document.body.classList.remove("no-js");
-
-  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  /* ---------------------------------------------------------
-     Scroll-triggered reveals
-     --------------------------------------------------------- */
-  var revealables = document.querySelectorAll(".reveal");
-  if (!("IntersectionObserver" in window) || reduceMotion) {
-    revealables.forEach(function (el) { el.classList.add("is-in"); });
-  } else {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-in");
-          io.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
-    revealables.forEach(function (el) { io.observe(el); });
-  }
-
-  /* ---------------------------------------------------------
-     Reading progress
-     --------------------------------------------------------- */
-  var bar = document.getElementById("progressBar");
-  var ticking = false;
-  function updateProgress() {
-    var h = document.documentElement;
-    var max = h.scrollHeight - h.clientHeight;
-    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
-    bar.style.width = Math.min(100, Math.max(0, pct * 100)).toFixed(2) + "%";
-    ticking = false;
-  }
-  window.addEventListener("scroll", function () {
-    if (!ticking) { ticking = true; window.requestAnimationFrame(updateProgress); }
-  }, { passive: true });
-  window.addEventListener("resize", updateProgress, { passive: true });
-  updateProgress();
-
-  /* ---------------------------------------------------------
-     Missing-asset handling — placeholders instead of broken icons.
-     Drop the real file into /assets and it just appears; no code change.
-     --------------------------------------------------------- */
-  function markMissing(img) {
-    var host = img.closest(".figure, .cutaway");
-    if (host) { host.classList.add("is-missing"); }
-  }
-  document.querySelectorAll(".figure img, .cutaway img").forEach(function (img) {
-    img.addEventListener("error", function () { markMissing(img); });
-    // Already failed before this script ran, or is a 0-byte/undecodable file.
-    if (img.complete && img.naturalWidth === 0) { markMissing(img); }
-  });
-
-  var audioBlock = document.getElementById("audioBlock");
-  var audioEl = document.getElementById("mctAudio");
-  if (audioEl && audioBlock) {
-    audioEl.addEventListener("error", function () { audioBlock.classList.add("is-missing"); });
-    // Belt and braces over http(s); skipped on file:// where fetch always fails.
-    if (/^https?:$/.test(window.location.protocol)) {
-      fetch(audioEl.getAttribute("src"), { method: "HEAD" })
-        .then(function (res) { if (!res.ok) { audioBlock.classList.add("is-missing"); } })
-        .catch(function () { audioBlock.classList.add("is-missing"); });
-    }
-  }
-
-  /* ---------------------------------------------------------
-     Interactive cutaway hotspots
-     Percentages are relative to the cutaway image box; adjust
-     x/y here once the real cutaway image is dropped in.
-     --------------------------------------------------------- */
-  var PARTS = [
-    { x: 14, y: 52, title: "Wet start-off clutch (NAK)",
-      body: "The single compact multi-plate clutch that replaced the torque converter and its lock-up clutch. Runs in an oil bath that cools it through repeated hard launches, and carries around 60% less rotational inertia than a fluid-filled converter." },
-    { x: 25, y: 30, title: "Single input shaft",
-      body: "One shaft, not two. Despite the “Multi-Clutch” name, the MCT is not a dual-clutch box — engine torque enters through a single input shaft, exactly as on the 722.9 it was derived from." },
-    { x: 46, y: 46, title: "Planetary gearsets",
-      body: "The proven, torque-tolerant planetary architecture of the 722.9, carried over untouched. AMG kept the part that worked and attacked only the component holding it back." },
-    { x: 58, y: 28, title: "Clutches K1 / K2 / K3",
-      body: "Three of the internal clutches that select each of the seven ratios. These — not a pair of input clutches — are what “Multi-Clutch Technology” actually refers to." },
-    { x: 66, y: 62, title: "Brakes B1 / B2 / B3 / BR",
-      body: "The brakes that hold planetary members stationary to establish each gear. Electronically orchestrated, they enabled multi-gear downshifts in a single move — 7th straight to 4th." },
-    { x: 34, y: 80, title: "Oil sump & main drain plug",
-      body: "With no converter to trap fluid, effectively all the oil drains through the main plug. The refill is temperature-critical: fill to the overflow level with the fluid inside a defined temperature window." },
-    { x: 20, y: 70, title: "Electrohydraulic control unit",
-      body: "Fully computer-controlled clutch engagement — the enabler for 100 ms shifts, the Zwischengas rev-matching blip, and RaceStart launch control, coordinated by the central AMG DRIVE UNIT." },
-    { x: 86, y: 50, title: "Output shaft",
-      body: "Drive leaves here for the propshaft — with a direct mechanical connection back to the crankshaft instead of a slipping fluid coupling." }
-  ];
-
-  var stage = document.getElementById("cutawayStage");
-  var titleEl = document.getElementById("cutawayTitle");
-  var bodyEl = document.getElementById("cutawayBody");
-  var listEl = document.getElementById("cutawayList");
-  var buttons = [];
-  var activeIdx = -1;
-
-  var DEFAULT_TITLE = titleEl.textContent;
-  var DEFAULT_BODY = bodyEl.textContent;
-
-  function setActive(idx) {
-    activeIdx = idx;
-    buttons.forEach(function (b, i) {
-      b.setAttribute("aria-expanded", i === idx ? "true" : "false");
-    });
-    if (idx === -1) {
-      titleEl.textContent = DEFAULT_TITLE;
-      bodyEl.textContent = DEFAULT_BODY;
-    } else {
-      titleEl.textContent = PARTS[idx].title;
-      bodyEl.textContent = PARTS[idx].body;
-    }
-  }
-
-  PARTS.forEach(function (part, i) {
-    var btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "hotspot";
-    btn.style.left = part.x + "%";
-    btn.style.top = part.y + "%";
-    btn.textContent = String(i + 1);
-    btn.setAttribute("aria-expanded", "false");
-    btn.setAttribute("aria-controls", "cutawayReadout");
-    btn.setAttribute("aria-label", part.title);
-
-    // Always select on click — never toggle off. On touch, the synthetic
-    // mouseenter fires first, so a toggle would close it on the same tap.
-    btn.addEventListener("click", function () { setActive(i); });
-    btn.addEventListener("mouseenter", function () { setActive(i); });
-    btn.addEventListener("focus", function () { setActive(i); });
-
-    stage.appendChild(btn);
-    buttons.push(btn);
-
-    // Mirror every hotspot into a plain list — readable on tiny screens
-    // and the only UI if the image or JS positioning is unusable.
-    var li = document.createElement("li");
-    li.innerHTML = "<b>" + (i + 1) + ". " + part.title + "</b> " + part.body;
-    listEl.appendChild(li);
-  });
-
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape" && activeIdx !== -1) { setActive(-1); }
+  // Same graceful-degradation rule as the article pages: no broken icons
+  // before the real lead image is dropped in.
+  document.querySelectorAll(".post__art img").forEach(function (img) {
+    function miss() { img.closest(".post__art").classList.add("is-missing"); }
+    img.addEventListener("error", miss);
+    if (img.complete && img.naturalWidth === 0) { miss(); }
   });
 })();
 </script>

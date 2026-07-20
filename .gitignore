@@ -1,7 +1,7 @@
 # Working files — kept local, not published to the public Pages repo
-Mercedes Benz MCT/Draft.md
-Mercedes Benz MCT/spec.md
-Mercedes Benz MCT/*.pdf
+*/Draft.md
+*/spec.md
+*.pdf
 
 # OS / editor cruft
 Thumbs.db

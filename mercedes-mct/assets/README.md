@@ -6,7 +6,7 @@ name below and it appears — **no code changes needed**.
 
 | File | Where it appears | Suggested aspect |
 |---|---|---|
-| `fig-00-hero.jpg` | Masthead — lead image beside the title | 3:2 |
+| `fig-00-hero.jpg` | Masthead — lead image beside the title, and the card for this post on the site's root index | 3:2 |
 | `mct-cutaway.jpg` | Section 02 — the interactive cutaway with hotspots | 16:10, landscape, ≥1400px wide |
 | `mct-audio.mp3` | Section 08 — audio player near the end | — |
 | `fig-01-7g-tronic.jpg` | Section 01 — the 722.9 / 7G-Tronic starting point | 4:3 |
@@ -15,11 +15,12 @@ name below and it appears — **no code changes needed**.
 | `fig-04-9g-mct.jpg` | Section 07 — the 9-speed MCT (725.0) | 4:3 |
 
 `.jpg` is what the HTML asks for. To use a `.png` or `.webp` instead, change the
-one `src` on that `<img>` in `index.html`.
+one `src` on that `<img>` in `../index.html` (and, for the hero, in the site's
+root `index.html` too).
 
 ## Cutaway hotspot positions
 
 The eight hotspots are positioned as percentages over the cutaway image, in the
-`PARTS` array near the bottom of `index.html`. They're currently at plausible
+`PARTS` array near the bottom of `../index.html`. They're currently at plausible
 placeholder coordinates. Once the real cutaway is in, nudge each `x` / `y` so the
 marker sits on the actual component — that's the only tuning step required.
