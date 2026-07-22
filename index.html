@@ -254,11 +254,24 @@ main{flex:1}
 (function () {
   "use strict";
   // Same graceful-degradation rule as the article pages: no broken icons
-  // before the real lead image is dropped in.
+  // before the real lead image is dropped in — and the same extension
+  // fallback, so a .png satisfies a slot written as .jpg.
+  var IMG_EXTS = ["jpg", "jpeg", "png", "webp", "avif"];
+
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    var miss = function () { img.closest(".post__art").classList.add("is-missing"); };
+    if (dot === -1) { miss(); return; }
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { miss(); return; }
+    tried.push(next);
+    img.src = src.slice(0, dot) + "." + next;
+  }
   document.querySelectorAll(".post__art img").forEach(function (img) {
-    function miss() { img.closest(".post__art").classList.add("is-missing"); }
-    img.addEventListener("error", miss);
-    if (img.complete && img.naturalWidth === 0) { miss(); }
+    img.addEventListener("error", function () { tryNextExt(img); });
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
   });
 })();
 </script>

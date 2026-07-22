@@ -3,6 +3,9 @@
 */spec.md
 *.pdf
 
+# Tooling
+.serena/
+
 # OS / editor cruft
 Thumbs.db
 desktop.ini

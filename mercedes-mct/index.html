@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The AMG SpeedShift MCT — The Automatic That Threw Away Its Torque Converter</title>
+<title>The AMG SpeedShift MCT — The Torque Converter Automatic That Threw Away Its Torque Converter</title>
 <meta name="description" content="How Mercedes-AMG got a torque-converter automatic to shift almost as fast as a dual-clutch — by deleting one component.">
 <meta name="theme-color" content="#0B0B0B">
-<meta property="og:title" content="The AMG SpeedShift MCT: The Automatic That Threw Away Its Torque Converter">
+<meta property="og:title" content="The AMG SpeedShift MCT — The Torque Converter Automatic That Threw Away Its Torque Converter">
 <meta property="og:description" content="How Mercedes-AMG got a torque-converter automatic to shift almost as fast as a dual-clutch — by deleting one component.">
 <meta property="og:type" content="article">
 
@@ -359,11 +359,33 @@ ul li::before{
   line-height:1.5;
   color:var(--secondary);
 }
+/* Credit line under every image — sits below the caption, quieter than it */
+.figure__src{
+  display:block;
+  margin-top:var(--s-sm);
+  padding-top:var(--s-sm);
+  border-top:1px solid var(--line);
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#5E5E5E;
+}
+/* The reference number links down to the matching entry in Sources */
+.figure__src a{
+  color:var(--secondary);
+  border-bottom-color:transparent;
+}
+.figure__src a:hover,.figure__src a:focus-visible{
+  color:var(--tertiary);
+  border-bottom-color:var(--tertiary);
+}
 
 /* ============================================================
    Interactive cutaway
    ============================================================ */
-.cutaway{margin:0}
+.cutaway{margin:0;overflow-anchor:none}
 .cutaway__stage{
   position:relative;
   background:var(--surface);
@@ -375,9 +397,23 @@ ul li::before{
 .cutaway__stage img{
   width:100%;height:100%;
   object-fit:cover;
+  transition:filter .35s ease;
 }
+.cutaway__stage.is-focusing img{filter:blur(7px)}
 .cutaway.is-missing img{display:none}
 .cutaway.is-missing .figure__ph{display:flex}
+
+/* Hover-to-focus lens: a sharp copy of the same image, clipped to a soft
+   region over the hovered part. The base image blurs via .is-focusing above;
+   this layer supplies the sharp patch(es) — its mask-image is a union of the
+   part's ellipse plus one small circle per child pin, built in JS (buildMask),
+   so no per-label images are needed. */
+.cutaway__focus{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  transition:opacity .3s ease;
+}
+.cutaway__stage.is-focusing .cutaway__focus{opacity:1}
 
 .hotspot{
   position:absolute;
@@ -416,13 +452,67 @@ ul li::before{
 }
 .hotspot[aria-expanded="true"]::after{animation:none;opacity:0}
 
+/* A part's extra pins (e.g. K2/K3 riding along with the K1/K2/K3 marker)
+   exist only to place their own small sharp spot in the focus lens — they
+   never render as visible markers and never take hover/click, in edit mode
+   (below) they're shown dashed and draggable purely for positioning. */
+.hotspot--child{
+  width:14px;height:14px;margin:-7px 0 0 -7px;
+  opacity:0;pointer-events:none;
+}
+.hotspot--child::after{display:none}
+
+/* Temporary drag-to-reposition tool — only active with #edit-hotspots in the
+   URL, so a normal reader never loads or sees any of this. */
+.cutaway__stage.is-editing .hotspot{cursor:grab}
+.cutaway__stage.is-editing .hotspot.is-dragging{cursor:grabbing;transform:scale(1.12)}
+.cutaway__stage.is-editing .hotspot::after{display:none}
+.cutaway__stage.is-editing .hotspot--child{opacity:1;pointer-events:auto;border-style:dashed}
+
+.editpanel{
+  position:fixed;right:var(--s-md);bottom:var(--s-md);z-index:1000;
+  width:300px;max-width:calc(100vw - 32px);
+  background:var(--surface);border:1px solid var(--tertiary);
+  border-radius:var(--r-lg);padding:16px;
+  font-family:var(--font-body);
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.editpanel h5{
+  margin:0 0 var(--s-sm);
+  font-family:var(--font-display);font-size:0.78rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--tertiary);
+}
+.editpanel pre{
+  margin:0 0 var(--s-sm);max-height:220px;overflow:auto;
+  font-family:monospace;font-size:0.76rem;line-height:1.6;color:#DCDCDC;
+  background:var(--neutral);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:8px;white-space:pre-wrap;
+}
+.editpanel button{
+  font-family:var(--font-display);font-size:0.72rem;letter-spacing:0.08em;
+  text-transform:uppercase;background:var(--tertiary);color:var(--on-primary);
+  border:none;border-radius:var(--r-md);padding:8px 14px;cursor:pointer;
+}
+.editpanel button:active{transform:scale(0.97)}
+.editpanel p{margin:var(--s-sm) 0 0;font-size:0.78rem;line-height:1.5;color:var(--secondary)}
+.editpanel code{color:var(--primary)}
+
 .cutaway__readout{
   border:1px solid var(--line);
   border-top:none;
   border-radius:0 0 var(--r-lg) var(--r-lg);
   background:var(--surface);
   padding:20px 24px;
-  min-height:132px;
+  /* Fixed, not min — the box must never resize on hover. It sits inside a
+     position:sticky column, and a size change there can nudge the sticky
+     element's position once it's pinned near the bottom of its section,
+     shifting hotspots under a stationary cursor and triggering a
+     mouseenter/mouseleave feedback loop (the reported "bounce"). 280px
+     comfortably covers the longest part description at the narrowest real
+     column width (~304px, just above the 900px breakpoint); overflow-y is
+     a safety net, not the primary mechanism. */
+  height:280px;
+  overflow-y:auto;
 }
 .cutaway__readout .label{display:block;margin-bottom:var(--s-sm)}
 .cutaway__readout h4{
@@ -494,42 +584,6 @@ kbd{
 }
 
 /* ============================================================
-   Audio
-   ============================================================ */
-.audio{
-  background:var(--surface);
-  border:1px solid var(--line);
-  border-radius:var(--r-lg);
-  padding:24px;
-}
-.audio__title{
-  font-family:var(--font-display);
-  font-size:1.15rem;
-  font-weight:600;
-  letter-spacing:0.04em;
-  text-transform:uppercase;
-  margin:var(--s-sm) 0 var(--s-md);
-}
-.audio audio{
-  width:100%;
-  border-radius:var(--r-md);
-  filter:invert(1) hue-rotate(180deg) contrast(.92);
-}
-.audio__ph{
-  display:none;
-  align-items:center;
-  gap:var(--s-md);
-  border:1px dashed var(--line);
-  border-radius:var(--r-md);
-  padding:var(--s-md);
-  color:var(--secondary);
-  font-size:0.86rem;
-}
-.audio.is-missing audio{display:none}
-.audio.is-missing .audio__ph{display:flex}
-.audio__note{margin:var(--s-md) 0 0;font-size:0.82rem;color:var(--secondary);max-width:none}
-
-/* ============================================================
    Sources
    ============================================================ */
 .sources{padding-block:calc(var(--s-lg) * 2)}
@@ -550,7 +604,11 @@ kbd{
   font-size:0.88rem;
   line-height:1.6;
   color:var(--secondary);
+  scroll-margin-top:var(--s-lg);
 }
+/* Arrived here from an image credit — mark which entry was meant */
+.sources li:target{border-top-color:var(--tertiary)}
+.sources li:target b{color:var(--tertiary)}
 .sources li::before{
   content:counter(src,decimal-leading-zero);
   position:absolute;left:0;top:var(--s-md);
@@ -560,7 +618,6 @@ kbd{
   color:var(--tertiary);
 }
 .sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
-.sources .src-note{display:block;margin-bottom:8px}
 .sources li a{
   display:inline-block;
   font-size:0.8rem;
@@ -600,6 +657,7 @@ kbd{
 @media (prefers-reduced-motion:reduce){
   .reveal{opacity:1;transform:none;transition:none}
   .hotspot::after{animation:none}
+  .cutaway__stage img,.cutaway__focus{transition:none}
 }
 /* Never hide content if JS never runs */
 .no-js .reveal{opacity:1;transform:none}
@@ -630,17 +688,15 @@ kbd{
     <div class="masthead__kicker rise">
       <span class="masthead__rule"></span>
       <a class="label masthead__home" href="../">Weird Gearboxes</a>
-      <span class="label">No. 01</span>
     </div>
 
     <div class="masthead__grid">
       <div class="masthead__lede">
-        <h1 class="rise" data-delay="1">The AMG SpeedShift MCT <em>The automatic that threw away its torque converter</em></h1>
+        <h1 class="rise" data-delay="1">The AMG SpeedShift MCT <em>The torque converter automatic that threw away its torque converter</em></h1>
         <p class="masthead__dek rise" data-delay="2">How Mercedes-AMG got a torque-converter automatic gearbox to shift almost as fast as a dual-clutch — by deleting one component.</p>
         <div class="masthead__meta rise" data-delay="2">
           <span class="label">Mercedes-AMG</span>
-          <span class="label">722.9 &nbsp;·&nbsp; 725.0</span>
-          <span class="label">2008 — present</span>
+          <span class="label">Gearbox 722.9 &nbsp;·&nbsp; 725.0</span>
         </div>
       </div>
 
@@ -649,9 +705,10 @@ kbd{
           <img src="assets/fig-00-hero.jpg" alt="The AMG SpeedShift MCT transmission.">
           <div class="figure__ph">
             <span class="label">Lead image coming soon</span>
-            <span class="figure__ph-file">assets/fig-00-hero.jpg</span>
+            <span class="figure__ph-file">assets/fig-00-hero.jpg or .png</span>
           </div>
         </div>
+        <figcaption><span class="figure__src">Image source: <a href="#src-13">[13]</a></span></figcaption>
       </figure>
     </div>
   </div>
@@ -667,7 +724,7 @@ kbd{
         <h2>The problem AMG was trying to solve</h2>
         <p>By the mid-2000s the automatic transmission was in the middle of an arms race. Volkswagen and Audi had launched the first DSG dual-clutch boxes, BMW was persisting with its jerky single-clutch SMG, and Ferrari and Lamborghini were running automated single-clutch “F1” units. Everyone was chasing the same thing: a lightning-fast, uninterrupted gear change.</p>
         <p>Mercedes-AMG at that time had a good automatic for its regular vehicles, but it was a <em>torque-converter</em> automatic, which was traditionally not the sportiest type of gearbox. However, in 2005 AMG introduced <strong>AMG SpeedShift</strong> on the SLK 55 AMG — a performance-tuned version of the then-new 7-speed 7G-Tronic (transmission family <strong>722.9</strong>), sharing its gear ratios but with sharper AMG software. The performance torque-converter version was later branded <strong>SpeedShift TCT</strong> (“Torque Converter Technology”) and <strong>7G-Tronic Sport</strong>.</p>
-        <p>The catch: a torque converter, however well tuned, uses a fluid coupling. That fluid slips, it stores rotational inertia, and it puts a soft, “slushy” layer between the engine and the wheels. It was never going to match a DCT’s directness or shift speed.</p>
+        <p>The catch: a torque converter, however well tuned, uses a fluid coupling. That fluid slips, it stores rotational inertia, and it puts a soft, “slushy” layer between the engine and the wheels. In the mid 2000s, it was never going to match a DCT’s directness or shift speed.</p>
       </div>
 
       <div class="section__media">
@@ -676,10 +733,10 @@ kbd{
             <img src="assets/fig-01-7g-tronic.jpg" alt="The 7-speed 7G-Tronic (722.9) torque-converter automatic AMG started from.">
             <div class="figure__ph">
               <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">assets/fig-01-7g-tronic.jpg</span>
+              <span class="figure__ph-file">assets/fig-01-7g-tronic.jpg or .png</span>
             </div>
           </div>
-          <figcaption>The starting point: the 7-speed 722.9 / 7G-Tronic, a conventional torque-converter automatic.</figcaption>
+          <figcaption>The starting point: the 7-speed 722.9 / 7G-Tronic, a conventional torque-converter automatic.<span class="figure__src">Image source: <a href="#src-14">[14]</a></span></figcaption>
         </figure>
         <blockquote class="pullquote reveal" data-delay="2">
           <p>Fluid slips. Fluid stores inertia. Fluid sits between you and the wheels.</p>
@@ -695,13 +752,13 @@ kbd{
         <span class="section__num">02</span>
         <h2>The unusual fix: delete the torque converter</h2>
         <p>Rather than engineer a whole new dual-clutch box, AMG did something more surgical. They took the existing 7-speed <strong>722.9</strong> planetary architecture and <strong>replaced the torque converter and its lock-up clutch with a single compact wet start-off clutch</strong> — in German, a <em>Nass-Anfahrkupplung</em> (NAK). The result debuted in <strong>2008</strong> in the <strong>R230 SL 63 AMG</strong>, coupled with the legendary 6.3 litre AMG V8, and was the first transmission of its kind fitted to a production car. It was called <strong>AMG SpeedShift MCT</strong> — Multi-Clutch Technology.</p>
-        <p>One might assume the “Multi-Clutch” name refers to a dual-clutch box, but that’s not the case. The new gearbox had a <strong>single input shaft</strong> and a <strong>single multi-plate wet clutch</strong> doing the job the torque converter used to do — getting the car moving from a standstill and locking up at high speed. Instead, “Multi-Clutch” referred to the multiple internal clutches and brakes of the <em>planetary</em> gearset — the same clutches (K1/K2/K3) and brakes (B1/B2/B3/BR) that the standard 722.9 torque-converter gearbox already used to select each of its seven gears.</p>
+        <p>One might assume the “Multi-Clutch” name refers to a dual-clutch box, but that’s not the case. The new gearbox had a <strong>single input shaft</strong> and a <strong>single multi-plate wet clutch</strong> doing the job the torque converter used to do — getting the car moving from a standstill and locking up at high speed. Instead, “Multi-Clutch” referred to the multiple internal clutches and brakes of the <em>planetary</em> gearset — the same clutches and brakes that the standard 722.9 torque-converter gearbox already used to select each of its seven gears.</p>
 
         <h3>Why a wet clutch beat the converter</h3>
-        <p>The start-off clutch ran in an <strong>oil bath</strong> (a sump), which cooled it and protected its service life under repeated hard launches. More importantly for performance, that clutch had a <strong>much lower rotational inertia</strong> than a fluid-filled torque converter — around 60% lower, in fact. Less inertia and no fluid slip means:</p>
+        <p>The start-off clutch ran in an <strong>oil bath</strong> (a sump), which cooled it and protected its service life under repeated hard launches. More importantly for performance, the wet clutch unit had a <strong>much lower rotational inertia</strong> than the torque converter unit — around 60% lower, in fact. Less inertia and no fluid slip meant:</p>
         <ul>
           <li><strong>Sharper throttle response</strong> and a direct, mechanical connection between engine and wheels.</li>
-          <li><strong>No converter slip losses</strong>, which also <strong>helps fuel economy</strong> — an unusual side-benefit for a performance box.</li>
+          <li><strong>No converter slip losses</strong>, which could also <strong>help fuel economy</strong> — an unusual side-benefit for a performance box.</li>
           <li>The clutch engagement could be <strong>fully computer-controlled</strong>, which unlocked aggressive, precisely-metered shifts.</li>
         </ul>
       </div>
@@ -711,16 +768,18 @@ kbd{
         <figure class="cutaway reveal" data-delay="1" id="cutaway">
           <div class="cutaway__stage" id="cutawayStage">
             <img src="assets/mct-cutaway.jpg" alt="Cutaway of the AMG SpeedShift MCT transmission with labelled internal components.">
+            <div class="cutaway__focus" id="cutawayFocus" aria-hidden="true"></div>
             <div class="figure__ph">
               <span class="label">Cutaway coming soon</span>
-              <span class="figure__ph-file">assets/mct-cutaway.jpg</span>
+              <span class="figure__ph-file">assets/mct-cutaway.jpg or .png</span>
             </div>
             <!-- hotspots injected here by JS -->
           </div>
+          <figcaption><span class="figure__src">Image source: <a href="#src-2">[2]</a></span></figcaption>
           <div class="cutaway__readout" id="cutawayReadout" aria-live="polite">
             <span class="label">Interactive cutaway</span>
             <h4 id="cutawayTitle">Explore the gearbox</h4>
-            <p id="cutawayBody">Hover or tap a marker to see what each part does — and which one AMG threw away.</p>
+            <p id="cutawayBody">Hover or tap a marker to see what each part does.</p>
           </div>
           <p class="cutaway__hint">Tap a numbered marker · use <kbd>Tab</kbd> and <kbd>Enter</kbd> to step through them.</p>
           <span class="label cutaway__list-label">Inside the gearbox</span>
@@ -785,18 +844,8 @@ kbd{
       </div>
 
       <div class="section__media">
-        <figure class="figure reveal" data-delay="1">
-          <div class="figure__frame">
-            <img src="assets/fig-02-racestart.jpg" alt="The AMG DRIVE UNIT controller and RaceStart launch-control function.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">assets/fig-02-racestart.jpg</span>
-            </div>
-          </div>
-          <figcaption>RaceStart and the <em>Zwischengas</em> blip were both orchestrated by the central AMG DRIVE UNIT.</figcaption>
-        </figure>
         <blockquote class="pullquote reveal" data-delay="2">
-          <p>7th to 4th in one move — no stepping through the ratios in between.</p>
+          <p>Shift to any gear, from any gear, in one move — no stepping through the ratios in between.</p>
         </blockquote>
       </div>
     </div>
@@ -808,11 +857,10 @@ kbd{
       <div class="section__text reveal">
         <span class="section__num">05</span>
         <h2>How close did it actually get to a DCT?</h2>
-        <p>Based on the consensus from long-term MBWorld owners:</p>
         <ul>
-          <li>A DCT can shift a <em>sequential</em> change (next gear pre-selected) in roughly <strong>50 ms</strong> — still faster than the MCT’s ~100 ms for a single shift. <strong>On a track, where shifts are predictable, a DCT wins.</strong></li>
-          <li>But a DCT is only that fast when the <em>next</em> gear is pre-armed. Ask it for an <strong>out-of-sequence</strong> change (a big multi-gear downshift) and it slows right down. The <strong>MCT shifts an out-of-sequence, multi-gear change as fast as a single one</strong> — which is why several owners prefer it on the road.</li>
-          <li>The trade-off for that directness is refinement. Because there’s a real clutch and a relatively light flywheel instead of a fluid coupling, the box is <strong>more direct and, at light throttle, occasionally jerky</strong> — owners describe small jolts between gears in normal driving, and note it rewards deliberate throttle inputs. That’s the physics of a direct connection, not a fault.</li>
+          <li>At that time, a DCT could shift a <em>sequential</em> change (next gear pre-selected) in roughly <strong>50 ms</strong> — still faster than the MCT’s ~100 ms for a single shift.
+          <li>But a DCT is only that fast when the <em>next</em> gear is pre-armed. Ask it for an <strong>out-of-sequence</strong> change (a big multi-gear downshift) and it slows right down. The <strong>MCT could shift an out-of-sequence, multi-gear change as fast as a single one</strong></li>
+          <li>The trade-off for that directness was refinement. Because there was a real clutch and a relatively light flywheel instead of a fluid coupling, the gearbox was <strong>more direct and, at light throttle, occasionally jerky</strong>. That’s the physics of a direct connection, not a fault.</li>
         </ul>
       </div>
 
@@ -829,9 +877,6 @@ kbd{
             <p class="stat__note">A 7th-to-4th downshift costs the MCT no more than a single-gear change.</p>
           </div>
         </div>
-        <blockquote class="pullquote reveal" data-delay="2">
-          <p>On track, the DCT wins. On the road, out of sequence, it doesn’t.</p>
-        </blockquote>
       </div>
     </div>
   </section>
@@ -841,30 +886,6 @@ kbd{
     <div class="wrap section__grid">
       <div class="section__text reveal">
         <span class="section__num">06</span>
-        <h2>Servicing: it behaves like a clutch, not a converter</h2>
-        <p>One practical consequence of deleting the torque converter shows up at service time. On a normal 722.9 / 7G-Tronic, fluid is trapped inside the converter and needs its own drain. <strong>The MCT has no converter, so effectively all the fluid drains through the main plug.</strong> As with the 722.9 it’s based on, the fill is temperature-critical and procedure-critical — Mercedes’ own 722.9 training material specifies filling to an overflow level with the fluid brought to a defined temperature window, and MCT owners echo that the box needs proper warm-up cycles and an exact fill or it will misbehave. Do it wrong and you get the slipping and shudder complaints that populate the AMG forums.</p>
-      </div>
-
-      <div class="section__media">
-        <figure class="figure reveal" data-delay="1">
-          <div class="figure__frame">
-            <img src="assets/fig-03-service.jpg" alt="722.9 transmission oil pan and overflow fill procedure.">
-            <div class="figure__ph">
-              <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">assets/fig-03-service.jpg</span>
-            </div>
-          </div>
-          <figcaption>No converter to drain separately — but a temperature-critical overflow fill that has to be done exactly right.</figcaption>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <!-- 07 ------------------------------------------------------------ -->
-  <section class="section">
-    <div class="wrap section__grid">
-      <div class="section__text reveal">
-        <span class="section__num">07</span>
         <h2>The sequel: the 9-speed MCT</h2>
         <p>The concept outlived the 7-speed. From 2017 onwards, starting with the <strong>W213 E63</strong>, AMG applied the same idea to the newer <strong>9G-Tronic</strong> (transmission generation <strong>NAG3 / 725.0</strong>), again swapping the torque converter for a wet start-off clutch, to create the <strong>world’s first 9-speed multi-clutch automatic</strong>, rated to handle around <strong>900 N·m</strong>. It kept the double-declutch and RaceStart features, added a fuel-saving <strong>coasting</strong> function that opened the clutch when cruising off-throttle, and — according to owners — communicated far more directly over the car’s CAN bus than the older 7-speed, which had a laggier control path and noticeably delayed paddle response.</p>
         <p>This concept was so successful that today, in the world of rapid DCTs and equally rapid traditional Torque Converter Gearboxes, you can still buy a brand new AMG with a modern, polished version of <strong>9G-Tronic</strong>, which traces its roots back to the <strong>7G-Tronic SpeedShift</strong>.</p>
@@ -878,45 +899,29 @@ kbd{
         </div>
         <figure class="figure reveal" data-delay="2">
           <div class="figure__frame">
-            <img src="assets/fig-04-9g-mct.jpg" alt="The 9-speed AMG SPEEDSHIFT MCT (725.0) transmission.">
+            <img src="assets/fig-02-9g-mct.jpg" alt="The 9-speed AMG SPEEDSHIFT MCT (725.0) transmission.">
             <div class="figure__ph">
               <span class="label">Image coming soon</span>
-              <span class="figure__ph-file">assets/fig-04-9g-mct.jpg</span>
+              <span class="figure__ph-file">assets/fig-02-9g-mct.jpg or .png</span>
             </div>
           </div>
-          <figcaption>Same trick, one generation on: the 9G-Tronic with its converter swapped for a wet start-off clutch.</figcaption>
+          <figcaption>Same trick, one generation on: the 9G-Tronic with its converter swapped for a wet start-off clutch.<span class="figure__src">Image source: <a href="#src-15">[15]</a></span></figcaption>
         </figure>
       </div>
     </div>
   </section>
 
-  <!-- 08 — Bottom line + audio -------------------------------------- -->
+  <!-- 07 — Bottom line ------------------------------------------------ -->
   <section class="section">
     <div class="wrap section__grid">
       <div class="section__text reveal">
-        <span class="section__num">08</span>
+        <span class="section__num">07</span>
         <h2>Bottom line</h2>
         <p>I secretly love the imperfect automatic gearboxes that surfaced in the 2000s, because they were the stepping stones that eventually led to the current, <em>perfect</em> auto-boxes. Many such gearboxes have their own quirks and uniqueness. The AMG SpeedShift MCT is just one of them.</p>
-        <p>It is a lovely piece of lateral thinking: instead of adopting the industry’s fashionable DCT, AMG kept the proven, torque-tolerant planetary gearset of the 722.9 and attacked the <em>one</em> component holding it back — the torque converter. Swapping it for a computer-controlled wet clutch bought most of a DCT’s directness and speed, added rev-matched multi-gear downshifts a DCT struggles with, saved weight and fuel, and did it all through a single input shaft.</p>
-        <blockquote class="pullquote">
-          <p>It’s the automatic that got fast by giving up the thing that made it an automatic.</p>
-        </blockquote>
+        <p>It is a lovely piece of lateral thinking: instead of adopting the industry’s fashionable DCT, AMG kept the proven, torque-tolerant planetary gearset of the 722.9 and attacked the <em>one</em> component holding it back — the torque converter. Swapping it for a computer-controlled wet clutch bought most of a DCT’s directness and speed without putting in the engineering effort to develop a full DCT.</p>
       </div>
 
-      <div class="section__media">
-        <div class="audio reveal" data-delay="1" id="audioBlock">
-          <span class="label">Listen</span>
-          <h3 class="audio__title">The MCT, out loud</h3>
-          <audio id="mctAudio" controls preload="metadata" src="assets/mct-audio.mp3">
-            Your browser doesn’t support the audio element.
-          </audio>
-          <div class="audio__ph">
-            <span class="label">Audio coming soon</span>
-            <span>A clip will be added here shortly.</span>
-          </div>
-          <p class="audio__note">A 6.3 V8 shifting through a gearbox with no torque converter in the way.</p>
-        </div>
-      </div>
+      <div class="section__media"></div>
     </div>
   </section>
 
@@ -924,23 +929,25 @@ kbd{
   <section class="sources">
     <div class="wrap">
       <div class="reveal">
-        <span class="section__num">09</span>
+        <span class="section__num">08</span>
         <h2>Sources</h2>
       </div>
       <ol class="reveal" data-delay="1">
-        <li><b>Mercedes-Benz 7G-Tronic transmission — Wikipedia</b><span class="src-note">TCT / AMG SpeedShift, SLK 55 AMG 2005, 722.9 family, magnesium casing, emergency modes.</span><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission</a></li>
-        <li><b>“Mercedes-AMG’s MCT Transmission Explained In Layman’s Terms” — autoevolution</b><span class="src-note">Wet start-off clutch, single input shaft, mode percentages, 100 ms, not a DCT, 9-speed.</span><a href="https://www.autoevolution.com/news/mercedes-amg-s-mct-transmission-explained-in-layman-s-terms-112461.html" target="_blank" rel="noopener">autoevolution.com — MCT explained in layman’s terms</a></li>
-        <li><b>“Mercedes-AMG’s MCT Transmission: Design Peculiarities and Principle of Operation” — go4trans</b><span class="src-note">80 kg, ~18% lighter, ~30% lower inertia, 7,200 rpm, oil-bath clutch, fuel economy.</span><a href="https://go4trans.com/technical-transmission-general-articles/mercedes-amgs-mct-transmission-design-peculiarities-and-principle-of-operation/" target="_blank" rel="noopener">go4trans.com — design peculiarities and principle of operation</a></li>
-        <li><b>Mercedes-Benz 9G-Tronic transmission — Wikipedia</b><span class="src-note">NAK / Nass-Anfahrkupplung, computer-controlled double-clutching, AMG Drive Unit, RaceStart, 900 N·m, first in E63 4Matic+.</span><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission</a></li>
-        <li><b>“New 7-speed AMG SPEEDSHIFT MCT” — paultan.org, 11 Feb 2008</b><span class="src-note">Debut on SL 63 AMG, wet start-up clutch replacing converter, four drive modes, single clutch — not a DCT.</span><a href="https://paultan.org/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">paultan.org — new 7-speed AMG SPEEDSHIFT MCT debuts</a> · <a href="https://web.archive.org/web/20090131170842/http://paultan.org/archives/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">archived copy</a></li>
-        <li><b>2008 Mercedes-Benz SL 63 AMG (R230) — autoevolution</b><span class="src-note">MCT debut car, 100 ms shifts, four modes, RaceStart, M156 engine.</span><a href="https://www.autoevolution.com/cars/mercedes-benz-sl-63-amg-r230-2008.html" target="_blank" rel="noopener">autoevolution.com — SL 63 AMG (R230) 2008</a></li>
-        <li><b>“Getriebe fragen c55/c63” — mercedes-forum.com</b><span class="src-note">C63 W204 uses SpeedShift PLUS 7G-Tronic with torque converter + Zwischengas; NAK/MCT was in the SL 63, not the early C-Class.</span><a href="https://www.mercedes-forum.com/threads/getriebe-fragen-c55-c63.61223/" target="_blank" rel="noopener">mercedes-forum.com — Getriebe fragen c55/c63</a></li>
-        <li><b>“2016 Mercedes-Benz E 63 S AMG SPEEDSHIFT MCT Transmission” — MB of Scottsdale blog</b><span class="src-note">Wet clutch, lower rotational inertia vs converter, smoother/more responsive.</span><a href="https://www.mbscottsdale.com/blog/2016-mercedes-benz-e-63-s-amg-speedshift-mct-transmission/" target="_blank" rel="noopener">mbscottsdale.com — E 63 S AMG SPEEDSHIFT MCT</a></li>
-        <li><b>“AMG SPEEDSHIFT MCT 9G Automatic Transmission” — MBWorld.org forum</b><span class="src-note">Single multi-plate clutch vs converter, DCT ~50 ms vs MCT &lt;100 ms, out-of-sequence shift advantage, CAN-bus directness, fluid-drain difference, MCT introduced with 2008 SL63, C63 got it at facelift; owner impressions of direct feel, occasional low-throttle jolts, light flywheel, throttle-modulation needed.</span><a href="https://mbworld.org/forums/c63-c63s-amg/923640-amg-speedshift-mct-9g-automatic-transmission.html" target="_blank" rel="noopener">mbworld.org — AMG SPEEDSHIFT MCT 9G automatic transmission</a></li>
-        <li><b>“AMG Speedshift-Getriebe?” — Motor-Talk</b><span class="src-note">MCT debut 2008 in SL 63 AMG; wet start-off clutch in oil bath, low inertia, fuel saving.</span><a href="https://www.motor-talk.de/forum/amg-speedshift-getriebe-t6536718.html" target="_blank" rel="noopener">motor-talk.de — AMG Speedshift-Getriebe?</a></li>
-        <li><b>Mercedes-Benz 722.9 Automatic Transmission — Technical Training (Tech 331), attached PDF</b><span class="src-note">Base 722.9 architecture, magnesium housing, temperature-critical overflow fill procedure, drain/fill via oil pan. Also cross-referenced: “Getriebe rutscht kurz e63 AMG m157” — stern-freunde.de (NAK diagnosis, slip/hotspot discussion).</span><a href="https://stern-freunde.de/forum/thread/9299-getriebe-rutscht-kurz-e63-amg-m157-oder-auch-nicht/" target="_blank" rel="noopener">stern-freunde.de — Getriebe rutscht kurz e63 AMG m157</a></li>
-        <li><b>PistonHeads — C63 AMG buying guide, powertrain section</b><span class="src-note"></span><a href="https://www.pistonheads.com/news/ph-buying-guide-contents/c63-amg-buying-guide-powertrain/31870" target="_blank" rel="noopener">pistonheads.com — C63 AMG buying guide: powertrain</a></li>
-        <li><b>YouTube video</b><span class="src-note">Clutch vs. torque-converter inertia comparison, ~60% lower inertia figure.</span><a href="https://youtu.be/NVBmUNqs30g?si=sZWFOqCrkkuXMIMg" target="_blank" rel="noopener">youtu.be/NVBmUNqs30g</a></li>
+        <li><b>Mercedes-Benz 7G-Tronic transmission — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_7G-Tronic_transmission</a></li>
+        <li id="src-2"><b>“Mercedes-AMG’s MCT Transmission Explained In Layman’s Terms” — autoevolution</b><a href="https://www.autoevolution.com/news/mercedes-amg-s-mct-transmission-explained-in-layman-s-terms-112461.html" target="_blank" rel="noopener">autoevolution.com — MCT explained in layman’s terms</a></li>
+        <li><b>“Mercedes-AMG’s MCT Transmission: Design Peculiarities and Principle of Operation” — go4trans</b><a href="https://go4trans.com/technical-transmission-general-articles/mercedes-amgs-mct-transmission-design-peculiarities-and-principle-of-operation/" target="_blank" rel="noopener">go4trans.com — design peculiarities and principle of operation</a></li>
+        <li><b>Mercedes-Benz 9G-Tronic transmission — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Mercedes-Benz_9G-Tronic_transmission</a></li>
+        <li><b>“New 7-speed AMG SPEEDSHIFT MCT” — paultan.org</b><a href="https://paultan.org/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">paultan.org — new 7-speed AMG SPEEDSHIFT MCT debuts</a> · <a href="https://web.archive.org/web/20090131170842/http://paultan.org/archives/2008/02/11/new-7-speed-amg-speedshift-mct-debuts/" target="_blank" rel="noopener">archived copy</a></li>
+        <li><b>2008 Mercedes-Benz SL 63 AMG (R230) — autoevolution</b><a href="https://www.autoevolution.com/cars/mercedes-benz-sl-63-amg-r230-2008.html" target="_blank" rel="noopener">autoevolution.com — SL 63 AMG (R230) 2008</a></li>
+        <li><b>“Getriebe fragen c55/c63” — mercedes-forum.com</b><a href="https://www.mercedes-forum.com/threads/getriebe-fragen-c55-c63.61223/" target="_blank" rel="noopener">mercedes-forum.com — Getriebe fragen c55/c63</a></li>
+        <li><b>“2016 Mercedes-Benz E 63 S AMG SPEEDSHIFT MCT Transmission” — MB of Scottsdale blog</b><a href="https://www.mbscottsdale.com/blog/2016-mercedes-benz-e-63-s-amg-speedshift-mct-transmission/" target="_blank" rel="noopener">mbscottsdale.com — E 63 S AMG SPEEDSHIFT MCT</a></li>
+        <li><b>“AMG SPEEDSHIFT MCT 9G Automatic Transmission” — MBWorld.org forum</b><a href="https://mbworld.org/forums/c63-c63s-amg/923640-amg-speedshift-mct-9g-automatic-transmission.html" target="_blank" rel="noopener">mbworld.org — AMG SPEEDSHIFT MCT 9G automatic transmission</a></li>
+        <li><b>“AMG Speedshift-Getriebe?” — Motor-Talk</b><a href="https://www.motor-talk.de/forum/amg-speedshift-getriebe-t6536718.html" target="_blank" rel="noopener">motor-talk.de — AMG Speedshift-Getriebe?</a></li>
+        <li><b>Mercedes-Benz 722.9 Automatic Transmission — Technical Training</b><a href="https://stern-freunde.de/forum/thread/9299-getriebe-rutscht-kurz-e63-amg-m157-oder-auch-nicht/" target="_blank" rel="noopener">stern-freunde.de — Getriebe rutscht kurz e63 AMG m157</a></li>
+        <li><b>PistonHeads — C63 AMG Buying Guide: Powertrain</b><a href="https://www.pistonheads.com/news/ph-buying-guide-contents/c63-amg-buying-guide-powertrain/31870" target="_blank" rel="noopener">pistonheads.com — C63 AMG buying guide: powertrain</a></li>
+        <li id="src-13"><b>AMG SPEEDSHIFT MCT - Mercedes-AMG Youtube</b><a href="https://youtu.be/NVBmUNqs30g?si=sZWFOqCrkkuXMIMg" target="_blank" rel="noopener">youtu.be/NVBmUNqs30g</a></li>
+        <li id="src-14"><b>Transmissions — Mercedes-Benz Canada, AMG performance</b><a href="https://www.mercedes-benz.ca/en/amg/performance/transmissions" target="_blank" rel="noopener">mercedes-benz.ca — AMG performance: transmissions</a></li>
+        <li id="src-15"><b>AMG® Technologies: Transmissions — RBM of Atlanta</b><a href="https://www.rbmofatlanta.com/mercedes-amg-technology/amg-technologies-transmissions/" target="_blank" rel="noopener">rbmofatlanta.com — AMG technologies: transmissions</a></li>
       </ol>
     </div>
   </section>
@@ -949,8 +956,8 @@ kbd{
 
 <footer>
   <div class="wrap foot">
-    <span class="label">Weird Gearboxes &nbsp;/&nbsp; AMG SpeedShift MCT</span>
-    <span class="label">722.9 &nbsp;·&nbsp; NAK &nbsp;·&nbsp; 725.0</span>
+    <span class="label">Weird Gearboxes &nbsp;/&nbsp; AMG SpeedShift MCT &nbsp;/&nbsp; by Bhavya Parekh</span>
+    <span class="label">Webpage theme design from <a href="https://getdesign.md/" target="_blank" rel="noopener">getdesign.md</a></span>
   </div>
 </footer>
 
@@ -1001,27 +1008,40 @@ kbd{
   /* ---------------------------------------------------------
      Missing-asset handling — placeholders instead of broken icons.
      Drop the real file into /assets and it just appears; no code change.
+     The extension in the markup is only a first guess: if it 404s we work
+     through the others, so fig-00-hero.png serves a slot written as .jpg.
      --------------------------------------------------------- */
+  var IMG_EXTS = ["jpg", "jpeg", "png", "webp", "avif"];
+
   function markMissing(img) {
     var host = img.closest(".figure, .cutaway");
     if (host) { host.classList.add("is-missing"); }
   }
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    if (dot === -1) { markMissing(img); return; }
+    var base = src.slice(0, dot);
+    // Extensions not yet attempted for this element, in IMG_EXTS order.
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { markMissing(img); return; }
+    tried.push(next);
+    img.src = base + "." + next;
+  }
   document.querySelectorAll(".figure img, .cutaway img").forEach(function (img) {
-    img.addEventListener("error", function () { markMissing(img); });
+    img.addEventListener("error", function () { tryNextExt(img); });
     // Already failed before this script ran, or is a 0-byte/undecodable file.
-    if (img.complete && img.naturalWidth === 0) { markMissing(img); }
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
   });
 
-  var audioBlock = document.getElementById("audioBlock");
-  var audioEl = document.getElementById("mctAudio");
-  if (audioEl && audioBlock) {
-    audioEl.addEventListener("error", function () { audioBlock.classList.add("is-missing"); });
-    // Belt and braces over http(s); skipped on file:// where fetch always fails.
-    if (/^https?:$/.test(window.location.protocol)) {
-      fetch(audioEl.getAttribute("src"), { method: "HEAD" })
-        .then(function (res) { if (!res.ok) { audioBlock.classList.add("is-missing"); } })
-        .catch(function () { audioBlock.classList.add("is-missing"); });
-    }
+  /* Opening a shared #src-N link directly: the browser scrolls before the
+     images above have laid out, so it lands short. Re-aim once loaded. */
+  if (/^#src-\d+$/.test(window.location.hash)) {
+    window.addEventListener("load", function () {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView(); }
+    });
   }
 
   /* ---------------------------------------------------------
@@ -1030,25 +1050,24 @@ kbd{
      x/y here once the real cutaway image is dropped in.
      --------------------------------------------------------- */
   var PARTS = [
-    { x: 14, y: 52, title: "Wet start-off clutch (NAK)",
+    { x: 17.6, y: 46.5, rx: 8, ry: 27, title: "Wet start-off clutch (NAK)",
       body: "The single compact multi-plate clutch that replaced the torque converter and its lock-up clutch. Runs in an oil bath that cools it through repeated hard launches, and carries around 60% less rotational inertia than a fluid-filled converter." },
-    { x: 25, y: 30, title: "Single input shaft",
-      body: "One shaft, not two. Despite the “Multi-Clutch” name, the MCT is not a dual-clutch box — engine torque enters through a single input shaft, exactly as on the 722.9 it was derived from." },
-    { x: 46, y: 46, title: "Planetary gearsets",
+    { x: 56.7, y: 32.8, rx: 16, ry: 16, title: "Planetary gearsets",
       body: "The proven, torque-tolerant planetary architecture of the 722.9, carried over untouched. AMG kept the part that worked and attacked only the component holding it back." },
-    { x: 58, y: 28, title: "Clutches K1 / K2 / K3",
-      body: "Three of the internal clutches that select each of the seven ratios. These — not a pair of input clutches — are what “Multi-Clutch Technology” actually refers to." },
-    { x: 66, y: 62, title: "Brakes B1 / B2 / B3 / BR",
-      body: "The brakes that hold planetary members stationary to establish each gear. Electronically orchestrated, they enabled multi-gear downshifts in a single move — 7th straight to 4th." },
-    { x: 34, y: 80, title: "Oil sump & main drain plug",
-      body: "With no converter to trap fluid, effectively all the oil drains through the main plug. The refill is temperature-critical: fill to the overflow level with the fluid inside a defined temperature window." },
-    { x: 20, y: 70, title: "Electrohydraulic control unit",
-      body: "Fully computer-controlled clutch engagement — the enabler for 100 ms shifts, the Zwischengas rev-matching blip, and RaceStart launch control, coordinated by the central AMG DRIVE UNIT." },
-    { x: 86, y: 50, title: "Output shaft",
-      body: "Drive leaves here for the propshaft — with a direct mechanical connection back to the crankshaft instead of a slipping fluid coupling." }
+    { x: 73.8, y: 26.3, rx: 9, ry: 18, title: "Clutches K1 / K2 / K3",
+      body: "Three of the internal clutches that select each of the seven ratios. These — not a pair of input clutches — are what “Multi-Clutch Technology” actually refers to.",
+      // Two extra pins for K2/K3 — surface only while this marker is active,
+      // each with its own small circular reveal alongside the group ellipse.
+      children: [ { x: 58.9, y: 16.9 }, { x: 37.2, y: 37.2 } ] },
+    { x: 41.3, y: 36, rx: 9, ry: 18, title: "Brakes B1 / B2 / B3 / BR",
+      body: "The brakes that hold planetary members stationary to establish each gear. Electronically orchestrated, they enabled multi-gear downshifts in a single move — 7th straight to 4th.",
+      children: [ { x: 47.5, y: 19.4 }, { x: 69, y: 12.1 } ] },
+    { x: 56.6, y: 66.9, rx: 13, ry: 13, title: "Electrohydraulic control unit",
+      body: "Fully computer-controlled clutch engagement — the enabler for 100 ms shifts, the Zwischengas rev-matching blip, and RaceStart launch control, coordinated by the central AMG DRIVE UNIT." }
   ];
 
   var stage = document.getElementById("cutawayStage");
+  var focusEl = document.getElementById("cutawayFocus");
   var titleEl = document.getElementById("cutawayTitle");
   var bodyEl = document.getElementById("cutawayBody");
   var listEl = document.getElementById("cutawayList");
@@ -1058,6 +1077,72 @@ kbd{
   var DEFAULT_TITLE = titleEl.textContent;
   var DEFAULT_BODY = bodyEl.textContent;
 
+  // The focus lens is a sharp copy of the same <img>, clipped to a soft
+  // ellipse — keep its background in sync with whatever src actually
+  // resolved (handles the extension-fallback swap above). A missing asset
+  // never fires a successful load, so the lens stays empty and inert.
+  var baseImg = stage.querySelector("img");
+  function syncFocusBg() {
+    focusEl.style.backgroundImage = 'url("' + baseImg.currentSrc + '")';
+  }
+  baseImg.addEventListener("load", syncFocusBg);
+  if (baseImg.complete && baseImg.naturalWidth > 0) { syncFocusBg(); }
+
+  // Drag-to-reposition tool: open the page with #edit-hotspots in the URL to
+  // turn the numbered markers draggable and show a live readout of their x/y
+  // percentages. Never active for a normal reader — everything below this
+  // check is skipped entirely otherwise.
+  var EDIT_MODE = location.hash.indexOf("edit-hotspots") !== -1;
+  var editPre;
+  if (EDIT_MODE) {
+    stage.classList.add("is-editing");
+    var editPanel = document.createElement("div");
+    editPanel.className = "editpanel";
+    editPanel.innerHTML =
+      "<h5>Edit mode — drag markers</h5>" +
+      "<pre></pre>" +
+      '<button type="button">Copy positions</button>' +
+      "<p>Drag each numbered marker onto its part. Parts with child pins (dashed, smaller) show them here too — drag those into place the same way. Copy the list above and send it back to bake in permanently — then remove <code>#edit-hotspots</code> from the URL and reload.</p>";
+    document.body.appendChild(editPanel);
+    editPre = editPanel.querySelector("pre");
+    editPanel.querySelector("button").addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(editPre.textContent);
+      }
+    });
+  }
+  function refreshEditPanel() {
+    if (!EDIT_MODE) { return; }
+    editPre.textContent = PARTS.map(function (p, i) {
+      var line = (i + 1) + ". " + p.title + "  →  x: " + p.x + ", y: " + p.y;
+      (p.children || []).forEach(function (c, j) {
+        line += "\n   ↳ child " + (j + 1) + ":  x: " + c.x + ", y: " + c.y;
+      });
+      return line;
+    }).join("\n");
+  }
+
+  // A child pin's own reveal is a small circle, not the parent's ellipse —
+  // just enough to pick out that one sub-component (e.g. K2 vs. K3). Percent
+  // of the stage's shorter side; radial-gradient's "circle" shape only
+  // accepts a <length> radius (no percentage), so this gets resolved to px
+  // against the stage's current size each time — "ellipse" is the one shape
+  // that takes percentages, which is why the parent lens above can use %.
+  var CHILD_RADIUS = 6;
+
+  // Union of the part's ellipse and one small circle per child pin. Stacked
+  // radial-gradients composite with normal source-over blending, so any
+  // point that's opaque in *any* layer ends up sharp — i.e. a true union.
+  function buildMask(part) {
+    var rect = stage.getBoundingClientRect();
+    var childPx = (CHILD_RADIUS / 100) * Math.min(rect.width, rect.height);
+    var layers = ["radial-gradient(ellipse " + part.rx + "% " + part.ry + "% at " + part.x + "% " + part.y + "%,#000 55%,transparent 100%)"];
+    (part.children || []).forEach(function (c) {
+      layers.push("radial-gradient(circle " + childPx + "px at " + c.x + "% " + c.y + "%,#000 55%,transparent 100%)");
+    });
+    return layers.join(",");
+  }
+
   function setActive(idx) {
     activeIdx = idx;
     buttons.forEach(function (b, i) {
@@ -1066,10 +1151,46 @@ kbd{
     if (idx === -1) {
       titleEl.textContent = DEFAULT_TITLE;
       bodyEl.textContent = DEFAULT_BODY;
+      stage.classList.remove("is-focusing");
     } else {
       titleEl.textContent = PARTS[idx].title;
       bodyEl.textContent = PARTS[idx].body;
+      var mask = buildMask(PARTS[idx]);
+      focusEl.style.maskImage = mask;
+      focusEl.style.webkitMaskImage = mask;
+      stage.classList.add("is-focusing");
     }
+  }
+
+  // Shared by main markers and their child pins: drags `coordObj` (a PARTS
+  // entry or one of its .children) by writing straight back into it, so
+  // refreshEditPanel() always reads the live position.
+  function makeDraggable(btn, coordObj, onDragMove) {
+    btn.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      btn.setPointerCapture(e.pointerId);
+      btn.classList.add("is-dragging");
+
+      function onMove(ev) {
+        var rect = stage.getBoundingClientRect();
+        var xPct = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+        var yPct = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+        coordObj.x = Math.round(xPct * 10) / 10;
+        coordObj.y = Math.round(yPct * 10) / 10;
+        btn.style.left = coordObj.x + "%";
+        btn.style.top = coordObj.y + "%";
+        if (onDragMove) { onDragMove(); }
+        refreshEditPanel();
+      }
+      function onUp() {
+        btn.releasePointerCapture(e.pointerId);
+        btn.classList.remove("is-dragging");
+        btn.removeEventListener("pointermove", onMove);
+        btn.removeEventListener("pointerup", onUp);
+      }
+      btn.addEventListener("pointermove", onMove);
+      btn.addEventListener("pointerup", onUp);
+    });
   }
 
   PARTS.forEach(function (part, i) {
@@ -1088,9 +1209,30 @@ kbd{
     btn.addEventListener("click", function () { setActive(i); });
     btn.addEventListener("mouseenter", function () { setActive(i); });
     btn.addEventListener("focus", function () { setActive(i); });
+    // Leaving the marker (not the whole stage) snaps straight back to the
+    // sharp resting image — no glide, no Escape needed.
+    btn.addEventListener("mouseleave", function () { setActive(-1); });
+    btn.addEventListener("blur", function () { setActive(-1); });
+
+    if (EDIT_MODE) { makeDraggable(btn, part, function () { setActive(i); }); }
 
     stage.appendChild(btn);
     buttons.push(btn);
+
+    // Extra pins for a grouped part (e.g. K2/K3 riding along with the K1/K2/K3
+    // marker) — always invisible markers, only their position feeds the focus
+    // lens's mask (buildMask). Draggable and dashed while EDIT_MODE is on.
+    (part.children || []).forEach(function (child) {
+      var kbtn = document.createElement("button");
+      kbtn.type = "button";
+      kbtn.className = "hotspot hotspot--child";
+      kbtn.style.left = child.x + "%";
+      kbtn.style.top = child.y + "%";
+      kbtn.setAttribute("aria-hidden", "true");
+      kbtn.tabIndex = -1;
+      if (EDIT_MODE) { makeDraggable(kbtn, child, function () { setActive(i); }); }
+      stage.appendChild(kbtn);
+    });
 
     // Mirror every hotspot into a plain list — readable on tiny screens
     // and the only UI if the image or JS positioning is unusable.
@@ -1098,6 +1240,8 @@ kbd{
     li.innerHTML = "<b>" + (i + 1) + ". " + part.title + "</b> " + part.body;
     listEl.appendChild(li);
   });
+
+  refreshEditPanel();
 
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && activeIdx !== -1) { setActive(-1); }
