@@ -21,6 +21,7 @@ One folder per post, each self-contained: the page and its assets travel togethe
 | No. | Post | Path |
 |---|---|---|
 | 01 | The AMG SpeedShift MCT — the automatic that threw away its torque converter | [`mercedes-mct/`](mercedes-mct/) |
+| 02 | The BMW SMG — a sequential gearbox that deserves more credit than it gets | [`bmw-smg/`](bmw-smg/) |
 
 ## Design
 

@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The BMW SMG — A Sequential Gearbox That Deserves More Credit</title>
+<meta name="description" content="How BMW's Sequential Manual Gearbox — a manual with the clutch pedal handed over to actuators — became one of the most divisive transmissions in M-car history.">
+<meta name="theme-color" content="#0B0B0B">
+<meta property="og:title" content="The BMW SMG — A Sequential Gearbox That Deserves More Credit">
+<meta property="og:description" content="How BMW's Sequential Manual Gearbox — a manual with the clutch pedal handed over to actuators — became one of the most divisive transmissions in M-car history.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Design tokens — DESIGN.md "Motorsport Livery"
+   ============================================================ */
+:root{
+  --primary:#F2F2F2;
+  --secondary:#8C8C8C;
+  --tertiary:#E10600;
+  --neutral:#0B0B0B;
+  --surface:#151515;
+  --on-primary:#0B0B0B;
+
+  --line:#2A2A2A;
+
+  --font-display:"Oswald","Arial Narrow","Helvetica Neue Condensed",Impact,system-ui,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --r-sm:0px;
+  --r-md:2px;
+  --r-lg:4px;
+
+  --s-sm:8px;
+  --s-md:16px;
+  --s-lg:32px;
+
+  --maxw:1280px;
+  --gutter:clamp(20px,5vw,64px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--neutral);
+  color:var(--primary);
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:var(--tertiary);text-decoration:none;border-bottom:1px solid rgba(225,6,0,.35)}
+a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
+:focus-visible{outline:2px solid var(--tertiary);outline-offset:3px}
+
+/* ============================================================
+   Reading progress
+   ============================================================ */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:transparent;z-index:100;pointer-events:none;
+}
+.progress__bar{
+  height:100%;width:0%;
+  background:var(--tertiary);
+  transform-origin:left center;
+}
+
+/* ============================================================
+   Shell
+   ============================================================ */
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-inline:var(--gutter);
+}
+
+.label{
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+
+/* ============================================================
+   Masthead / hero
+   ============================================================ */
+.masthead{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2.5) calc(var(--s-lg) * 2);
+  position:relative;
+}
+.masthead__kicker{
+  display:flex;align-items:center;gap:var(--s-md);
+  margin-bottom:var(--s-lg);
+}
+.masthead__home{
+  color:var(--secondary);
+  border-bottom:1px solid transparent;
+}
+.masthead__home:hover,.masthead__home:focus-visible{
+  color:var(--primary);
+  border-bottom-color:var(--tertiary);
+}
+.masthead__kicker::after{
+  content:"";height:1px;flex:1;background:var(--line);
+}
+.masthead__rule{
+  width:56px;height:3px;background:var(--tertiary);flex:none;
+}
+h1,.h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:0.02em;
+  line-height:1.02;
+  margin:0;
+  text-transform:uppercase;
+}
+.masthead h1{
+  font-size:clamp(2.2rem,6vw,5rem);
+  max-width:15ch;
+}
+.masthead h1 em{
+  font-style:normal;
+  display:block;
+  margin-top:0.5em;
+  font-size:clamp(0.95rem,1.7vw,1.5rem);
+  font-weight:500;
+  line-height:1.18;
+  letter-spacing:0.06em;
+  color:var(--secondary);
+  max-width:26ch;
+}
+.masthead__dek{
+  margin:var(--s-lg) 0 0;
+  max-width:52ch;
+  font-size:clamp(1rem,1.6vw,1.2rem);
+  line-height:1.55;
+  color:var(--primary);
+}
+.masthead__meta{
+  margin-top:calc(var(--s-lg) * 1.25);
+  display:flex;flex-wrap:wrap;gap:var(--s-md) var(--s-lg);
+}
+.masthead__meta span{position:relative}
+
+.masthead__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:end;
+}
+.masthead__art{align-self:end}
+.masthead__art .figure__frame{aspect-ratio:3/2}
+@media (max-width:900px){
+  .masthead__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+}
+
+/* ============================================================
+   Section grid — 60 / 40 text-to-media split, staggered per section
+   ============================================================ */
+.section{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2);
+}
+.section__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:start;
+}
+.section__text{grid-column:1;grid-row:1}
+.section__media{grid-column:2;grid-row:1}
+.section__text > *:first-child{margin-top:0}
+.section__text > *:last-child{margin-bottom:0}
+
+/* Staggered layout: alternate sections flip which side carries the text,
+   so the reading column zigzags left/right down the page instead of
+   pinning media to the right on every section. Text stays 60% either way.
+   grid-row is pinned explicitly on both — without it, auto-placement can
+   shove the reordered item into row 2 instead of sharing row 1. */
+.section--rev .section__grid{grid-template-columns:40fr 60fr}
+.section--rev .section__text{grid-column:2;grid-row:1}
+.section--rev .section__media{grid-column:1;grid-row:1}
+
+.section__media{
+  position:sticky;
+  top:calc(var(--s-lg) * 2);
+  display:flex;
+  flex-direction:column;
+  gap:var(--s-md);
+}
+
+@media (max-width:900px){
+  .section__grid,.section--rev .section__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+  .section__text,.section--rev .section__text,.section__media,.section--rev .section__media{grid-column:1;grid-row:auto}
+  .section__media{position:static;top:auto}
+}
+
+/* Media-less section (no image column) — table and prose run the full
+   width of .wrap instead of being clamped to the 60% reading column. */
+.section__text--wide p{max-width:none}
+
+/* ============================================================
+   Prose
+   ============================================================ */
+.section__num{
+  display:block;
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  color:var(--tertiary);
+  margin-bottom:var(--s-sm);
+}
+h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.75rem,3.4vw,2.5rem);
+  font-weight:700;
+  line-height:1.08;
+  text-transform:uppercase;
+  margin:0 0 var(--s-lg);
+  max-width:22ch;
+}
+p{margin:0 0 var(--s-md);max-width:68ch}
+.section__text p{font-size:1.02rem;line-height:1.72;color:#DCDCDC}
+.section__text strong{color:var(--primary);font-weight:600}
+.section__text em{color:var(--primary)}
+
+/* ============================================================
+   Tables (component roster, model/years roster)
+   ============================================================ */
+.table-wrap{
+  margin:0 0 var(--s-md);
+  overflow-x:auto;
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+}
+table{
+  width:100%;
+  min-width:440px;
+  border-collapse:collapse;
+  background:var(--surface);
+}
+thead th{
+  text-align:left;
+  padding:12px 16px;
+  font-family:var(--font-display);
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  color:var(--secondary);
+  border-bottom:2px solid var(--tertiary);
+  white-space:nowrap;
+}
+tbody td{
+  padding:14px 16px;
+  border-bottom:1px solid var(--line);
+  font-size:0.9rem;
+  line-height:1.6;
+  color:#DCDCDC;
+  vertical-align:top;
+}
+tbody tr:last-child td{border-bottom:none}
+tbody td:first-child{
+  font-family:var(--font-display);
+  font-weight:600;
+  letter-spacing:0.02em;
+  color:var(--primary);
+  white-space:nowrap;
+}
+
+/* ============================================================
+   Stat callouts
+   ============================================================ */
+.stat{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--tertiary);
+  border-radius:var(--r-lg);
+  padding:24px;
+}
+.stat__value{
+  font-family:var(--font-display);
+  font-size:clamp(2.4rem,5.2vw,3.4rem);
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:0.01em;
+  color:var(--primary);
+  display:block;
+}
+.stat__value small{
+  font-size:0.38em;
+  letter-spacing:0.08em;
+  color:var(--secondary);
+  margin-left:6px;
+}
+.stat__label{
+  display:block;
+  margin-top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+.stat__note{
+  margin:var(--s-sm) 0 0;
+  font-size:0.85rem;
+  line-height:1.5;
+  color:var(--secondary);
+  max-width:none;
+}
+.stat-grid{display:grid;gap:var(--s-md)}
+@media (min-width:520px) and (max-width:900px){
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+
+/* Pull quote */
+.pullquote{
+  background:transparent;
+  border:none;
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+  padding:var(--s-lg) 0;
+  margin:0;
+}
+.pullquote p{
+  font-family:var(--font-display);
+  font-weight:500;
+  font-size:clamp(1.2rem,2.4vw,1.6rem);
+  line-height:1.25;
+  letter-spacing:0.01em;
+  color:var(--primary);
+  margin:0;
+  text-transform:uppercase;
+}
+
+/* ============================================================
+   Figures + graceful "coming soon" placeholders
+   ============================================================ */
+.figure{margin:0}
+.figure__frame{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+.figure__frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.figure__ph{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--s-sm);
+  text-align:center;
+  padding:var(--s-lg);
+  background:var(--surface);
+  border:1px dashed var(--line);
+}
+.figure__ph .label{color:var(--secondary)}
+.figure__ph-file{
+  font-family:var(--font-body);
+  font-size:0.78rem;
+  color:#5E5E5E;
+  word-break:break-all;
+}
+/* JS marks the frame when the asset fails to load */
+.figure.is-missing img{display:none}
+.figure.is-missing .figure__ph{display:flex}
+.figure figcaption{
+  margin-top:var(--s-sm);
+  font-size:0.82rem;
+  line-height:1.5;
+  color:var(--secondary);
+}
+/* Credit line under every image — sits below the caption, quieter than it */
+.figure__src{
+  display:block;
+  margin-top:var(--s-sm);
+  padding-top:var(--s-sm);
+  border-top:1px solid var(--line);
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#5E5E5E;
+}
+/* The reference number links down to the matching entry in Sources */
+.figure__src a{
+  color:var(--secondary);
+  border-bottom-color:transparent;
+}
+.figure__src a:hover,.figure__src a:focus-visible{
+  color:var(--tertiary);
+  border-bottom-color:var(--tertiary);
+}
+
+/* ============================================================
+   Interactive cutaway
+   ============================================================ */
+.cutaway{margin:0;overflow-anchor:none}
+.cutaway__stage{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  aspect-ratio:16/10;
+}
+.cutaway__stage img{
+  width:100%;height:100%;
+  object-fit:cover;
+  transition:filter .35s ease;
+}
+.cutaway__stage.is-focusing img{filter:blur(7px)}
+.cutaway.is-missing img{display:none}
+.cutaway.is-missing .figure__ph{display:flex}
+
+/* Hover-to-focus lens: a sharp copy of the same image, clipped to a soft
+   region over the hovered part. The base image blurs via .is-focusing above;
+   this layer supplies the sharp patch, built in JS (buildMask), so no
+   per-label images are needed. */
+.cutaway__focus{
+  position:absolute;inset:0;z-index:1;pointer-events:none;opacity:0;
+  background-size:cover;background-position:center;background-repeat:no-repeat;
+  transition:opacity .3s ease;
+}
+.cutaway__stage.is-focusing .cutaway__focus{opacity:1}
+
+/* Leader line from a marker to its (separated) focus target — same x on
+   both ends, so this is always a straight vertical, only drawn while that
+   part is active. */
+.cutaway__line{
+  position:absolute;z-index:1;pointer-events:none;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(225,6,0,.55) 20%,rgba(225,6,0,.55) 80%,transparent);
+  opacity:0;
+  transition:opacity .3s ease;
+}
+.cutaway__stage.is-focusing .cutaway__line{opacity:1}
+
+.hotspot{
+  position:absolute;
+  width:30px;height:30px;
+  margin:-15px 0 0 -15px;
+  padding:0;
+  border:1px solid var(--tertiary);
+  border-radius:50%;
+  background:rgba(11,11,11,.72);
+  color:var(--primary);
+  font-family:var(--font-display);
+  font-size:0.72rem;
+  letter-spacing:0.04em;
+  line-height:28px;
+  text-align:center;
+  cursor:pointer;
+  transition:background .18s ease,transform .18s ease;
+  z-index:2;
+}
+.hotspot::after{
+  content:"";
+  position:absolute;inset:-9px;
+  border-radius:50%;
+  border:1px solid rgba(225,6,0,.28);
+  animation:pulse 2.6s ease-out infinite;
+}
+@keyframes pulse{
+  0%{transform:scale(.7);opacity:.9}
+  70%{transform:scale(1.25);opacity:0}
+  100%{opacity:0}
+}
+.hotspot:hover,.hotspot:focus-visible,.hotspot[aria-expanded="true"]{
+  background:var(--tertiary);
+  color:var(--on-primary);
+  transform:scale(1.12);
+}
+.hotspot[aria-expanded="true"]::after{animation:none;opacity:0}
+
+/* The focus target — the actual center of the blur-clear ellipse on the
+   part itself. Always invisible to a normal reader; only the marker (the
+   numbered .hotspot above) is ever shown to them, offset away from it on
+   the same vertical line so the number never sits on top of — and hides —
+   the part it's revealing. */
+.hotspot--target{
+  width:16px;height:16px;margin:-8px 0 0 -8px;
+  opacity:0;pointer-events:none;
+}
+.hotspot--target::after{display:none}
+
+/* Temporary drag-to-reposition tool — only active with #edit-hotspots in the
+   URL, so a normal reader never loads or sees any of this. */
+.cutaway__stage.is-editing .hotspot{cursor:grab}
+.cutaway__stage.is-editing .hotspot.is-dragging{cursor:grabbing;transform:scale(1.12)}
+.cutaway__stage.is-editing .hotspot::after{display:none}
+.cutaway__stage.is-editing .hotspot--target{opacity:1;pointer-events:auto;border-style:dashed}
+
+.editpanel{
+  position:fixed;right:var(--s-md);bottom:var(--s-md);z-index:1000;
+  width:300px;max-width:calc(100vw - 32px);
+  background:var(--surface);border:1px solid var(--tertiary);
+  border-radius:var(--r-lg);padding:16px;
+  font-family:var(--font-body);
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+}
+.editpanel h5{
+  margin:0 0 var(--s-sm);
+  font-family:var(--font-display);font-size:0.78rem;
+  letter-spacing:0.12em;text-transform:uppercase;color:var(--tertiary);
+}
+.editpanel pre{
+  margin:0 0 var(--s-sm);max-height:220px;overflow:auto;
+  font-family:monospace;font-size:0.76rem;line-height:1.6;color:#DCDCDC;
+  background:var(--neutral);border:1px solid var(--line);
+  border-radius:var(--r-md);padding:8px;white-space:pre-wrap;
+}
+.editpanel button{
+  font-family:var(--font-display);font-size:0.72rem;letter-spacing:0.08em;
+  text-transform:uppercase;background:var(--tertiary);color:var(--on-primary);
+  border:none;border-radius:var(--r-md);padding:8px 14px;cursor:pointer;
+}
+.editpanel button:active{transform:scale(0.97)}
+.editpanel p{margin:var(--s-sm) 0 0;font-size:0.78rem;line-height:1.5;color:var(--secondary)}
+.editpanel code{color:var(--primary)}
+
+.cutaway__readout{
+  border:1px solid var(--line);
+  border-top:none;
+  border-radius:0 0 var(--r-lg) var(--r-lg);
+  background:var(--surface);
+  padding:20px 24px;
+  /* Fixed, not min — the box must never resize on hover, since it sits
+     inside a position:sticky column (see mercedes-mct for the full
+     rationale on why a size change here can cause a hover feedback loop). */
+  height:280px;
+  overflow-y:auto;
+}
+.cutaway__readout .label{display:block;margin-bottom:var(--s-sm)}
+.cutaway__readout h4{
+  font-family:var(--font-display);
+  font-size:1.15rem;
+  font-weight:600;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  margin:0 0 var(--s-sm);
+  color:var(--primary);
+}
+.cutaway__readout p{
+  margin:0;
+  font-size:0.9rem;
+  line-height:1.6;
+  color:var(--secondary);
+  max-width:none;
+}
+.cutaway__stage{border-radius:var(--r-lg) var(--r-lg) 0 0}
+.cutaway__hint{
+  margin-top:var(--s-sm);
+  font-size:0.78rem;
+  color:#5E5E5E;
+}
+
+/* Fallback part list — always available, and the only UI if JS is off */
+.cutaway__list{
+  margin:var(--s-md) 0 0;
+  padding:0;
+  list-style:none;
+  display:grid;
+  gap:var(--s-sm);
+}
+.cutaway__list li{
+  padding-left:0;
+  margin:0;
+  font-size:0.86rem;
+  line-height:1.5;
+  color:var(--secondary);
+}
+.cutaway__list b{color:var(--primary);font-weight:600}
+
+kbd{
+  font-family:var(--font-body);
+  font-size:0.72rem;
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:1px 5px;
+  color:var(--secondary);
+}
+
+/* On phones the markers crowd each other — drop them and lead with the
+   plain part list, which carries exactly the same information. */
+@media (min-width:561px){
+  .cutaway__list,.cutaway__list-label{display:none}
+}
+@media (max-width:560px){
+  .cutaway__hint,.hotspot,.cutaway__readout{display:none}
+  .cutaway__stage{border-radius:var(--r-lg)}
+  .cutaway__list-label{display:block;margin-top:var(--s-lg)}
+  .cutaway__list{
+    margin-top:var(--s-md);
+    border-top:1px solid var(--line);
+  }
+  .cutaway__list li{
+    padding:var(--s-md) 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cutaway__list b{display:block;margin-bottom:4px}
+}
+
+/* ============================================================
+   Sources
+   ============================================================ */
+.sources{padding-block:calc(var(--s-lg) * 2)}
+.sources ol{
+  margin:0;padding:0;list-style:none;
+  counter-reset:src;
+  display:grid;
+  gap:var(--s-md);
+}
+@media (min-width:900px){
+  .sources ol{grid-template-columns:1fr 1fr;gap:var(--s-md) var(--s-lg)}
+}
+.sources li{
+  counter-increment:src;
+  position:relative;
+  padding:var(--s-md) 0 var(--s-md) 42px;
+  border-top:1px solid var(--line);
+  font-size:0.88rem;
+  line-height:1.6;
+  color:var(--secondary);
+  scroll-margin-top:var(--s-lg);
+}
+/* Arrived here from an image credit — mark which entry was meant */
+.sources li:target{border-top-color:var(--tertiary)}
+.sources li:target b{color:var(--tertiary)}
+.sources li::before{
+  content:counter(src,decimal-leading-zero);
+  position:absolute;left:0;top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.12em;
+  color:var(--tertiary);
+}
+.sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
+.sources li a{
+  display:inline-block;
+  font-size:0.8rem;
+  word-break:break-word;
+  border-bottom-color:transparent;
+  color:#7A7A7A;
+}
+.sources li a::before{content:"↗ ";color:var(--tertiary)}
+.sources li a:hover,.sources li a:focus-visible{color:var(--tertiary);border-bottom-color:var(--tertiary)}
+
+/* ============================================================
+   Foot
+   ============================================================ */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:var(--s-lg);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s-md);
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.is-in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.09s}
+.reveal[data-delay="2"]{transition-delay:.18s}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .hotspot::after{animation:none}
+  .cutaway__stage img,.cutaway__focus{transition:none}
+}
+/* Never hide content if JS never runs */
+.no-js .reveal{opacity:1;transform:none}
+
+/* Above the fold: animate on paint, don't wait for the observer to boot. */
+.rise{
+  opacity:0;
+  animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.rise[data-delay="1"]{animation-delay:.12s}
+.rise[data-delay="2"]{animation-delay:.24s}
+@keyframes rise{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;animation:none}
+}
+</style>
+</head>
+
+<body class="no-js">
+
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__kicker rise">
+      <span class="masthead__rule"></span>
+      <a class="label masthead__home" href="../">Weird Gearboxes</a>
+    </div>
+
+    <div class="masthead__grid">
+      <div class="masthead__lede">
+        <h1 class="rise" data-delay="1">The BMW SMG <em>— A sequential gearbox that deserves more credit than it gets</em></h1>
+        <p class="masthead__dek rise" data-delay="2">At the turn of the millennium, BMW set out to build its own "automatic" transmission for its M-division cars — one that promised rapid, sporty shifts with the convenience of losing the third pedal. But did it actually work?</p>
+        <div class="masthead__meta rise" data-delay="2">
+          <span class="label">BMW M</span>
+          <span class="label">SMG &nbsp;·&nbsp; Sequential Manual Gearbox</span>
+        </div>
+      </div>
+
+      <figure class="figure masthead__art rise" data-delay="2">
+        <div class="figure__frame">
+          <img src="assets/fig-00-hero.jpg" alt="The BMW SMG sequential manual gearbox and its shift lever.">
+          <div class="figure__ph">
+            <span class="label">Lead image coming soon</span>
+            <span class="figure__ph-file">assets/fig-00-hero.jpg or .png</span>
+          </div>
+        </div>
+        <figcaption><span class="figure__src">Image source: <a href="#src-2">[2]</a></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">01</span>
+        <h2>What is SMG?</h2>
+        <p>Traditionally, automatic transmissions had always been known as slush boxes because of their torque converter. Some manufacturers, such as Mercedes, chose to replace the torque converter itself with a wet clutch while keeping the rest of the automatic largely intact. BMW took a different path entirely.</p>
+        <p>In 1996, BMW coined the concept of the <strong>Sequential Manual Gearbox</strong> — better known as the SMG. The first iteration, SMG I, was developed jointly by BMW, Getrag, and Sachs, drawing on the technology BMW used in its Williams Formula One cars of the era.</p>
+        <p>The idea was elegantly simple — so simple that manufacturers kept using variations of it to build cheap automatics well into the 2020s. Take a regular manual gearbox and bolt on solenoids and hydraulic actuators to do the work a driver's hands and left foot normally would: selecting gears and operating the clutch. Everything a human does in a manual car is handed over to actuators and orchestrated by a computer, promising shifts that are uniform, precise, and — most importantly — fast.</p>
+        <p>SMG I made its series-production debut in the E36 M3, one of the first road cars to carry a sequential gearbox previously reserved for motorsport. It was, however, a rough first attempt: relatively fragile and unreliable in service, with owners often reporting costly repairs.</p>
+        <p>The SMG truly became famous — or infamous — in its second iteration, SMG II, which debuted in the 2001 E46 M3 alongside its legendary S54 straight-six. It stayed in production until the end of the E46 M3, after which BMW replaced it with a far more sophisticated dual-clutch transmission from the E90/E92 M3 onwards. The E46 M3 CSL, notably, reportedly ran a different, improved version of the SMG II software compared to the standard car.</p>
+        <p>A third and final version, SMG III, followed in the E60 M5 and E63/E64 M6, remaining in service until those cars ended production in 2010. These cars were built around their own piece of motorsport heritage — the F1-derived S85 V10 — and here too the SMG drew criticism for marring yet another extraordinary engine. Only in the US could buyers sidestep it: the manual version of the M5 and M6 was offered exclusively in the American market.</p>
+      </div>
+
+      <div class="section__media">
+        <figure class="figure reveal" data-delay="1">
+          <div class="figure__frame">
+            <img src="assets/fig-01-smg-generations.jpg" alt="The three generations of BMW's SMG gearbox — SMG I, SMG II, and SMG III — side by side.">
+            <div class="figure__ph">
+              <span class="label">Image coming soon</span>
+              <span class="figure__ph-file">assets/fig-01-smg-generations.jpg or .png</span>
+            </div>
+          </div>
+          <figcaption>Evolution of the SMG gearbox: SMG I on the left, SMG II in the middle, and SMG III on the right.<span class="figure__src">Image source: <a href="#src-3">[3]</a>, <a href="#src-11">[11]</a>, <a href="#src-12">[12]</a></span></figcaption>
+        </figure>
+        <blockquote class="pullquote reveal" data-delay="2">
+          <p>Everything a human does in a manual car is handed over to actuators — orchestrated by a computer.</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ------------------------------------------------------------ -->
+  <section class="section section--rev">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">02</span>
+        <h2>What was SMG made of?</h2>
+        <p>At its core, the SMG is nothing more exotic than a manual transmission with the clutch pedal removed and replaced by hydraulic actuation. Gear changes are carried out by electric and hydraulic actuation of both the gearbox's internal selector forks and a conventional single-disc dry clutch — not by a driver-operated pedal. Unlike the go-to automatic of the time — the torque-converter automatic, which at best merely lets you shift manually (think Porsche and Audi's Tiptronic, or BMW's own Steptronic) — the SMG dispenses with the torque converter entirely, keeping the whole unit lighter and retaining a true mechanical clutch and manual gearset inside. The computer simply handles clutch actuation and gear selection electronically in response to driver input.</p>
+        <p>The SMG II, built on the Getrag S6S420G manual gearbox, brought this together with a dedicated set of hardware:</p>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Component</th><th>Role</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>SMG control unit (Siemens)</td><td>Gathers sensor data (engine speed, throttle position, brake input, steering angle, wheel speed, temperatures, and more) and drives the clutch solenoid valve along with the upshift and downshift actuators</td></tr>
+              <tr><td>DME</td><td>The brain that decides exactly <em>when</em> to shift</td></tr>
+              <tr><td>SMG CAN bus</td><td>The line between the DME and the SMG control unit: sensor data flows from the SMG unit to the DME, shift decisions flow back from the DME to the SMG unit, and the DME then bridges it all onto the rest of the car's network</td></tr>
+              <tr><td>Hydraulic unit</td><td>Supplies and directs hydraulic pressure for clutch and gear actuation</td></tr>
+              <tr><td>Gearbox actuators / shifting cylinders</td><td>Physically moves the internal selector forks</td></tr>
+              <tr><td>Clutch slave cylinder</td><td>Fitted with a contactless linear displacement sensor to physically actuate the clutch</td></tr>
+              <tr><td>Clutch solenoid valve</td><td>Actuates and controls the clutch slave cylinder</td></tr>
+              <tr><td>Shift lever module</td><td>Driver input for gear selection, with shift lock</td></tr>
+              <tr><td>Steering wheel paddle switches</td><td>Driver input for sequential up/down shifts</td></tr>
+              <tr><td>DRIVELOGIC control system</td><td>Governs shift behaviour and aggressiveness</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>A useful way to picture the division of labour: the SMG control unit sits next to the DME and does the physical work — hydraulic control and sensor gathering — while the DME does the thinking, computing the actual shift commands.</p>
+        <p>The DRIVELOGIC feature was introduced with the SMG and has survived, in spirit, all the way into today's M cars. It offers six selectable settings that govern the transmission's entire personality. At the lower settings, the gearbox pulls away in a taller gear (second instead of first), shifts earlier (around 2,500 rpm), and reaches top gear sooner to favour efficiency, with gentle, unhurried shifts. At the higher settings, it holds each gear longer, lets the revs climb further before changing (shift points moving up toward 3,500 rpm and beyond under hard acceleration), favours lower gears for a sharper, on-your-toes response, and cracks off both upshifts and downshifts far more aggressively.</p>
+        <p>In manual mode, the highest DRIVELOGIC setting — which stays locked until you switch off the stability control — lets the gearbox fire shifts as quickly as 80 milliseconds, sending noticeably sharp jolts through the drivetrain under hard acceleration.</p>
+        <p>Downshifts have their own story. On earlier cars, the driver had to blip the throttle themselves on the way down — just as you would in a manual — to bring engine and wheel speed into harmony and avoid a violent lurch. A later update added automated rev-matching via double-declutching: the electro-hydraulic system blips the throttle on your behalf to synchronise engine speed with the transmission's input speed, and it does so faster and far more consistently than any human could manage.</p>
+        <p>The system also builds in a few safety nets. If the car slows to a stop and you forget to shift down, it automatically drops to first or second for you. It won't allow an upshift-less pull to over-rev and damage the engine — though, tellingly, it also won't upshift on your behalf if you simply forget to, keeping you honest and involved.</p>
+      </div>
+
+      <div class="section__media">
+        <!-- Interactive cutaway -->
+        <figure class="cutaway reveal" data-delay="1" id="cutaway">
+          <div class="cutaway__stage" id="cutawayStage">
+            <img src="assets/smg-cutaway.png" alt="Cutaway of the BMW SMG transmission with labelled internal components.">
+            <div class="cutaway__focus" id="cutawayFocus" aria-hidden="true"></div>
+            <div class="cutaway__line" id="cutawayLine" aria-hidden="true"></div>
+            <div class="figure__ph">
+              <span class="label">Cutaway coming soon</span>
+              <span class="figure__ph-file">assets/smg-cutaway.jpg or .png</span>
+            </div>
+            <!-- hotspots injected here by JS -->
+          </div>
+          <figcaption><span class="figure__src">Image source: <a href="#src-9">[9]</a></span></figcaption>
+          <div class="cutaway__readout" id="cutawayReadout" aria-live="polite">
+            <span class="label">Interactive cutaway</span>
+            <h4 id="cutawayTitle">Explore the gearbox</h4>
+            <p id="cutawayBody">Hover or tap a marker to see what each part does.</p>
+          </div>
+          <p class="cutaway__hint">Tap a numbered marker · use <kbd>Tab</kbd> and <kbd>Enter</kbd> to step through them.</p>
+          <span class="label cutaway__list-label">Inside the gearbox</span>
+          <ul class="cutaway__list" id="cutawayList"></ul>
+        </figure>
+
+        <figure class="figure reveal" data-delay="2">
+          <div class="figure__frame">
+            <img src="assets/fig-02-drivelogic.jpg" alt="BMW DRIVELOGIC settings, governing the SMG's shift behaviour from gentle to aggressive.">
+            <div class="figure__ph">
+              <span class="label">Image coming soon</span>
+              <span class="figure__ph-file">assets/fig-02-drivelogic.jpg or .png</span>
+            </div>
+          </div>
+          <figcaption>DRIVELOGIC, first introduced with SMG, is still part of modern BMW M cars.<span class="figure__src">Image source: <a href="#src-3">[3]</a>, <a href="#src-10">[10]</a></span></figcaption>
+        </figure>
+
+        <div class="stat reveal" data-delay="2">
+          <span class="stat__value">80<small>ms</small></span>
+          <span class="stat__label">Fastest shift time</span>
+          <p class="stat__note">In manual mode, at the top DRIVELOGIC setting — locked until stability control is switched off.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap">
+      <div class="section__text section__text--wide reveal">
+        <span class="section__num">03</span>
+        <h2>When and where was SMG used?</h2>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Chassis / model</th><th>Engine</th><th>Transmission</th><th>Denomination</th><th>Introduced</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>E36 M3</td><td>S50B32</td><td>SMG I (not offered in the US)</td><td>GS6S420BG</td><td>10/1996</td></tr>
+              <tr><td>E46 M3</td><td>S54B32O0</td><td>SMG II</td><td>GS6S420BG</td><td>03/2001 · 06/2003</td></tr>
+              <tr><td>E46 3 Series</td><td>—</td><td>5-Speed SMG</td><td>GS5S31BZ</td><td>ca. 2002</td></tr>
+              <tr><td>E85 Z4</td><td>M54B25 / M54B30</td><td>6-Speed SMG</td><td>GS6S37BZ</td><td>04/2003</td></tr>
+              <tr><td>E60/E61 525i &amp; 530i</td><td>M54B25 / M54B30, N52B30O0</td><td>6-Speed SMG</td><td>GS6S37BZ</td><td>09/2003</td></tr>
+              <tr><td>E60/E61 545i &amp; 550i, E63/E64 645Ci &amp; 650i</td><td>N62B44O0, N62B48O1</td><td>6-Speed SMG</td><td>GS6S53BZ</td><td>09/2003</td></tr>
+              <tr><td>E60 M5, E63/E64 M6</td><td>S85B50O0</td><td>SMG III</td><td>GS7S47BG</td><td>09/2005</td></tr>
+              <tr><td>E89 Z4 (non-M)</td><td>N54B30O0</td><td>Double-clutch transmission (DCT) — SMG's successor</td><td>GS7D36SG</td><td>05/2009</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>Alongside the M-car units, BMW also fitted a non-M sequential manual across its regular range: a five-speed built on a ZF gearbox with Magneti Marelli hardware (sold elsewhere as "Selespeed" across various Alfa Romeo, Fiat, Ferrari, and Maserati models), and the six-speed GS6S37BZ/GS6S53BZ, which found its way into the E85 Z4, E60/E61 5-series, and E63/E64 6-series before BMW moved on to dual-clutch technology towards the end of that decade.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ------------------------------------------------------------ -->
+  <section class="section section--rev">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">04</span>
+        <h2>Why are most people scared of it?</h2>
+        <p>The SMG leans entirely on a hydraulic pressure system to actuate its gear changes, and that system is its best-known weak point. Owners have consistently reported the unit struggling to hold hydraulic pressure over time, and putting it right usually means a rebuild — new seals, a new accumulator, and often the SMG pump/motor itself.</p>
+        <p>Running costs and repair bills are a genuine, ongoing consideration with these cars. In fact, the SMG is routinely flagged — right alongside the VANOS system and the rear subframe — as one of the three areas any prospective E46 M3 buyer should have inspected before handing over money. The earliest SMG I units carry an extra asterisk here, given their reputation for fragility and the scarcity of parts and support today. SMG III units, however, are touted to be considerably more reliable.</p>
+      </div>
+
+      <div class="section__media">
+        <blockquote class="pullquote reveal">
+          <p>SMG joins the list of things that can go terribly wrong on the BMWs of the 2000s — right alongside the well-known VANOS and subframe rust issues.</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">05</span>
+        <h2>The bittersweet experience of owning an SMG</h2>
+        <p>If you're even slightly plugged into the world of BMW — and M3s and M5s in particular — you'll know the SMG tends to get put in a bad light. And, honestly, not without reason. But there's a whole camp of owners who've learned to enjoy it, and once you're in that camp, the gearbox stops feeling terrifying and alien.</p>
+        <p>Ever since the early press coverage in the 2000s, reactions have been a mixed bag. This was first-of-its-kind technology in a production car, so it's fair to say it didn't arrive as a fully polished product. The shifting was often described as clunky and hesitant — as though someone with a fresh driver's licence were working the gears, except that someone was the car's own computer.</p>
+        <p>Steadily, though, owners worked out how to use it properly. Because at heart it's still a manual, you can't treat it like a full-blown automatic. The technique most owners land on is a deliberate lift off the throttle during a shift — exactly what you'd do in a manual car. That brief lift gives the control unit a little breathing room and smooths out the clunky, jerky character. It's easy to do in manual mode, where you're pulling the paddles yourself; in automatic mode, you have to anticipate when the car is about to change gear, ease off, and get back on the throttle as the clutch re-engages.</p>
+        <p>That said, not everyone agrees the lift-off is necessary — some argue it can even confuse the shift logic. That's because, like many automatics, the SMG adapts to its driver over time. The computer is constantly learning how you drive and tailoring its shift strategy to suit you. Which is exactly why the car can feel so alien when someone else gets behind the wheel: they can't predict the shifts, and the box no longer seems to be following anyone's inputs cleanly. A well-known fix is to flash and reset the DME software, wiping the old adaptations so the gearbox can quickly relearn a new owner's style.</p>
+        <p>Between the lift-off technique and the adaptation reset, one thing becomes clear: this was never going to be a gearbox you could simply jump into and treat like a perfect automatic. And maybe that's the real point of the SMG. It asks you to meet it halfway, to go through a short learning curve before it gives its best. For a lot of us, that's not a flaw to apologise for. It's exactly why the imperfect, characterful gearboxes of that era are worth loving.</p>
+      </div>
+
+      <div class="section__media">
+        <blockquote class="pullquote reveal">
+          <p>This was never going to be a gearbox you could simply jump into and treat like a perfect automatic.</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -------------------------------------------------------- -->
+  <section class="sources">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="section__num">06</span>
+        <h2>Sources</h2>
+      </div>
+      <ol class="reveal" data-delay="1">
+        <li id="src-1"><b>BimmerScan — "BMW E46 SMG"</b><a href="https://bimmerscan.com/bmw-e46-smg/" target="_blank" rel="noopener">bimmerscan.com/bmw-e46-smg</a></li>
+        <li id="src-2"><b>FCP Euro — "Rediscovering The BMW SMG Transmission: A Hidden Gem Or Obsolete Relic?"</b><a href="https://www.fcpeuro.com/blog/revisiting-the-bmw-smg-transmission" target="_blank" rel="noopener">fcpeuro.com — rediscovering the BMW SMG transmission</a></li>
+        <li id="src-3"><b>Greg Wilson, "Looking back to 2002 with BMW's SMG – Sequential Manual Gearbox," originally published on canadiandriver.com</b><a href="https://eng.kaps.cz/bmw-smg-gearbox-1011" target="_blank" rel="noopener">eng.kaps.cz — BMW SMG gearbox, reproduced</a></li>
+        <li><b>Reddit, r/BMW — "SMG E46 M3 owners what's your opinion on the transmission?"</b><a href="https://www.reddit.com/r/BMW/comments/6xzovy/smg_e46_m3_owners_whats_your_opinion_on_the/" target="_blank" rel="noopener">reddit.com/r/BMW — SMG E46 M3 owner opinions</a></li>
+        <li id="src-5"><b>SMG Society — Model Overview pages</b><a href="https://www.smgsociety.com/" target="_blank" rel="noopener">smgsociety.com</a></li>
+        <li id="src-6"><b>BMW Doctor - Is The **BMW SMG Transmission** The WORST TRANSMISSION Ever Made ??</b><a href="https://youtu.be/2eSPqMh2Vaw?si=euVGV2lWouLM3TS1" target="_blank" rel="noopener">youtu.be/2eSPqMh2Vaw</a></li>
+        <li><b>M3nameisjosh - The E46 M3 SMG Transmission isn't THAT bad!</b><a href="https://youtu.be/TJfmk7tNZ8o?si=AjgKiym2oSl0s6Jd" target="_blank" rel="noopener">youtu.be/TJfmk7tNZ8o</a></li>
+        <li id="src-8"><b>MTechGuy</b><a href="https://www.youtube.com/@MTechGuy" target="_blank" rel="noopener">youtube.com/@MTechGuy</a></li>
+        <li id="src-9"><b>M5Board — BMW M5 Forum</b><a href="https://www.m5board.com/" target="_blank" rel="noopener">m5board.com</a></li>
+        <li id="src-10"><b>BMW New Zealand</b><a href="https://www.bmw.co.nz/en/index.html" target="_blank" rel="noopener">bmw.co.nz</a></li>
+        <li id="src-11"><b>BMW Group PressClub China</b><a href="https://www.press.bmwgroup.com/china/" target="_blank" rel="noopener">press.bmwgroup.com/china</a></li>
+        <li id="src-12"><b>Refined Performance - BMW E60 M5 Carbon Fiber Shifter Console Wrap DIY...kinda</b><a href="https://youtu.be/StuaGGqUEUg?si=VgpvgZUFipRDqCI9" target="_blank" rel="noopener">youtu.be/StuaGGqUEUg</a></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="label">Weird Gearboxes &nbsp;/&nbsp; BMW SMG &nbsp;/&nbsp; by Bhavya Parekh</span>
+    <span class="label">Webpage theme design from <a href="https://getdesign.md/" target="_blank" rel="noopener">getdesign.md</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  document.body.classList.remove("no-js");
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------------
+     Scroll-triggered reveals
+     --------------------------------------------------------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------
+     Reading progress
+     --------------------------------------------------------- */
+  var bar = document.getElementById("progressBar");
+  var ticking = false;
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct * 100)).toFixed(2) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+  updateProgress();
+
+  /* ---------------------------------------------------------
+     Missing-asset handling — placeholders instead of broken icons.
+     Drop the real file into /assets and it just appears; no code change.
+     The extension in the markup is only a first guess: if it 404s we work
+     through the others, so fig-00-hero.png serves a slot written as .jpg.
+     --------------------------------------------------------- */
+  var IMG_EXTS = ["jpg", "jpeg", "png", "webp", "avif"];
+
+  function markMissing(img) {
+    var host = img.closest(".figure, .cutaway");
+    if (host) { host.classList.add("is-missing"); }
+  }
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    if (dot === -1) { markMissing(img); return; }
+    var base = src.slice(0, dot);
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { markMissing(img); return; }
+    tried.push(next);
+    img.src = base + "." + next;
+  }
+  document.querySelectorAll(".figure img, .cutaway img").forEach(function (img) {
+    img.addEventListener("error", function () { tryNextExt(img); });
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
+  });
+
+  /* Opening a shared #src-N link directly: the browser scrolls before the
+     images above have laid out, so it lands short. Re-aim once loaded. */
+  if (/^#src-\d+$/.test(window.location.hash)) {
+    window.addEventListener("load", function () {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView(); }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Interactive cutaway hotspots
+     Percentages are relative to the cutaway image box; adjust
+     x/y here once the real cutaway image is dropped in — or open
+     the page with #edit-hotspots to drag them into place live.
+     --------------------------------------------------------- */
+  // x/y/rx/ry place the focus target — the ellipse actually revealed on
+  // the part. labelY places the visible numbered marker on that *same* x,
+  // offset clear of the ellipse so the badge never sits on top of (and
+  // hides) the part it's pointing at.
+  // Ordered left-to-right by x so the marker numbers read across the image.
+  var PARTS = [
+    { x: 37.4, y: 27.8, rx: 18, ry: 16, labelY: 5.6, title: "Hydraulic Shifting Cylinders",
+      body: "The hydraulic cylinders that physically move the internal selector forks — the SMG's stand-in for a driver's hand on the shift lever. This assembly also covers the pressure control valves that meter hydraulic force to each cylinder and the transmission position sensors that confirm which gear has actually been selected." },
+    { x: 46, y: 69.1, rx: 9, ry: 7, labelY: 91.3, title: "Clutch Solenoid Valve",
+      body: "Controls the hydraulic pressure to the clutch slave cylinder on command from the SMG control unit — the direct link between an electronic shift decision and the clutch physically engaging or disengaging." },
+    { x: 48.3, y: 54.6, rx: 10, ry: 14, labelY: 16.7, title: "Clutch Slave Cylinder",
+      body: "This is what replaces your left foot. Fitted with a contactless linear displacement sensor, it actuates the clutch on command from the hydraulic unit." },
+    { x: 53.5, y: 74.8, rx: 8, ry: 24, labelY: 43.5, title: "Hydraulic Unit",
+      body: "Supplies and directs the hydraulic pressure that actuates both the clutch and the gear selectors — the SMG's best-known weak point over time." }
+  ];
+
+  var stage = document.getElementById("cutawayStage");
+  var focusEl = document.getElementById("cutawayFocus");
+  var lineEl = document.getElementById("cutawayLine");
+  var titleEl = document.getElementById("cutawayTitle");
+  var bodyEl = document.getElementById("cutawayBody");
+  var listEl = document.getElementById("cutawayList");
+  var buttons = [];
+  var activeIdx = -1;
+
+  var DEFAULT_TITLE = titleEl.textContent;
+  var DEFAULT_BODY = bodyEl.textContent;
+
+  // The focus lens is a sharp copy of the same <img>, clipped to a soft
+  // ellipse — keep its background in sync with whatever src actually
+  // resolved (handles the extension-fallback swap above). A missing asset
+  // never fires a successful load, so the lens stays empty and inert.
+  var baseImg = stage.querySelector("img");
+  function syncFocusBg() {
+    focusEl.style.backgroundImage = 'url("' + baseImg.currentSrc + '")';
+  }
+  baseImg.addEventListener("load", syncFocusBg);
+  if (baseImg.complete && baseImg.naturalWidth > 0) { syncFocusBg(); }
+
+  // Drag-to-reposition tool: open the page with #edit-hotspots in the URL to
+  // turn the numbered markers draggable and show a live readout of their x/y
+  // percentages. Never active for a normal reader.
+  var EDIT_MODE = location.hash.indexOf("edit-hotspots") !== -1;
+  var editPre;
+  if (EDIT_MODE) {
+    stage.classList.add("is-editing");
+    var editPanel = document.createElement("div");
+    editPanel.className = "editpanel";
+    editPanel.innerHTML =
+      "<h5>Edit mode — drag markers</h5>" +
+      "<pre></pre>" +
+      '<button type="button">Copy positions</button>' +
+      "<p>Drag the solid numbered marker to place the label, and the small dashed target to place the focus ellipse on the part itself — both are locked to the same x, so they always stay on one vertical line. Copy the list above and bake the values into PARTS in index.html, then remove <code>#edit-hotspots</code> from the URL and reload.</p>";
+    document.body.appendChild(editPanel);
+    editPre = editPanel.querySelector("pre");
+    editPanel.querySelector("button").addEventListener("click", function () {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(editPre.textContent);
+      }
+    });
+  }
+  function refreshEditPanel() {
+    if (!EDIT_MODE) { return; }
+    editPre.textContent = PARTS.map(function (p, i) {
+      return (i + 1) + ". " + p.title + "  →  x: " + p.x + ", y: " + p.y + ", labelY: " + p.labelY;
+    }).join("\n");
+  }
+
+  function buildMask(part) {
+    return "radial-gradient(ellipse " + part.rx + "% " + part.ry + "% at " + part.x + "% " + part.y + "%,#000 55%,transparent 100%)";
+  }
+
+  // The leader line runs on the shared x, between the label and the focus
+  // target — whichever of the two sits above the other.
+  function positionLine(part) {
+    var top = Math.min(part.y, part.labelY);
+    var height = Math.abs(part.labelY - part.y);
+    lineEl.style.left = part.x + "%";
+    lineEl.style.top = top + "%";
+    lineEl.style.height = height + "%";
+  }
+
+  function setActive(idx) {
+    activeIdx = idx;
+    buttons.forEach(function (b, i) {
+      b.setAttribute("aria-expanded", i === idx ? "true" : "false");
+    });
+    if (idx === -1) {
+      titleEl.textContent = DEFAULT_TITLE;
+      bodyEl.textContent = DEFAULT_BODY;
+      stage.classList.remove("is-focusing");
+    } else {
+      var part = PARTS[idx];
+      titleEl.textContent = part.title;
+      bodyEl.textContent = part.body;
+      var mask = buildMask(part);
+      focusEl.style.maskImage = mask;
+      focusEl.style.webkitMaskImage = mask;
+      positionLine(part);
+      stage.classList.add("is-focusing");
+    }
+  }
+
+  // xPct/yPct are already clamped/rounded; onMove writes them into the part
+  // and repositions whatever DOM elements depend on that value.
+  function makeDraggable(btn, onMove) {
+    btn.addEventListener("pointerdown", function (e) {
+      e.preventDefault();
+      btn.setPointerCapture(e.pointerId);
+      btn.classList.add("is-dragging");
+
+      function onPointerMove(ev) {
+        var rect = stage.getBoundingClientRect();
+        var xPct = Math.max(0, Math.min(100, ((ev.clientX - rect.left) / rect.width) * 100));
+        var yPct = Math.max(0, Math.min(100, ((ev.clientY - rect.top) / rect.height) * 100));
+        onMove(Math.round(xPct * 10) / 10, Math.round(yPct * 10) / 10);
+        refreshEditPanel();
+      }
+      function onUp() {
+        btn.releasePointerCapture(e.pointerId);
+        btn.classList.remove("is-dragging");
+        btn.removeEventListener("pointermove", onPointerMove);
+        btn.removeEventListener("pointerup", onUp);
+      }
+      btn.addEventListener("pointermove", onPointerMove);
+      btn.addEventListener("pointerup", onUp);
+    });
+  }
+
+  PARTS.forEach(function (part, i) {
+    // The focus target — sits on the part itself, drives the blur-clear
+    // ellipse. Never visible to a normal reader.
+    var target = document.createElement("button");
+    target.type = "button";
+    target.className = "hotspot hotspot--target";
+    target.style.left = part.x + "%";
+    target.style.top = part.y + "%";
+    target.setAttribute("aria-hidden", "true");
+    target.tabIndex = -1;
+
+    // The marker — the visible numbered badge, offset off the ellipse but
+    // locked to the same x as the target above.
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "hotspot";
+    btn.style.left = part.x + "%";
+    btn.style.top = part.labelY + "%";
+    btn.textContent = String(i + 1);
+    btn.setAttribute("aria-expanded", "false");
+    btn.setAttribute("aria-controls", "cutawayReadout");
+    btn.setAttribute("aria-label", part.title);
+
+    function syncX(xPct) {
+      part.x = xPct;
+      target.style.left = xPct + "%";
+      btn.style.left = xPct + "%";
+    }
+
+    // Always select on click — never toggle off. On touch, the synthetic
+    // mouseenter fires first, so a toggle would close it on the same tap.
+    btn.addEventListener("click", function () { setActive(i); });
+    btn.addEventListener("mouseenter", function () { setActive(i); });
+    btn.addEventListener("focus", function () { setActive(i); });
+    btn.addEventListener("mouseleave", function () { setActive(-1); });
+    btn.addEventListener("blur", function () { setActive(-1); });
+
+    if (EDIT_MODE) {
+      makeDraggable(btn, function (xPct, yPct) {
+        syncX(xPct);
+        part.labelY = yPct;
+        btn.style.top = yPct + "%";
+        setActive(i);
+      });
+      makeDraggable(target, function (xPct, yPct) {
+        syncX(xPct);
+        part.y = yPct;
+        target.style.top = yPct + "%";
+        setActive(i);
+      });
+    }
+
+    stage.appendChild(target);
+    stage.appendChild(btn);
+    buttons.push(btn);
+
+    // Mirror every hotspot into a plain list — readable on tiny screens
+    // and the only UI if the image or JS positioning is unusable.
+    var li = document.createElement("li");
+    li.innerHTML = "<b>" + (i + 1) + ". " + part.title + "</b> " + part.body;
+    listEl.appendChild(li);
+  });
+
+  refreshEditPanel();
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && activeIdx !== -1) { setActive(-1); }
+  });
+})();
+</script>
+</body>
+</html>
