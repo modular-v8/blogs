@@ -563,14 +563,28 @@ kbd{
   color:var(--secondary);
 }
 
-/* On phones the markers crowd each other — drop them and lead with the
-   plain part list, which carries exactly the same information. */
+/* On phones the hover/tap readout doesn't work well, so it's dropped in
+   favour of the always-visible part list below — but the numbered markers
+   stay on the image as a static legend (matching the list's numbering).
+   Each marker already sits directly on the part it labels (no offset), so
+   no separate leader line is needed here, unlike bmw-smg. */
 @media (min-width:561px){
   .cutaway__list,.cutaway__list-label{display:none}
 }
 @media (max-width:560px){
-  .cutaway__hint,.hotspot,.cutaway__readout{display:none}
+  .cutaway__hint,.cutaway__readout{display:none}
   .cutaway__stage{border-radius:var(--r-lg)}
+  .hotspot{
+    opacity:1;
+    pointer-events:none;
+    width:22px;height:22px;margin:-11px 0 0 -11px;
+    font-size:0.64rem;line-height:20px;
+  }
+  .hotspot::after{display:none}
+  /* Child pins (K2/K3 riding along with a grouped marker) only ever exist
+     to feed the focus-lens mask — never a visible number of their own,
+     on phones either. */
+  .hotspot--child{opacity:0}
   .cutaway__list-label{display:block;margin-top:var(--s-lg)}
   .cutaway__list{
     margin-top:var(--s-md);
