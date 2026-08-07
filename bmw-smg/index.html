@@ -181,8 +181,8 @@ h1,.h1{
   gap:calc(var(--s-lg) * 1.5);
   align-items:start;
 }
-.section__text{grid-column:1;grid-row:1}
-.section__media{grid-column:2;grid-row:1}
+.section__text{grid-column:1;grid-row:1;min-width:0}
+.section__media{grid-column:2;grid-row:1;min-width:0}
 .section__text > *:first-child{margin-top:0}
 .section__text > *:last-child{margin-bottom:0}
 
@@ -507,6 +507,20 @@ tbody td:first-child{
 }
 .hotspot--target::after{display:none}
 
+/* Static guide line from an offset marker down/up to the part it labels —
+   built once per part alongside .hotspot/.hotspot--target above, hidden by
+   default (desktop shows the line only for the hovered part, via
+   #cutawayLine) and revealed in the phone layout below, where markers no
+   longer respond to hover. */
+.hotspot-leader{
+  position:absolute;
+  width:1px;
+  background:linear-gradient(to bottom,transparent,rgba(225,6,0,.55) 20%,rgba(225,6,0,.55) 80%,transparent);
+  pointer-events:none;
+  z-index:1;
+  display:none;
+}
+
 /* Temporary drag-to-reposition tool — only active with #edit-hotspots in the
    URL, so a normal reader never loads or sees any of this. */
 .cutaway__stage.is-editing .hotspot{cursor:grab}
@@ -604,14 +618,31 @@ kbd{
   color:var(--secondary);
 }
 
-/* On phones the markers crowd each other — drop them and lead with the
-   plain part list, which carries exactly the same information. */
+/* On phones the hover/tap readout doesn't work well, so it's dropped in
+   favour of the always-visible part list below — but the numbered markers
+   stay on the image as a static legend (matching the list's numbering),
+   with a small dot and a thin leader line showing exactly where each one's
+   part sits, since the badge itself is offset clear of it. */
 @media (min-width:561px){
   .cutaway__list,.cutaway__list-label{display:none}
 }
 @media (max-width:560px){
-  .cutaway__hint,.hotspot,.cutaway__readout{display:none}
+  .cutaway__hint,.cutaway__readout{display:none}
   .cutaway__stage{border-radius:var(--r-lg)}
+  .hotspot{
+    opacity:1;
+    pointer-events:none;
+    width:22px;height:22px;margin:-11px 0 0 -11px;
+    font-size:0.64rem;line-height:20px;
+  }
+  .hotspot::after{display:none}
+  .hotspot--target{
+    opacity:1;
+    width:8px;height:8px;margin:-4px 0 0 -4px;
+    background:var(--tertiary);
+    border:none;
+  }
+  .hotspot-leader{display:block}
   .cutaway__list-label{display:block;margin-top:var(--s-lg)}
   .cutaway__list{
     margin-top:var(--s-md);
@@ -1210,10 +1241,25 @@ kbd{
     btn.setAttribute("aria-controls", "cutawayReadout");
     btn.setAttribute("aria-label", part.title);
 
+    // Static guide line between the marker and its target — always in the
+    // DOM (see .hotspot-leader), shown only in the phone layout, where the
+    // marker no longer responds to hover so this is the only way to see
+    // what it points at.
+    var leader = document.createElement("div");
+    leader.className = "hotspot-leader";
+    leader.setAttribute("aria-hidden", "true");
+    function positionLeader() {
+      leader.style.left = part.x + "%";
+      leader.style.top = Math.min(part.y, part.labelY) + "%";
+      leader.style.height = Math.abs(part.labelY - part.y) + "%";
+    }
+    positionLeader();
+
     function syncX(xPct) {
       part.x = xPct;
       target.style.left = xPct + "%";
       btn.style.left = xPct + "%";
+      positionLeader();
     }
 
     // Always select on click — never toggle off. On touch, the synthetic
@@ -1229,16 +1275,19 @@ kbd{
         syncX(xPct);
         part.labelY = yPct;
         btn.style.top = yPct + "%";
+        positionLeader();
         setActive(i);
       });
       makeDraggable(target, function (xPct, yPct) {
         syncX(xPct);
         part.y = yPct;
         target.style.top = yPct + "%";
+        positionLeader();
         setActive(i);
       });
     }
 
+    stage.appendChild(leader);
     stage.appendChild(target);
     stage.appendChild(btn);
     buttons.push(btn);
