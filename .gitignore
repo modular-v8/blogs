@@ -3,6 +3,9 @@
 */spec.md
 *.pdf
 */assets/Post Image.png
+.decisions/
+.claude/
+.env
 
 # Tooling
 .serena/
