@@ -22,6 +22,7 @@ One folder per post, each self-contained: the page and its assets travel togethe
 |---|---|---|
 | 01 | The AMG SpeedShift MCT — the automatic that threw away its torque converter | [`mercedes-mct/`](mercedes-mct/) |
 | 02 | The BMW SMG — a sequential gearbox that deserves more credit than it gets | [`bmw-smg/`](bmw-smg/) |
+| 03 | The Lamborghini e-gear — the gearbox concept Ferrari, Maserati, and Lamborghini all shared | [`lamborghini-single-clutch/`](lamborghini-single-clutch/) |
 
 ## Design
 
