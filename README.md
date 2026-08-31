@@ -7,11 +7,17 @@ Hand-written, single-file interactive blog pages. No framework, no build step �
 ## Structure
 
 ```
-index.html          landing page — lists every post
-DESIGN.md           shared design system (Motorsport Livery)
+index.html                    landing page — lists every post
+DESIGN.md                     shared design system (Motorsport Livery)
 mercedes-mct/
-  index.html        the article
-  assets/           images + audio for that article
+  index.html                  the article
+  assets/                     images for that article
+bmw-smg/
+  index.html
+  assets/
+lamborghini-single-clutch/
+  index.html
+  assets/
 ```
 
 One folder per post, each self-contained: the page and its assets travel together, and the root `index.html` links to it.

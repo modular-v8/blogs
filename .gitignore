@@ -6,6 +6,7 @@
 .decisions/
 .claude/
 .env
+antipatterns.md
 
 # Tooling
 .serena/
