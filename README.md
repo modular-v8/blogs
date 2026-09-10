@@ -22,6 +22,10 @@ tiptronic/
   index.html
   DESIGN.md                   design system this post was built against
   assets/
+pdk/
+  index.html
+  DESIGN.md                   design system this post was built against
+  assets/
 ```
 
 One folder per post, each self-contained: the page and its assets travel together, and the root `index.html` links to it.
@@ -34,6 +38,7 @@ One folder per post, each self-contained: the page and its assets travel togethe
 | 02 | The BMW SMG — a sequential gearbox that deserves more credit than it gets | [`bmw-smg/`](bmw-smg/) |
 | 03 | The Lamborghini e-gear — the gearbox concept Ferrari, Maserati, and Lamborghini all shared | [`lamborghini-single-clutch/`](lamborghini-single-clutch/) |
 | 04 | TipTronic — it was never its own transmission, just Porsche's trademark for an ordinary torque-converter automatic | [`tiptronic/`](tiptronic/) |
+| 05 | PDK — a dual-clutch idea shelved for twenty years before Porsche ever sold it, and a badge that now covers at least two different gearboxes | [`pdk/`](pdk/) |
 
 ## Design
 

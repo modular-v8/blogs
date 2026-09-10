@@ -1,0 +1,961 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PDK — The Gearbox Porsche Waited Twenty Years to Sell You</title>
+<meta name="description" content="PDK's dual-clutch idea is decades older than its 2008 road debut: a shelved 1960s prototype, a Le Mans-class racer, and a badge that today covers at least two different gearboxes. The origins, internals, and reliability of Porsche's PDK.">
+<meta name="theme-color" content="#0B0B0B">
+<meta property="og:title" content="PDK — The Gearbox Porsche Waited Twenty Years to Sell You">
+<meta property="og:description" content="PDK's dual-clutch idea is decades older than its 2008 road debut: a shelved 1960s prototype, a Le Mans-class racer, and a badge that today covers at least two different gearboxes.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Design tokens — DESIGN.md "Motorsport Livery"
+   ============================================================ */
+:root{
+  --primary:#F2F2F2;
+  --secondary:#8C8C8C;
+  --tertiary:#E10600;
+  --neutral:#0B0B0B;
+  --surface:#151515;
+  --on-primary:#0B0B0B;
+
+  --line:#2A2A2A;
+
+  --font-display:"Oswald","Arial Narrow","Helvetica Neue Condensed",Impact,system-ui,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --r-sm:0px;
+  --r-md:2px;
+  --r-lg:4px;
+
+  --s-sm:8px;
+  --s-md:16px;
+  --s-lg:32px;
+
+  --maxw:1280px;
+  --gutter:clamp(20px,5vw,64px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--neutral);
+  color:var(--primary);
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:var(--tertiary);text-decoration:none;border-bottom:1px solid rgba(225,6,0,.35)}
+a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
+:focus-visible{outline:2px solid var(--tertiary);outline-offset:3px}
+
+/* ============================================================
+   Reading progress
+   ============================================================ */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:transparent;z-index:100;pointer-events:none;
+}
+.progress__bar{
+  height:100%;width:0%;
+  background:var(--tertiary);
+  transform-origin:left center;
+}
+
+/* ============================================================
+   Shell
+   ============================================================ */
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-inline:var(--gutter);
+}
+
+.label{
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+
+/* ============================================================
+   Masthead / hero
+   ============================================================ */
+.masthead{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2.5) calc(var(--s-lg) * 2);
+  position:relative;
+}
+.masthead__kicker{
+  display:flex;align-items:center;gap:var(--s-md);
+  margin-bottom:var(--s-lg);
+}
+.masthead__home{
+  color:var(--secondary);
+  border-bottom:1px solid transparent;
+}
+.masthead__home:hover,.masthead__home:focus-visible{
+  color:var(--primary);
+  border-bottom-color:var(--tertiary);
+}
+.masthead__kicker::after{
+  content:"";height:1px;flex:1;background:var(--line);
+}
+.masthead__rule{
+  width:56px;height:3px;background:var(--tertiary);flex:none;
+}
+h1,.h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:0.02em;
+  line-height:1.02;
+  margin:0;
+  text-transform:uppercase;
+}
+.masthead h1{
+  font-size:clamp(2.2rem,6vw,5rem);
+  max-width:15ch;
+}
+.masthead h1 em{
+  font-style:normal;
+  display:block;
+  margin-top:0.5em;
+  font-size:clamp(0.95rem,1.7vw,1.5rem);
+  font-weight:500;
+  line-height:1.18;
+  letter-spacing:0.06em;
+  color:var(--secondary);
+  max-width:26ch;
+}
+.masthead__dek{
+  margin:var(--s-lg) 0 0;
+  max-width:60ch;
+  font-size:clamp(1rem,1.6vw,1.2rem);
+  line-height:1.6;
+  color:var(--primary);
+}
+.masthead__meta{
+  margin-top:calc(var(--s-lg) * 1.25);
+  display:flex;flex-wrap:wrap;gap:var(--s-md) var(--s-lg);
+}
+.masthead__meta span{position:relative}
+
+.masthead__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:end;
+}
+.masthead__art{align-self:end}
+.masthead__art .figure__frame{aspect-ratio:4/3}
+@media (max-width:900px){
+  .masthead__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+}
+
+/* ============================================================
+   Section grid — 60 / 40 text-to-media split
+   ============================================================ */
+.section{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2);
+}
+.section__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:start;
+}
+.section__text > *:first-child{margin-top:0}
+.section__text > *:last-child{margin-bottom:0}
+
+.section__media{
+  position:sticky;
+  top:calc(var(--s-lg) * 2);
+  display:flex;
+  flex-direction:column;
+  gap:var(--s-md);
+}
+
+@media (max-width:900px){
+  .section__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+  .section__media{position:static;top:auto}
+}
+
+/* Alternating layout — every other media-bearing section flips to
+   media-left / text-right instead of the default text-left / media-right. */
+.section--reverse .section__grid{grid-template-columns:40fr 60fr}
+.section--reverse .section__text{order:2}
+.section--reverse .section__media{order:1}
+@media (max-width:900px){
+  .section--reverse .section__text{order:0}
+  .section--reverse .section__media{order:0}
+}
+
+/* A section with no media runs its text the full width of .wrap instead of
+   reserving an empty 40% column. Paragraphs' own 68ch cap (below) would
+   otherwise still leave that space blank, so lift it here too. */
+.section--full .section__text{max-width:none}
+.section--full .section__text p{max-width:none}
+
+/* ============================================================
+   Prose
+   ============================================================ */
+.section__num{
+  display:block;
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  color:var(--tertiary);
+  margin-bottom:var(--s-sm);
+}
+h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.75rem,3.4vw,2.5rem);
+  font-weight:700;
+  line-height:1.08;
+  text-transform:uppercase;
+  margin:0 0 var(--s-lg);
+  max-width:26ch;
+}
+p{margin:0 0 var(--s-md);max-width:68ch}
+.section__text p{font-size:1.02rem;line-height:1.72;color:#DCDCDC}
+.section__text strong{color:var(--primary);font-weight:600}
+.section__text em{color:var(--primary)}
+
+/* ============================================================
+   Stat callouts
+   ============================================================ */
+.stat{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--tertiary);
+  border-radius:var(--r-lg);
+  padding:24px;
+}
+.stat__value{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,5vw,3.2rem);
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:0.01em;
+  color:var(--primary);
+  display:block;
+}
+.stat__value small{
+  font-size:0.38em;
+  letter-spacing:0.08em;
+  color:var(--secondary);
+  margin-left:6px;
+}
+.stat__label{
+  display:block;
+  margin-top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+.stat__note{
+  margin:var(--s-sm) 0 0;
+  font-size:0.85rem;
+  line-height:1.5;
+  color:var(--secondary);
+  max-width:none;
+}
+.stat-grid{display:grid;gap:var(--s-md)}
+@media (min-width:520px) and (max-width:900px){
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ============================================================
+   Figures + graceful "coming soon" placeholders
+   ============================================================ */
+.figure{margin:0}
+.figure__frame{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+.figure__frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.figure__ph{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--s-sm);
+  text-align:center;
+  padding:var(--s-lg);
+  background:var(--surface);
+  border:1px dashed var(--line);
+}
+.figure__ph .label{color:var(--secondary)}
+.figure__ph-file{
+  font-family:var(--font-body);
+  font-size:0.78rem;
+  color:#5E5E5E;
+  word-break:break-all;
+}
+/* JS marks the frame when the asset fails to load */
+.figure.is-missing img{display:none}
+.figure.is-missing .figure__ph{display:flex}
+.figure figcaption{
+  margin-top:var(--s-sm);
+  font-size:0.82rem;
+  line-height:1.5;
+  color:var(--secondary);
+}
+/* Credit line under every image — sits below the caption, quieter than it */
+.figure__src{
+  display:block;
+  margin-top:var(--s-sm);
+  padding-top:var(--s-sm);
+  border-top:1px solid var(--line);
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#5E5E5E;
+}
+/* The reference number links down to the matching entry in Sources */
+.figure__src a{
+  color:var(--secondary);
+  border-bottom-color:transparent;
+}
+.figure__src a:hover,.figure__src a:focus-visible{
+  color:var(--tertiary);
+  border-bottom-color:var(--tertiary);
+}
+
+/* ============================================================
+   Alternating figure — two images cross-fading in place, every
+   2s, like a two-frame GIF. JS toggles .is-active between them.
+   ============================================================ */
+.figure__frame .alt-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+.figure__frame .alt-img.is-active{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .figure__frame .alt-img{transition:none}
+}
+
+/* ============================================================
+   Timeline (Section 04) — horizontal, scroll-driven
+   ============================================================ */
+.timeline__hint{
+  display:flex;align-items:center;gap:var(--s-sm);
+  margin-bottom:var(--s-md);
+}
+.timeline__hint::before{content:"";width:28px;height:1px;background:var(--tertiary);flex:none}
+
+.timeline__bar{
+  height:3px;
+  margin-bottom:var(--s-md);
+  background:var(--line);
+  border-radius:var(--r-sm);
+  overflow:hidden;
+}
+.timeline__bar-fill{height:100%;width:0%;background:var(--tertiary)}
+
+.timeline__spacer{position:relative}
+.timeline__pin{
+  position:sticky;
+  top:calc(var(--s-lg) * 2);
+  height:clamp(340px,42vw,440px);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  background:var(--surface);
+  overflow:hidden;
+  display:flex;
+}
+.timeline__viewport{
+  position:relative;
+  flex:1;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
+}
+.timeline__rail{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.timeline__track{
+  position:relative;
+  display:flex;
+  gap:calc(var(--s-lg) * 1.25);
+  padding-inline:var(--gutter);
+  will-change:transform;
+}
+.timeline__item{
+  flex:0 0 auto;
+  width:clamp(210px,22vw,270px);
+  position:relative;
+  padding-top:calc(var(--s-lg) + 6px);
+}
+.timeline__dot{
+  position:absolute;
+  top:calc(var(--s-lg) - 4px);
+  left:0;
+  width:9px;height:9px;
+  border-radius:50%;
+  background:var(--secondary);
+  transition:background .2s ease,transform .2s ease;
+}
+.timeline__item.is-active .timeline__dot{background:var(--tertiary);transform:scale(1.3)}
+.timeline__year{
+  display:block;
+  font-family:var(--font-display);
+  font-size:1.4rem;
+  font-weight:700;
+  color:var(--secondary);
+  transition:color .2s ease;
+}
+.timeline__item.is-active .timeline__year{color:var(--tertiary)}
+.timeline__model{
+  display:block;
+  margin-top:4px;
+  font-weight:600;
+  color:var(--primary);
+  font-size:0.92rem;
+  line-height:1.35;
+}
+.timeline__note{margin-top:6px;font-size:0.82rem;line-height:1.5;color:var(--secondary);max-width:none}
+
+/* No-JS, or prefers-reduced-motion (".no-scrub"): a normal swipeable strip
+   with native horizontal scroll instead of scroll-hijacked translation. */
+.no-js .timeline__pin,.timeline.no-scrub .timeline__pin{
+  position:static;height:auto;overflow-x:auto;-webkit-overflow-scrolling:touch;
+}
+.no-js .timeline__track,.timeline.no-scrub .timeline__track{transform:none !important}
+.no-js .timeline__bar,.timeline.no-scrub .timeline__bar,
+.no-js .timeline__hint,.timeline.no-scrub .timeline__hint{display:none}
+
+@media (max-width:640px){
+  .timeline__pin{height:clamp(300px,66vw,380px)}
+}
+
+/* ============================================================
+   Sources
+   ============================================================ */
+.sources{padding-block:calc(var(--s-lg) * 2)}
+.sources ol{
+  margin:0;padding:0;list-style:none;
+  counter-reset:src;
+  display:grid;
+  gap:var(--s-md);
+}
+@media (min-width:900px){
+  .sources ol{grid-template-columns:1fr 1fr;gap:var(--s-md) var(--s-lg)}
+}
+.sources li{
+  counter-increment:src;
+  position:relative;
+  padding:var(--s-md) 0 var(--s-md) 42px;
+  border-top:1px solid var(--line);
+  font-size:0.88rem;
+  line-height:1.6;
+  color:var(--secondary);
+  scroll-margin-top:var(--s-lg);
+}
+/* Arrived here from an image credit — mark which entry was meant */
+.sources li:target{border-top-color:var(--tertiary)}
+.sources li:target b{color:var(--tertiary)}
+.sources li::before{
+  content:counter(src,decimal-leading-zero);
+  position:absolute;left:0;top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.12em;
+  color:var(--tertiary);
+}
+.sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
+.sources li a{
+  display:inline-block;
+  font-size:0.8rem;
+  word-break:break-word;
+  border-bottom-color:transparent;
+  color:#7A7A7A;
+}
+.sources li a::before{content:"↗ ";color:var(--tertiary)}
+.sources li a:hover,.sources li a:focus-visible{color:var(--tertiary);border-bottom-color:var(--tertiary)}
+
+/* ============================================================
+   Foot
+   ============================================================ */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:var(--s-lg);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s-md);
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.is-in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.09s}
+.reveal[data-delay="2"]{transition-delay:.18s}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+}
+/* Never hide content if JS never runs */
+.no-js .reveal{opacity:1;transform:none}
+
+/* Above the fold: animate on paint, don't wait for the observer to boot. */
+.rise{
+  opacity:0;
+  animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.rise[data-delay="1"]{animation-delay:.12s}
+.rise[data-delay="2"]{animation-delay:.24s}
+@keyframes rise{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;animation:none}
+}
+</style>
+</head>
+
+<body class="no-js">
+
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__kicker rise">
+      <span class="masthead__rule"></span>
+      <a class="label masthead__home" href="../">Weird Gearboxes</a>
+    </div>
+
+    <div class="masthead__grid">
+      <div class="masthead__lede">
+        <h1 class="rise" data-delay="1">PDK <em>Twenty Years Ahead of Its Time, By Design.</em></h1>
+        <p class="masthead__dek rise" data-delay="2">Ask a Porsche owner why they love PDK and they'll tell you about milliseconds. The badge itself has a longer story than that, running from a shelved 1960s prototype through Le Mans to a showroom option in 2008.</p>
+      </div>
+
+      <figure class="figure masthead__art rise" data-delay="2">
+        <div class="figure__frame">
+          <img src="assets/fig-00-hero.jpg" alt="A Porsche PDK paddle shifter and instrument cluster.">
+          <div class="figure__ph">
+            <span class="label">Lead image coming soon</span>
+            <span class="figure__ph-file">assets/fig-00-hero.jpg or .png</span>
+          </div>
+        </div>
+        <figcaption><span class="figure__src">Image source: <a href="#src-17">[17]</a></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Intro continued — split out of the hero dek so the hero image is
+       visible without scrolling. No heading: still the article's lede. -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <p>In the <a href="../tiptronic/index.html">Tiptronic post</a> I promised that PDK deserved a blog of its own, because it is genuinely different engineering and the same enthusiasts who dismissed Tiptronic as an automatic wearing a costume treat PDK with real affection. That affection is well earned, but the story is even more interesting. It runs through a prototype that sat forgotten in storage for over a decade, a Le Mans-class race car, and a name that is a brand in itself...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">01</span>
+        <h2>What Is PDK, and Why Is It So Famous</h2>
+        <p>PDK stands for <em>Porsche-Doppelkupplungsgetriebe</em>, German for Porsche dual-clutch transmission. Mechanically it is built from two half-transmissions, what Porsche itself calls sub-transmissions, sharing one case. One handles the odd-numbered gears, the other the even-numbered gears and reverse, and each rides its own concentric shaft with its own clutch. For instance, while the car accelerates in third gear, fourth is already selected and waiting on the idle shaft, simply not clutched in yet. The shift itself amounts to nothing more than one clutch opening as the other closes.</p>
+        <p>That handover happens in around 100 milliseconds either way; up- or downshift, well under half the time a skilled driver needs to heel-and-toe a downshift by hand and legs. Both clutches also stay mechanically connected to the engine at all times, unlike a torque-converter automatic's fluid coupling, so throttle response through a PDK stays immediate rather than passing through anything that can slip or lag.</p>
+        <p>None of that fully explains the devotion PDK gets, though. Ask Porsche owners why they rave about it and the answers tend to circle the same idea, that it lets a driver stop thinking about the mechanics of shifting and just drive, hitting every apex and every gear change without risking a missed heel-toe downshift or an over-revved engine. Every shift landing exactly where it should frees up attention for the road instead of the mechanics of shifting itself, and driving one hard settles into something close to a flow state a manual can't quite reach. That tension, between a gearbox that is objectively faster and one some drivers still refuse to trade for anything with a clutch pedal, is basically the whole PDK story in miniature.</p>
+      </div>
+
+      <div class="section__media">
+        <div class="stat reveal">
+          <span class="stat__value">~100<small>ms</small></span>
+          <span class="stat__label">PDK's shift time; IRRESPECTIVE OF UP- or downshifting</span>
+          <p class="stat__note">Versus 200–400 ms for a skilled driver's heel-and-toe downshift.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ------------------------------------------------------------ -->
+  <section class="section section--reverse">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">02</span>
+        <h2>Origins — A Prototype Twenty Years Ahead of Itself</h2>
+        <p>The idea behind PDK is much older than it was first introduced. Back in the late 1960s, Porsche engineer Imre Szodfridt pitched a dual-clutch gearbox to Ferdinand Piëch, then Porsche's Head of Development (yes, the same man who drew the first prototype of a W16 engine on the back of an envelope, on a Japanese bullet train). Szodfridt's idea went nowhere at the time, simply because the electronics and hydraulics of the era had no way of controlling two clutches precisely enough to make it work.</p>
+        <p>It sat in storage until 1981, when engineer Rainer Wüst's team dug the old prototype out and rebuilt its pneumatic valves to run hydraulically instead. The first road tests happened in modified 924s and 944 Turbos, shifted through a simple lever with no clutch pedal at all, push forward to downshift and pull back to upshift. That direction was reportedly suggested by racing driver Jacky Ickx, on the logic that braking already pushes a driver forward in the seat, so the downshift motion should follow the same direction as their body.</p>
+        <p>The real proving ground, though, was motorsport. Porsche tested the gearbox in the 956 LeMans Racecar before racing it properly in the 962, specifically the 962 C Racecar, where Hans-Joachim Stuck is credited with the idea of moving the shifters onto the steering wheel itself. Early clutch control was far from sorted, and every shift produced a hard jerk through the driveshaft, bad enough that this excess torque nearly took the whole test program apart. But rather than solve that jerk outright before racing, the team used the kick forward as a genuine performance advantage on track instead, only dialing it out once the transmission moved toward road use. Not only LeMans, but it paid off in the Rally world as well. The Audi Sport Quattro S1, running Porsche's dual-clutch system, won the Semperit Rallye at the end of 1985 in its first outing with Walter Röhrl driving, and the previously mentioned PDK-equipped 962C won at Monza on its own debut in 1986, and took that year's World Sports-Prototype Championship as well.</p>
+        <p>None of that racing success translated into a production car quickly though. Porsche simply didn't have the budget to industrialize the transmission at the time, and Wüst has since said the team was "at least 20 years ahead of our time." The first dual-clutch transmission to actually reach a customer's driveway wasn't even a Porsche. That honor went to the Volkswagen Golf R32 in 2003, five years before PDK itself reached a production Porsche!</p>
+        <p>PDK finally arrived as an option on the 911 in 2008, on the facelifted 997, and the contemporary press reaction was close to unanimous. Car Magazine's UK launch review called it "the greatest dual-clutch gearbox we've yet tried," and Porsche's own engineers reportedly told the press at the time that PDK could replace the manual across the whole range within five years, a prediction that turned out to be more or less correct. The only real complaint at launch had nothing to do with how it shifted. Porsche designed the gear lever to have a "push-away" to upshift and "pull-back" to downshift, the opposite of the now natural convention other similar cars had already settled on, and more than one reviewer said they would stick with the manual for that reason alone. It also wasn't available in all high-performance cars yet, since the first PDK could only handle 325 lb-ft of torque, which kept it out of the Turbo, GT3, and GT3 RS until Porsche strengthened the unit for those cars later on.</p>
+      </div>
+
+      <div class="section__media">
+        <figure class="figure reveal" data-delay="1">
+          <div class="figure__frame">
+            <img src="assets/fig-01-962c.jpg" alt="The Porsche 962C, the first race car to run PDK, at Monza in 1986.">
+            <div class="figure__ph">
+              <span class="label">Image coming soon</span>
+              <span class="figure__ph-file">assets/fig-01-962c.jpg or .png</span>
+            </div>
+          </div>
+          <figcaption>The Porsche 962C. Stuck and Bell's 1986 championship-winning car was the first to race with PDK.<span class="figure__src">Image source: <a href="#src-18">[18]</a></span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:calc(var(--s-lg) * 1.5)">
+      <div class="section__text reveal">
+        <p>Here's the timeline, as best as the sources agree on it.</p>
+      </div>
+
+      <div class="timeline reveal" data-delay="1">
+        <div class="timeline__hint">
+          <span class="label">Scroll to move through the timeline</span>
+        </div>
+        <div class="timeline__bar"><div class="timeline__bar-fill"></div></div>
+        <div class="timeline__spacer">
+          <div class="timeline__pin">
+            <div class="timeline__viewport">
+              <div class="timeline__rail"></div>
+              <div class="timeline__track">
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">1985</span><span class="timeline__model">Audi Sport Quattro S1</span><p class="timeline__note">Group B rally win on the Semperit Rallye, driven by Walter Röhrl.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">1986</span><span class="timeline__model">Porsche 962C</span><p class="timeline__note">First Porsche competition use; won Monza on debut, took the World Sports-Prototype Championship.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2003</span><span class="timeline__model">Volkswagen Golf R32</span><p class="timeline__note">First dual-clutch transmission in any production road car (DSG, not PDK).</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2008</span><span class="timeline__model">911 (997.2) Carrera / Carrera S</span><p class="timeline__note">First PDK in a production Porsche, 7-speed, ZF 7DT-45.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2009</span><span class="timeline__model">Cayman / Boxster (facelift)</span><p class="timeline__note">7-speed PDK added, ZF 7DT-45.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2009</span><span class="timeline__model">Panamera (1st gen)</span><p class="timeline__note">7-speed PDK standard on 4 / 4S / Turbo, ZF 7DT-75.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2010</span><span class="timeline__model">911 Turbo</span><p class="timeline__note">7-speed PDK with heavy-duty clutch, ZF 7DT-70.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2014</span><span class="timeline__model">Macan (1st gen)</span><p class="timeline__note">7-speed PDK, a Porsche-tuned Audi DL501 built by VW, not the ZF unit used elsewhere.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2016</span><span class="timeline__model">Panamera (2nd gen)</span><p class="timeline__note">8-speed PDK, ZF 8DT-80.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2018</span><span class="timeline__model">Bentley Continental GT</span><p class="timeline__note">Adopts the same ZF 8DT-80 PDK-derived unit.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2019</span><span class="timeline__model">911 (992.1) Carrera S</span><p class="timeline__note">Also uses the ZF 8DT-80 PDK-derived unit.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2020</span><span class="timeline__model">911 (992) Carrera S</span><p class="timeline__note">New 8-speed PDK, ZF 8DT-55.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2024</span><span class="timeline__model">911 Carrera GTS (992.2), T-Hybrid</span><p class="timeline__note">8-speed PDK with an electric motor integrated into the housing.</p></div>
+                <div class="timeline__item"><span class="timeline__dot"></span><span class="timeline__year">2025</span><span class="timeline__model">911 Turbo S, T-Hybrid</span><p class="timeline__note">Same integrated e-motor PDK, paired with dual electric turbochargers.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">03</span>
+        <h2>What Goes On Inside a PDK</h2>
+        <p>Strip away the badge and a PDK is mechanically close to a manual gearbox split into two halves. Each sub-transmission carries its own set of gears and its own wet clutch, with the clutch packs running submerged in transmission fluid that lubricates and cools them as they slip and grip. Sitting on top of that mechanical core is what Porsche calls the mechatronic unit, a combined hydraulic and electronic control module that decides which gear to pre-select, when to engage each clutch, and how aggressively to do it depending on the drive mode. It's also, by a wide margin, the single most expensive part of the transmission to replace.</p>
+        <p>That basic layout, two clutches on concentric shafts, isn't actually unique to Porsche. Volkswagen's own DSG gearbox uses the identical architecture, down to the same solid inner shaft and hollow outer shaft carrying one clutch each. However, PDK carries far more engine braking than a DSG, which tends to coast when the driver lifts off the throttle, and its paddles respond with almost no delay by comparison. The distinction isn't the hardware but the calibration, a deliberate software decision Porsche made because, that is what the customer of a 911 deserves over the customer of a Golf GTI.</p>
+        <p>That calibration difference matters more than it sounds, because it is really the whole answer to why PDK earned its reputation while so many other dual-clutch boxes didn't. The mechanical gearbox section of a PDK is functionally equivalent to a manual transmission, and about as durable. What actually makes it a computer-controlled gearbox, and what tends to go wrong with it, is the hydraulic section and its sensors bolted on top of that mechanical core.</p>
+      </div>
+
+      <div class="section__media">
+        <figure class="figure reveal" data-delay="1">
+          <div class="figure__frame">
+            <img class="alt-img is-active" src="assets/shift-mechanism-a.png" alt="A PDK cutaway diagram with the power path highlighted through one clutch pack.">
+            <img class="alt-img" src="assets/shift-mechanism-b.png" alt="The same PDK cutaway, power path now highlighted through the other clutch pack.">
+            <div class="figure__ph">
+              <span class="label">Image coming soon</span>
+              <span class="figure__ph-file">assets/shift-mechanism-a.jpg or .png</span>
+            </div>
+          </div>
+          <figcaption>Two sub-transmissions, one case. Power alternates between the two clutch packs with every shift.<span class="figure__src">Image source: <a href="#src-19">[19]</a></span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ------------------------------------------------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">04</span>
+        <h2>Current Development, and Where PDK Has Actually Been</h2>
+        <p>PDK today is no longer just a fast-shifting gearbox. Since 2024, on the 911 Carrera GTS, and now the 911 Turbo S as well, Porsche's T-Hybrid system builds an electric motor directly into the PDK housing itself, one that also works as the engine's starter and alternator. That motor adds 54 PS on its own and can feed up to 40 kW back into a small 1.9 kWh battery under braking, paired with an electrically spun turbocharger for near-instant boost. The result is a 992.2 GTS that reaches 100 km/h in 3.0 seconds, three tenths quicker than the non-hybrid car it replaced. PDK, in other words, has quietly become a hybrid component as much as a gearbox.</p>
+        <p>Not every car having a PDK shares the same badge, either. The 8-speed unit in the current Panamera, built by ZF, is also used in the Bentley Continental GT and the Aston Martin Valhalla, which makes it as much a shared luxury-brand component now as a Porsche-only design. The Macan runs a different story altogether. Its "PDK," by the account of Porsche's own then-head of transmission development Wolfgang Hatz, is actually a Porsche-tuned version of Audi's DL501 S-tronic gearbox, built at a Volkswagen factory in Kassel rather than by ZF at all, the same box fitted to the Audi A6 and RS5. Porsche doesn't manufacture either transmission itself. It's really a badge and a calibration philosophy.</p>
+        <p>There's still one Porsche that doesn't use PDK at all. The Cayenne has kept its 8-speed Tiptronic S, the torque-converter automatic, mostly because a torque converter handles sustained towing loads better than a dual-clutch box does.</p>
+        <p>But wait.. what if I told you that the already capable PDK is also taken to another level by German tuning specialist 9FF!</p>
+        <p>The same shop that pushed old Tiptronic-based automatics to 800 to 1,600 horsepower in race applications, does comparable work on modern PDK units. Stock clutch packs are already good for roughly 1,000 Nm of torque, and 9FF pushes past that either by increasing clamping pressure on the clutches, within limits the rest of the hydraulic system and sensors can tolerate, or by fitting more clutch discs into the same physical space using thinner rings, which increases surface area by around 150% and pushes torque capacity up to roughly 1,500 Nm. They also tune the air gap in each clutch's disengaged state, shaving a few more milliseconds off an already fast factory shift.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 ------------------------------------------------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">05</span>
+        <h2>Reception, Reliability, and the Pain Points</h2>
+        <p>Re-quoting words of many who have experienced a PDK - "You HAVE to try it out flat-out on a track or an open road to truly absorb its finesse." A rare amount of the criticism PDK still gets, in other words, comes from people who never really drove it the way it was meant to be driven.</p>
+        <p>The reliability picture is relatively mundane. Porsche first announced that PDK fluid is a lifetime fill, but owners and mechanics argue that it doesn't really hold up for anyone who drives the car hard, tracks it, or spends a lot of time in stop-and-go traffic, since heat from the clutch packs slipping degrades that fluid faster. Independent Porsche shops now recommend a fluid change every 30,000 to 40,000 miles for street cars, and after every single track day for anything driven on a circuit. Skip that and the two most common failures might follow, worn clutch packs that shudder on takeoff and hesitate at low speed, and a degraded mechatronic unit that throws fault codes or, in the worst case, drops the car into limp mode. Both are full transmission-out jobs, and the mechatronic unit in particular is the single most expensive part in the whole gearbox to replace. Tellingly, shops that see this failure regularly report that it's almost always occurs downstream of a fluid change that never happened on time, which makes a lot of PDK's reputation for expensive failures a maintenance problem rather than an outright hardware failure.</p>
+        <p>In unfortunate cases, replacement quotes for a failed PDK have run anywhere from $15,000 to $25,000, and the large majority of those failures trace back to the hydraulic section and its sensors rather than the gears themselves, a recurring theme for almost any automatic transmission built around an electronically controlled clutch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 — Bottom line, no media, full width per spec ------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">06</span>
+        <h2>LOVED HONESTLY</h2>
+        <p>Unlike SMG, TipTronic and other single-clutch gearboxes of the millenium, PDK earns its reputation honestly. It is a really great example of how to make a good automatic transmission. It took Porsche the better part of forty years to get from a shelved prototype to a production car, proven first at Monza and only handed to customers decades later.</p>
+        <p>This is not a gearbox to be loved for its quirks, but a gearbox to be loved and respected for what it truly does.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -------------------------------------------------------- -->
+  <section class="sources">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="section__num">07</span>
+        <h2>Sources</h2>
+      </div>
+      <ol class="reveal" data-delay="1">
+        <li id="src-1"><b>"What does PDK stand for and what does it do?" — Porsche.com</b><a href="https://www.porsche.com/stories/innovation/what-is-pdk/" target="_blank" rel="noopener">porsche.com — what is PDK</a></li>
+        <li id="src-2"><b>"Why do yall rave about PDK?" — Reddit (r/Porsche_Cayman)</b><a href="https://www.reddit.com/r/Porsche_Cayman/comments/1nbya0v/why_do_yall_rave_about_pdk/" target="_blank" rel="noopener">reddit.com — why do yall rave about PDK</a></li>
+        <li id="src-3"><b>"PDK Explained: Porsche's Dual-Clutch Transmission" — European Speed Club</b><a href="https://www.european-speed-club.com/en/glossar/pdk-porsche-doppelkupplungsgetriebe" target="_blank" rel="noopener">european-speed-club.com — PDK explained</a></li>
+        <li id="src-4"><b>"Faster gear change: the history of the PDK" — Porsche Newsroom</b><a href="https://newsroom.porsche.com/en/2022/history/porsche-klassik-rainer-wuest-pdk-944-turbo-962-c-28926.html" target="_blank" rel="noopener">newsroom.porsche.com — the history of the PDK</a></li>
+        <li id="src-5"><b>"The shifting history of Porsche's PDK transmission" — Hagerty</b><a href="https://www.hagerty.com/media/automotive-history/the-shifting-history-of-porsches-pdk-transmission/" target="_blank" rel="noopener">hagerty.com — the shifting history of PDK</a></li>
+        <li id="src-6"><b>"Porsche 911 Carrera PDK (2008) review" — Car Magazine (UK)</b><a href="https://www.carmagazine.co.uk/car-reviews/porsche/porsche-911-carrera-pdk-2008-review/" target="_blank" rel="noopener">carmagazine.co.uk — 911 Carrera PDK (2008) review</a></li>
+        <li id="src-7"><b>"List of ZF transmissions" — Wikipedia</b><a href="https://en.wikipedia.org/wiki/List_of_ZF_transmissions" target="_blank" rel="noopener">en.wikipedia.org/wiki/List_of_ZF_transmissions</a></li>
+        <li id="src-8"><b>"How a Forgotten Prototype Became Porsche's GREATEST Transmission" — Driven by Matt (YouTube)</b><a href="https://www.youtube.com/watch?v=FLlUpghOV6Y" target="_blank" rel="noopener">youtube.com/watch?v=FLlUpghOV6Y</a></li>
+        <li id="src-9"><b>"PDK vs Manual: Porsche Transmission Service Compared" — Repasi Motorwerks</b><a href="https://repasimotorwerks.com/blog/pdk-vs-manual-transmission-service" target="_blank" rel="noopener">repasimotorwerks.com — PDK vs manual service compared</a></li>
+        <li id="src-10"><b>"VW DSG and Porsche PDK similar?" — GOLFMK7 forum</b><a href="https://www.golfmk7.com/forums/index.php?threads/vw-dsg-and-porsche-pdk-similar.324385/" target="_blank" rel="noopener">golfmk7.com — VW DSG and Porsche PDK similar</a></li>
+        <li id="src-11"><b>"PDK Repair Summary" — Rennlist (987 Forum)</b><a href="https://rennlist.com/forums/987-forum/1172846-pdk-repair-summary.html" target="_blank" rel="noopener">rennlist.com — PDK repair summary</a></li>
+        <li id="src-12"><b>"World's Best DCT. Porsche PDK. How it works... Part 1" — Jeff Richardson (YouTube)</b><a href="https://www.youtube.com/watch?v=jKQyQNDIHw8" target="_blank" rel="noopener">youtube.com/watch?v=jKQyQNDIHw8</a></li>
+        <li id="src-13"><b>"What is Porsche T-Hybrid technology?" — Porsche.com</b><a href="https://www.porsche.com/stories/innovation/porsche-explained-porsche-t-hybrid/" target="_blank" rel="noopener">porsche.com — what is T-Hybrid</a></li>
+        <li id="src-14"><b>"Origins of the PDK - Audi, ZF, Unicorn tears, etc." — Porsche Macan Forum</b><a href="https://www.macanforum.com/threads/origins-of-the-pdk-audi-zf-unicorn-tears-etc.21282/" target="_blank" rel="noopener">macanforum.com — origins of the PDK</a></li>
+        <li id="src-15"><b>"Porsche Macan" — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Porsche_Macan" target="_blank" rel="noopener">en.wikipedia.org/wiki/Porsche_Macan</a></li>
+        <li id="src-16"><b>"We reinforce a double clutch! | 992 PDK reinforcement" — 9FF Engineering (YouTube)</b><a href="https://www.youtube.com/watch?v=ITA7ikTBLAc" target="_blank" rel="noopener">youtube.com/watch?v=ITA7ikTBLAc</a></li>
+        <li id="src-17"><b>"Porsche Doppelkupplungsgetriebe – PDK" — Elferspot Magazin</b><a href="https://www.elferspot.com/de/magazin/porsche-doppelkupplungsgetriebe-pdk/" target="_blank" rel="noopener">elferspot.com — Porsche Doppelkupplungsgetriebe (PDK)</a></li>
+        <li id="src-18"><b>"PAG 04 – Porsche 962 PDK-Doppelkupplungsgetriebe" — cede51.de</b><a href="https://cede51.de/pag-04-porsche-962-pdk-doppelkupplungsgetriebe/" target="_blank" rel="noopener">cede51.de — Porsche 962 PDK dual-clutch transmission</a></li>
+        <li id="src-19"><b>"PDK: Twenty Years in the Making" — 9WERKS</b><a href="https://9werks.co.uk/articles/pdk-twenty-years-in-the-making/" target="_blank" rel="noopener">9werks.co.uk — PDK: Twenty Years in the Making</a></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span class="label">Weird Gearboxes &nbsp;/&nbsp; PDK &nbsp;/&nbsp; by Bhavya Parekh</span>
+    <span class="label">Webpage theme design from <a href="https://getdesign.md/" target="_blank" rel="noopener">getdesign.md</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  document.body.classList.remove("no-js");
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------------
+     Scroll-triggered reveals
+     --------------------------------------------------------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------
+     Reading progress
+     --------------------------------------------------------- */
+  var bar = document.getElementById("progressBar");
+  var ticking = false;
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct * 100)).toFixed(2) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+  updateProgress();
+
+  /* ---------------------------------------------------------
+     Missing-asset handling — placeholders instead of broken icons.
+     Drop the real file into /assets and it just appears; no code change.
+     The extension in the markup is only a first guess: if it 404s we work
+     through the others, so a .png fills a slot written as .jpg.
+     --------------------------------------------------------- */
+  var IMG_EXTS = ["jpg", "jpeg", "png", "webp", "avif"];
+
+  function markMissing(img) {
+    var host = img.closest(".figure");
+    if (!host) { return; }
+    // A figure can hold more than one <img> (the alternating pair below) —
+    // only show the placeholder once every image in it has failed; a lone
+    // failure just hides that one frame and leaves its sibling showing.
+    var total = host.querySelectorAll(".figure__frame img").length;
+    var failed = (parseInt(host.getAttribute("data-img-failed") || "0", 10)) + 1;
+    host.setAttribute("data-img-failed", String(failed));
+    if (failed >= total) {
+      host.classList.add("is-missing");
+    } else {
+      img.style.display = "none";
+    }
+  }
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    if (dot === -1) { markMissing(img); return; }
+    var base = src.slice(0, dot);
+    // Extensions not yet attempted for this element, in IMG_EXTS order.
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { markMissing(img); return; }
+    tried.push(next);
+    img.src = base + "." + next;
+  }
+  document.querySelectorAll(".figure img").forEach(function (img) {
+    img.addEventListener("error", function () { tryNextExt(img); });
+    // Already failed before this script ran, or is a 0-byte/undecodable file.
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
+  });
+
+  /* ---------------------------------------------------------
+     Alternating figure — crosses between two images every 2s,
+     like a two-frame GIF. Holds on the first frame if the reader
+     prefers reduced motion, same as every other animation here.
+     --------------------------------------------------------- */
+  if (!reduceMotion) {
+    document.querySelectorAll(".figure__frame").forEach(function (frame) {
+      var altImgs = Array.prototype.slice.call(frame.querySelectorAll(".alt-img"));
+      if (altImgs.length < 2) { return; }
+      var activeIndex = 0;
+      window.setInterval(function () {
+        altImgs[activeIndex].classList.remove("is-active");
+        activeIndex = (activeIndex + 1) % altImgs.length;
+        altImgs[activeIndex].classList.add("is-active");
+      }, 2000);
+    });
+  }
+
+  /* Opening a shared #src-N link directly: the browser scrolls before the
+     images above have laid out, so it lands short. Re-aim once loaded. */
+  if (/^#src-\d+$/.test(window.location.hash)) {
+    window.addEventListener("load", function () {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView(); }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Horizontal scroll-driven timeline (Section 04).
+     Vertical scroll through a tall spacer is mapped to a
+     horizontal translateX on the track while the pin is stuck,
+     so it moves forward on scroll-down/swipe-up and back on
+     scroll-up/swipe-down — the same native gesture either way.
+     --------------------------------------------------------- */
+  var timeline = document.querySelector(".timeline");
+  if (timeline) {
+    var tlSpacer = timeline.querySelector(".timeline__spacer");
+    var tlPin = timeline.querySelector(".timeline__pin");
+    var tlTrack = timeline.querySelector(".timeline__track");
+    var tlItems = Array.prototype.slice.call(timeline.querySelectorAll(".timeline__item"));
+    var tlFill = timeline.querySelector(".timeline__bar-fill");
+
+    if (reduceMotion || !("IntersectionObserver" in window) || !tlSpacer || !tlPin || !tlTrack) {
+      // Native horizontal scroll strip instead of scroll-hijacking.
+      timeline.classList.add("no-scrub");
+    } else {
+      var tlScrollDistance = 0;
+      var tlTicking = false;
+
+      function tlUpdate() {
+        var rect = tlSpacer.getBoundingClientRect();
+        var pinHeight = tlPin.offsetHeight;
+        var total = tlSpacer.offsetHeight - pinHeight;
+        var progress = total > 0 ? (-rect.top) / total : 0;
+        progress = Math.min(1, Math.max(0, progress));
+        tlTrack.style.transform = "translateX(" + (-progress * tlScrollDistance) + "px)";
+        if (tlFill) { tlFill.style.width = (progress * 100).toFixed(1) + "%"; }
+        if (tlItems.length > 1) {
+          var activeIndex = Math.round(progress * (tlItems.length - 1));
+          tlItems.forEach(function (item, i) {
+            item.classList.toggle("is-active", i === activeIndex);
+          });
+        }
+        tlTicking = false;
+      }
+
+      function tlMeasure() {
+        var pinWidth = tlPin.clientWidth;
+        var trackWidth = tlTrack.scrollWidth;
+        tlScrollDistance = Math.max(0, trackWidth - pinWidth);
+        tlSpacer.style.height = (tlPin.offsetHeight + tlScrollDistance) + "px";
+        tlUpdate();
+      }
+
+      window.addEventListener("scroll", function () {
+        if (!tlTicking) { tlTicking = true; window.requestAnimationFrame(tlUpdate); }
+      }, { passive: true });
+      window.addEventListener("resize", tlMeasure, { passive: true });
+      window.addEventListener("load", tlMeasure);
+      tlMeasure();
+    }
+  }
+})();
+</script>
+</body>
+</html>
