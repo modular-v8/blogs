@@ -34,11 +34,11 @@ One folder per post, each self-contained: the page and its assets travel togethe
 
 | No. | Post | Path |
 |---|---|---|
-| 01 | The AMG SpeedShift MCT — the automatic that threw away its torque converter | [`mercedes-mct/`](mercedes-mct/) |
-| 02 | The BMW SMG — a sequential gearbox that deserves more credit than it gets | [`bmw-smg/`](bmw-smg/) |
-| 03 | The Lamborghini e-gear — the gearbox concept Ferrari, Maserati, and Lamborghini all shared | [`lamborghini-single-clutch/`](lamborghini-single-clutch/) |
-| 04 | TipTronic — it was never its own transmission, just Porsche's trademark for an ordinary torque-converter automatic | [`tiptronic/`](tiptronic/) |
-| 05 | PDK — a dual-clutch idea shelved for twenty years before Porsche ever sold it, and a badge that now covers at least two different gearboxes | [`pdk/`](pdk/) |
+| 01 | AMG's SpeedShift MCT — how AMG replaced a torque-converter with a wet-clutch and kept the rest of the hardware the same | [`mercedes-mct/`](mercedes-mct/) |
+| 02 | SMG, From BMW, with love — one of the most divisive transmissions in BMW history, and whether it deserves that reputation | [`bmw-smg/`](bmw-smg/) |
+| 03 | Italian Twist to an Automatic Transmission — the Formula 1-inspired robotized manual behind the Aventador's brutal gearshifts | [`lamborghini-single-clutch/`](lamborghini-single-clutch/) |
+| 04 | What's in a Name? — TipTronic was never its own transmission, just Porsche's trademark for an ordinary torque-converter automatic with a manual override gate | [`tiptronic/`](tiptronic/) |
+| 05 | Best of German Tech? — the dual-clutch idea sat shelved for two decades before it ever reached a customer, then proved itself at Monza before Porsche put it in a road car | [`pdk/`](pdk/) |
 
 ## Design
 
