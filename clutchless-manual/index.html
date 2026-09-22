@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Clutchless Manuals: Halfway to an Automatic</title>
+<meta name="description" content="A manual gearbox with no clutch pedal: how clutchless manuals sense the driver's intent, how they operate the clutch, and why the idea has been dropped and revived for seventy years.">
+<meta name="theme-color" content="#0B0B0B">
+<meta property="og:title" content="Clutchless Manuals: Halfway to an Automatic">
+<meta property="og:description" content="A manual gearbox with no clutch pedal: how clutchless manuals sense the driver's intent, how they operate the clutch, and why the idea has been dropped and revived for seventy years.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Design tokens — DESIGN.md "Motorsport Livery"
+   ============================================================ */
+:root{
+  --primary:#F2F2F2;
+  --secondary:#8C8C8C;
+  --tertiary:#E10600;
+  --neutral:#0B0B0B;
+  --surface:#151515;
+  --on-primary:#0B0B0B;
+
+  --line:#2A2A2A;
+
+  --font-display:"Oswald","Arial Narrow","Helvetica Neue Condensed",Impact,system-ui,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --r-sm:0px;
+  --r-md:2px;
+  --r-lg:4px;
+
+  --s-sm:8px;
+  --s-md:16px;
+  --s-lg:32px;
+
+  --maxw:1280px;
+  --gutter:clamp(20px,5vw,64px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--neutral);
+  color:var(--primary);
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:var(--tertiary);text-decoration:none;border-bottom:1px solid rgba(225,6,0,.35)}
+a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
+:focus-visible{outline:2px solid var(--tertiary);outline-offset:3px}
+
+/* ============================================================
+   Reading progress
+   ============================================================ */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:transparent;z-index:100;pointer-events:none;
+}
+.progress__bar{
+  height:100%;width:0%;
+  background:var(--tertiary);
+  transform-origin:left center;
+}
+
+/* ============================================================
+   Shell
+   ============================================================ */
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-inline:var(--gutter);
+}
+
+.label{
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+
+/* ============================================================
+   Masthead / hero
+   ============================================================ */
+.masthead{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2.5) calc(var(--s-lg) * 2);
+  position:relative;
+}
+.masthead__kicker{
+  display:flex;align-items:center;gap:var(--s-md);
+  margin-bottom:var(--s-lg);
+}
+.masthead__home{
+  color:var(--secondary);
+  border-bottom:1px solid transparent;
+}
+.masthead__home:hover,.masthead__home:focus-visible{
+  color:var(--primary);
+  border-bottom-color:var(--tertiary);
+}
+.masthead__kicker::after{
+  content:"";height:1px;flex:1;background:var(--line);
+}
+.masthead__rule{
+  width:56px;height:3px;background:var(--tertiary);flex:none;
+}
+h1,.h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:0.02em;
+  line-height:1.02;
+  margin:0;
+  text-transform:uppercase;
+}
+.masthead h1{
+  font-size:clamp(2.2rem,6vw,5rem);
+  max-width:15ch;
+}
+.masthead h1 em{
+  font-style:normal;
+  display:block;
+  margin-top:0.5em;
+  font-size:clamp(0.95rem,1.7vw,1.5rem);
+  font-weight:500;
+  line-height:1.18;
+  letter-spacing:0.06em;
+  color:var(--secondary);
+  max-width:26ch;
+}
+.masthead__dek{
+  margin:var(--s-lg) 0 0;
+  max-width:60ch;
+  font-size:clamp(1rem,1.6vw,1.2rem);
+  line-height:1.6;
+  color:var(--primary);
+}
+.masthead__meta{
+  margin-top:calc(var(--s-lg) * 1.25);
+  display:flex;flex-wrap:wrap;gap:var(--s-md) var(--s-lg);
+}
+.masthead__meta span{position:relative}
+
+.masthead__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:end;
+}
+.masthead__art{align-self:end}
+.masthead__art .figure__frame{aspect-ratio:4/3}
+@media (max-width:900px){
+  .masthead__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+}
+
+/* ============================================================
+   Section grid — 60 / 40 text-to-media split
+   ============================================================ */
+.section{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2);
+}
+.section__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:start;
+}
+.section__text > *:first-child{margin-top:0}
+.section__text > *:last-child{margin-bottom:0}
+
+.section__media{
+  position:sticky;
+  top:calc(var(--s-lg) * 2);
+  display:flex;
+  flex-direction:column;
+  gap:var(--s-md);
+}
+
+@media (max-width:900px){
+  .section__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+  .section__media{position:static;top:auto}
+}
+
+/* Alternating layout — every other media-bearing section flips to
+   media-left / text-right instead of the default text-left / media-right. */
+.section--reverse .section__grid{grid-template-columns:40fr 60fr}
+.section--reverse .section__text{order:2}
+.section--reverse .section__media{order:1}
+@media (max-width:900px){
+  .section--reverse .section__grid{grid-template-columns:1fr}
+  .section--reverse .section__text{order:0}
+  .section--reverse .section__media{order:0}
+}
+
+/* A section with no media runs its text the full width of .wrap instead of
+   reserving an empty 40% column. Paragraphs' own 68ch cap (below) would
+   otherwise still leave that space blank, so lift it here too. */
+.section--full .section__text{max-width:none}
+.section--full .section__text p{max-width:none}
+
+/* ============================================================
+   Prose
+   ============================================================ */
+.section__num{
+  display:block;
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  color:var(--tertiary);
+  margin-bottom:var(--s-sm);
+}
+h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.75rem,3.4vw,2.5rem);
+  font-weight:700;
+  line-height:1.08;
+  text-transform:uppercase;
+  margin:0 0 var(--s-lg);
+  max-width:26ch;
+}
+p{margin:0 0 var(--s-md);max-width:68ch}
+.section__text p{font-size:1.02rem;line-height:1.72;color:#DCDCDC}
+.section__text strong{color:var(--primary);font-weight:600}
+.section__text em{color:var(--primary)}
+
+/* ============================================================
+   Stat callouts
+   ============================================================ */
+.stat{
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-left:3px solid var(--tertiary);
+  border-radius:var(--r-lg);
+  padding:24px;
+}
+.stat__value{
+  font-family:var(--font-display);
+  font-size:clamp(2.2rem,5vw,3.2rem);
+  font-weight:700;
+  line-height:0.95;
+  letter-spacing:0.01em;
+  color:var(--primary);
+  display:block;
+}
+.stat__value small{
+  font-size:0.38em;
+  letter-spacing:0.08em;
+  color:var(--secondary);
+  margin-left:6px;
+}
+.stat__label{
+  display:block;
+  margin-top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+.stat__note{
+  margin:var(--s-sm) 0 0;
+  font-size:0.85rem;
+  line-height:1.5;
+  color:var(--secondary);
+  max-width:none;
+}
+.stat-grid{display:grid;gap:var(--s-md)}
+@media (min-width:520px) and (max-width:900px){
+  .stat-grid{grid-template-columns:1fr 1fr}
+}
+
+/* ============================================================
+   Figures + graceful "coming soon" placeholders
+   ============================================================ */
+.figure{margin:0}
+.figure__frame{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+/* The shift-mechanism diagram is a wide chain drawing (1024x567, ~16:9),
+   not the 4:3 the rest of the figures use — a 4:3 frame would crop it. */
+.figure__frame--imt-chain{aspect-ratio:1024/567}
+.figure__frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.figure__ph{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--s-sm);
+  text-align:center;
+  padding:var(--s-lg);
+  background:var(--surface);
+  border:1px dashed var(--line);
+}
+.figure__ph .label{color:var(--secondary)}
+.figure__ph-file{
+  font-family:var(--font-body);
+  font-size:0.78rem;
+  color:#5E5E5E;
+  word-break:break-all;
+}
+/* JS marks the frame when the asset fails to load */
+.figure.is-missing img{display:none}
+.figure.is-missing .figure__ph{display:flex}
+.figure figcaption{
+  margin-top:var(--s-sm);
+  font-size:0.82rem;
+  line-height:1.5;
+  color:var(--secondary);
+}
+/* Credit line under every image — sits below the caption, quieter than it */
+.figure__src{
+  display:block;
+  margin-top:var(--s-sm);
+  padding-top:var(--s-sm);
+  border-top:1px solid var(--line);
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#5E5E5E;
+}
+/* The reference number links down to the matching entry in Sources */
+.figure__src a{
+  color:var(--secondary);
+  border-bottom-color:transparent;
+}
+.figure__src a:hover,.figure__src a:focus-visible{
+  color:var(--tertiary);
+  border-bottom-color:var(--tertiary);
+}
+
+/* ============================================================
+   Alternating figure — two images cross-fading in place, every
+   2s, like a two-frame GIF. JS toggles .is-active between them.
+   ============================================================ */
+.figure__frame .alt-img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  opacity:0;
+  transition:opacity .8s ease;
+}
+.figure__frame .alt-img.is-active{opacity:1}
+@media (prefers-reduced-motion:reduce){
+  .figure__frame .alt-img{transition:none}
+}
+
+/* ============================================================
+   Gear-gate timeline (Section 02). The Master Table on a five-
+   speed H-gate: scrolling steps through the systems one at a
+   time while a playhead runs across the years, and every new
+   era is a gear change, with the lever crossing neutral.
+   ============================================================ */
+.shift{
+  position:relative;
+  margin-bottom:calc(var(--s-lg) * 1.5);
+  --vh:100vh;
+  --pin-top:56px;
+  --shift-grid:#1F1F1F;
+  --shift-past:#5E5E5E;
+}
+@supports (height:100svh){.shift{--vh:100svh}}
+/* Short or narrow screens: pin closer to the top to give the stage room */
+@media (max-height:760px),(max-width:760px){.shift{--pin-top:16px}}
+
+/* Hint row above the stage */
+.shift__hint{
+  display:none;
+  flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:var(--s-sm) var(--s-md);
+  margin-bottom:var(--s-md);
+}
+.shift.is-ready .shift__hint{display:flex}
+.shift__hint-text{display:flex;align-items:center;gap:var(--s-sm)}
+.shift__hint-text::before{content:"";width:28px;height:1px;background:var(--tertiary);flex:none}
+.shift__toggle{
+  padding:8px 12px;cursor:pointer;
+  background:transparent;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  color:var(--secondary);
+  transition:color .2s ease,border-color .2s ease;
+}
+.shift__toggle:hover,.shift__toggle:focus-visible{color:var(--primary);border-color:var(--secondary)}
+
+/* The pinned stage. JS sets the spacer's height so the stage stays
+   stuck for one step of scrolling per system. */
+.shift__spacer{display:none;position:relative}
+.shift.is-ready .shift__spacer{display:block}
+.shift__stage{
+  position:sticky;
+  top:var(--pin-top);
+  height:min(calc(var(--vh) - var(--pin-top) * 2),620px);
+  display:flex;flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+}
+
+/* Top strip: title on the left, stepping through the systems on the right */
+.shift__meta{
+  flex:none;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--s-md);
+  min-height:48px;
+  padding:6px var(--s-lg);
+  border-bottom:1px solid var(--line);
+}
+.shift__title{font-size:0.7rem}
+/* On phones the gear display moves into this strip and takes the title's place */
+.dash ~ .shift__title{display:none}
+
+.shift__nav{display:flex;align-items:center;gap:var(--s-sm);margin-left:auto}
+.shift__count{
+  min-width:4.8em;text-align:center;
+  font-family:var(--font-display);font-size:0.86rem;letter-spacing:0.12em;
+  font-variant-numeric:tabular-nums;
+  color:var(--secondary);
+}
+.shift__count b{font-weight:600;color:var(--primary)}
+.shift__step{
+  width:30px;height:30px;padding:0;cursor:pointer;
+  display:grid;place-items:center;
+  background:transparent;
+  border:1px solid var(--line);border-radius:var(--r-md);
+  color:var(--primary);
+  font-family:var(--font-display);font-size:1.1rem;line-height:1;
+  transition:border-color .2s ease,opacity .2s ease;
+}
+.shift__step:hover,.shift__step:focus-visible{border-color:var(--secondary)}
+.shift__step[aria-disabled="true"]{opacity:.3;cursor:default;border-color:var(--line)}
+
+/* Body: lever and readout, then the chart. Stacked by default;
+   side by side on wide screens (see the media query further down). */
+.shift__body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.shift__top{
+  flex:none;
+  display:grid;
+  grid-template-columns:clamp(112px,26%,190px) minmax(0,1fr);
+  grid-template-areas:"lever head" "chain chain";
+  gap:var(--s-md) var(--s-lg);
+  padding:var(--s-md) var(--s-lg);
+  border-bottom:1px solid var(--line);
+}
+
+/* H-gate. The lever box is a size container, so the gate scales to
+   whatever room the layout leaves it, and the gate is one too, so the
+   knob, slots and gear numbers scale with the gate. The slots are one
+   SVG path drawn twice (an edge stroke under a groove stroke); the knob
+   and gear numbers are HTML on top. */
+.shift__lever{
+  grid-area:lever;
+  min-width:0;min-height:0;
+  display:flex;align-items:center;gap:var(--s-lg);
+  container-type:size;
+}
+.gate{
+  --ratio:1.25;
+  --slot:clamp(7px,8cqh,18px);
+  --knob:clamp(14px,15cqh,32px);
+  --num:clamp(22px,20cqh,34px);
+  position:relative;
+  flex:0 1 auto;min-width:0;
+  width:100%;max-width:220px;
+  width:min(100cqw,calc(100cqh * var(--ratio)));max-width:none;
+  aspect-ratio:var(--ratio);
+  container-type:size;
+}
+.gate__svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.gate__svg path{fill:none;stroke-linecap:square;vector-effect:non-scaling-stroke}
+.gate__edge{stroke:var(--line);stroke-width:calc(var(--slot) + 2px)}
+.gate__slot{stroke:var(--neutral);stroke-width:var(--slot)}
+.gate__gear{
+  position:absolute;
+  left:var(--x);top:calc(var(--y) + var(--dir) * 15%);
+  width:var(--num);height:var(--num);margin:calc(var(--num) / -2) 0 0 calc(var(--num) / -2);padding:0;
+  background:transparent;border:0;cursor:pointer;
+  font-family:var(--font-display);font-size:clamp(0.72rem,10cqh,1.05rem);font-weight:600;line-height:1;
+  color:#5E5E5E;
+  transition:color .2s ease;
+}
+.gate__gear:hover,.gate__gear:focus-visible,.gate__gear.is-on{color:var(--primary)}
+/* Reverse completes the five-speed pattern but is never selected */
+.gate__rev{
+  position:absolute;
+  left:var(--x);top:calc(var(--y) + var(--dir) * 15%);
+  transform:translate(-50%,-50%);
+  font-family:var(--font-display);font-size:clamp(0.72rem,10cqh,1.05rem);font-weight:600;line-height:1;
+  color:#3A3A3A;
+  pointer-events:none;
+}
+.gate__knob{
+  position:absolute;left:0;top:0;z-index:2;
+  width:var(--knob);height:var(--knob);margin:calc(var(--knob) / -2) 0 0 calc(var(--knob) / -2);
+  border-radius:50%;
+  background:var(--tertiary);
+  border:2px solid var(--neutral);
+  cursor:grab;touch-action:none;
+  will-change:transform;
+}
+/* A grab area larger than the knob itself */
+.gate__knob::before{content:"";position:absolute;inset:-10px;border-radius:50%}
+.gate__knob.is-dragging{cursor:grabbing}
+.gate__knob svg{position:absolute;inset:14%;width:72%;height:72%}
+.gate__knob path{fill:none;stroke:var(--neutral);stroke-width:1.8;stroke-linecap:square}
+
+/* Gear display: a panel beside the gate, which JS moves into the top
+   strip on phones, where there is no room beside it. */
+.dash{flex:none;display:flex;flex-direction:column}
+.dash__cell{display:flex;flex-direction:column;gap:4px}
+.dash .label{font-size:0.66rem}
+.dash__row{display:flex;align-items:center;gap:10px}
+.dash__digit{
+  min-width:0.6em;
+  font-family:var(--font-display);font-size:clamp(2rem,26cqh,4rem);font-weight:700;line-height:0.9;
+  color:var(--primary);
+}
+.dash__era{
+  font-family:var(--font-display);font-size:0.74rem;letter-spacing:0.1em;
+  white-space:nowrap;color:var(--secondary);
+}
+.shift__meta .dash .label{display:none}
+.shift__meta .dash__digit{font-size:1.35rem}
+
+/* Readout for the current system */
+.read__head{grid-area:head;align-self:center;min-width:0}
+.read__years{
+  display:block;
+  font-family:var(--font-display);font-size:0.95rem;font-weight:500;
+  letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--secondary);
+}
+.read__name{
+  display:block;margin-top:2px;
+  font-family:var(--font-display);font-size:clamp(1.6rem,3.2vw,3rem);font-weight:700;
+  line-height:1.02;letter-spacing:0.01em;text-transform:uppercase;
+  color:var(--primary);
+  overflow-wrap:anywhere;
+}
+.read__aka{display:block;margin-top:4px;font-size:0.84rem;line-height:1.4;color:var(--secondary)}
+.read__aka:empty{display:none}
+.read__model{display:block;margin-top:8px;font-size:0.98rem;font-weight:600;line-height:1.4;color:#DCDCDC}
+.read__supplier{
+  display:flex;flex-wrap:wrap;align-items:baseline;gap:2px 10px;
+  margin-top:6px;font-size:0.9rem;line-height:1.4;color:var(--primary);
+}
+.read__supplier .label{font-size:0.68rem}
+.read__supplier[hidden]{display:none}
+
+/* The two problems every system had to solve, as a chain */
+.shift__chain{
+  grid-area:chain;min-width:0;
+  display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  align-items:stretch;gap:10px;
+}
+.shift__cell{
+  min-width:0;padding:12px 14px;
+  background:var(--neutral);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+}
+.shift__cell .label{display:block;margin-bottom:6px;font-size:0.68rem}
+.shift__cell p{margin:0;max-width:none;font-size:0.92rem;line-height:1.45;color:var(--primary)}
+.shift__arrow{align-self:center;font-family:var(--font-display);font-size:1.2rem;color:#5E5E5E}
+
+.read__head.is-up,.shift__chain.is-up{animation:readUp .34s cubic-bezier(.22,.61,.36,1)}
+.read__head.is-down,.shift__chain.is-down{animation:readDown .34s cubic-bezier(.22,.61,.36,1)}
+@keyframes readUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes readDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:none}}
+
+/* Lifespan chart. Rows are grouped by gear, each bar fills in grey as
+   the playhead passes it, and the current system is the red one. */
+.shift__chart{
+  --chart-gut:24px;--bar:6px;
+  position:relative;
+  flex:1 1 auto;min-height:0;
+  display:flex;flex-direction:column;
+  padding:12px var(--s-lg) 8px;
+}
+.chart__head{
+  flex:none;
+  display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;
+  gap:6px var(--s-md);
+  margin-bottom:10px;
+}
+.chart__head .label{font-size:0.7rem}
+
+.chart__groups{position:relative;flex:1 1 auto;min-height:0;display:flex;flex-direction:column;gap:5px}
+.chart__group{position:relative;flex:var(--rows) 1 0;min-height:0;display:flex;padding-left:var(--chart-gut)}
+.chart__gear{
+  position:absolute;left:0;top:0;bottom:0;width:var(--chart-gut);
+  font-family:var(--font-display);font-size:0.68rem;font-weight:600;line-height:1;
+  color:#5E5E5E;
+  transition:color .2s ease;
+}
+.chart__gear::after{
+  content:"";position:absolute;top:0;bottom:0;right:8px;width:2px;
+  background:var(--line);
+  transition:background .2s ease;
+}
+.chart__group.is-on .chart__gear{color:var(--primary)}
+.chart__group.is-on .chart__gear::after{background:var(--tertiary)}
+.chart__rows{flex:1 1 auto;min-width:0;display:grid;grid-auto-rows:minmax(0,1fr);min-height:0}
+.chart__row{
+  position:relative;display:block;width:100%;min-height:0;
+  margin:0;padding:0;border:0;
+  background:transparent;color:inherit;font:inherit;
+  cursor:pointer;
+}
+.chart__row:focus-visible{outline:1px solid var(--secondary);outline-offset:0}
+.chart__seg{
+  position:absolute;top:50%;height:var(--bar);margin-top:calc(var(--bar) / -2);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+}
+.chart__seg--track{background:var(--line)}
+.chart__seg--fill{width:0;background:var(--shift-past)}
+.chart__row.is-active .chart__seg{background:var(--tertiary)}
+.chart__label{
+  position:absolute;top:50%;z-index:2;
+  transform:translateY(-50%);
+  padding:0 4px;
+  background:var(--surface);
+  font-family:var(--font-display);font-size:0.66rem;font-weight:500;line-height:1.3;
+  letter-spacing:0.1em;text-transform:uppercase;white-space:nowrap;
+  color:var(--secondary);
+  pointer-events:none;
+  transition:color .2s ease;
+}
+.chart__row:hover .chart__label,
+.chart__row:focus-visible .chart__label,
+.chart__row.is-active .chart__label{color:var(--primary)}
+/* Rows too thin to carry every label keep only the current one */
+.shift.is-dense:not(.is-static) .chart__label{display:none}
+.shift.is-dense:not(.is-static) .chart__row.is-active .chart__label{display:block}
+
+.chart__grid,.chart__over{position:absolute;top:0;bottom:0;left:var(--chart-gut);right:0;pointer-events:none}
+.chart__over{z-index:1}
+.chart__line{position:absolute;top:0;bottom:0;width:1px;background:var(--shift-grid)}
+.chart__line--today{background:var(--line)}
+.chart__playhead{position:absolute;top:-6px;bottom:-1px;width:1px;margin-left:-0.5px;background:var(--tertiary)}
+.chart__playhead::before{content:"";position:absolute;top:0;left:-3px;width:7px;height:7px;background:var(--tertiary)}
+.chart__axis{flex:none;position:relative;height:20px;margin-left:var(--chart-gut);border-top:1px solid var(--line)}
+.chart__tick{
+  position:absolute;top:5px;
+  transform:translateX(-50%);
+  font-family:var(--font-display);font-size:0.66rem;letter-spacing:0.08em;
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+  color:var(--secondary);
+}
+.chart__tick--today{transform:translateX(-100%);padding-right:4px;text-transform:uppercase;letter-spacing:0.12em;color:var(--primary)}
+.shift__chart.is-narrow .chart__tick.is-minor{display:none}
+.chart__tip{
+  position:absolute;left:0;top:0;z-index:5;
+  max-width:260px;padding:8px 10px;
+  background:var(--neutral);
+  border:1px solid var(--line);border-radius:var(--r-md);
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .15s ease;
+}
+.chart__tip.is-on{opacity:1}
+.chart__tip b{display:block;font-family:var(--font-display);font-size:0.9rem;font-weight:600;letter-spacing:0.06em;color:var(--primary)}
+.chart__tip span{display:block;margin-top:2px;font-size:0.78rem;line-height:1.4;color:var(--secondary)}
+
+/* From 700px: lever, readout and chain in a column on the left, the
+   chart filling the full height on the right. */
+@media (min-width:700px){
+  .shift__body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .shift__top{
+    min-height:0;
+    display:flex;flex-direction:column;gap:10px;
+    padding:16px 20px;
+    border-bottom:0;border-right:1px solid var(--line);
+  }
+  .shift__lever{flex:1 1 0;min-height:56px;gap:var(--s-md)}
+  .read__head{align-self:stretch}
+  .read__years{font-size:0.8rem}
+  .read__aka{font-size:0.76rem}
+  .read__model{margin-top:4px;font-size:0.86rem}
+  .read__supplier{margin-top:4px;font-size:0.8rem}
+  .shift__chain{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px}
+  .shift__arrow{display:none}
+  .shift__cell{padding:8px 10px}
+  .shift__cell .label{margin-bottom:3px;font-size:0.6rem}
+  .shift__cell p{font-size:0.8rem;line-height:1.35}
+  .shift__chart{padding:var(--s-md) 20px 10px}
+}
+@media (min-width:1000px){
+  .shift__body{grid-template-columns:minmax(0,45fr) minmax(0,55fr)}
+  .shift__top{gap:var(--s-md);padding:var(--s-lg)}
+  .shift__lever{min-height:110px;gap:var(--s-lg)}
+  .read__years{font-size:0.95rem}
+  .read__aka{font-size:0.84rem}
+  .read__model{margin-top:8px;font-size:0.98rem}
+  .read__supplier{margin-top:6px;font-size:0.9rem}
+  .shift__chain{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:10px}
+  .shift__arrow{display:block}
+  .shift__cell{padding:12px 14px}
+  .shift__cell .label{margin-bottom:6px;font-size:0.68rem}
+  .shift__cell p{font-size:0.92rem;line-height:1.45}
+  .shift__chart{padding:var(--s-md) var(--s-lg) 10px}
+}
+
+/* Static view (reduced motion, short screens, or "See all at once"):
+   the chart drawn in full, then every system as a card. */
+.shift.is-static .shift__stage{position:relative;top:auto;height:auto}
+.shift.is-static .shift__body{display:block}
+.shift.is-static .shift__meta,
+.shift.is-static .shift__top,
+.shift.is-static .chart__playhead{display:none}
+.shift.is-static .shift__chart{flex:none}
+.shift.is-static .chart__group{flex:none}
+.shift.is-static .chart__rows{grid-auto-rows:18px}
+
+/* The system cards. The markup's data, and what readers without JS
+   get; while the stage runs they are kept for screen readers only. */
+.shift__list{
+  margin:0;padding:0;list-style:none;
+  display:grid;gap:var(--s-md);
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+}
+.shift.is-ready .shift__list{margin-top:var(--s-md)}
+.shift.is-ready:not(.is-static) .shift__list{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+.shift__sys{
+  padding:20px;
+  background:var(--surface);
+  border:1px solid var(--line);border-radius:var(--r-lg);
+  transition:border-color .3s ease;
+}
+.shift__sys.is-flash{border-color:var(--tertiary)}
+.shift__years{
+  display:block;
+  font-family:var(--font-display);font-size:0.86rem;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--secondary);
+}
+.shift__name{
+  display:block;margin-top:2px;
+  font-family:var(--font-display);font-size:1.6rem;font-weight:700;line-height:1.05;
+  letter-spacing:0.02em;text-transform:uppercase;
+  color:var(--primary);
+}
+.shift__aka{display:block;margin-top:4px;font-size:0.8rem;line-height:1.4;color:var(--secondary)}
+.shift__model{display:block;margin-top:8px;font-size:0.9rem;font-weight:600;line-height:1.4;color:#DCDCDC}
+.shift__specs{margin:14px 0 0;display:grid;gap:8px}
+.shift__specs div{padding-top:8px;border-top:1px solid var(--line)}
+.shift__specs dt{
+  font-family:var(--font-display);font-size:0.68rem;font-weight:500;
+  letter-spacing:0.16em;text-transform:uppercase;
+  color:var(--secondary);
+}
+.shift__specs dd{margin:2px 0 0;font-size:0.86rem;line-height:1.45;color:#C9C9C9}
+
+@media (max-width:560px){
+  .shift__meta{padding:6px 12px}
+  .shift__top{grid-template-columns:112px minmax(0,1fr);gap:12px 14px;padding:12px}
+  .read__years{font-size:0.78rem}
+  .read__aka{font-size:0.76rem}
+  .read__model{margin-top:6px;font-size:0.86rem}
+  .read__supplier{margin-top:4px;font-size:0.82rem}
+  .shift__chain{grid-template-columns:minmax(0,1fr);align-content:start;gap:0;border-top:1px solid var(--line)}
+  .shift__arrow{display:none}
+  .shift__cell{
+    display:grid;grid-template-columns:7.4em minmax(0,1fr);align-items:baseline;gap:10px;
+    padding:7px 0;
+    background:none;border:0;border-bottom:1px solid var(--line);border-radius:0;
+  }
+  .shift__cell .label{margin:0;font-size:0.6rem}
+  .shift__cell p{font-size:0.82rem;line-height:1.4}
+  .shift__chart{--chart-gut:18px;--bar:4px;padding:10px 12px 6px}
+  .chart__groups{gap:4px}
+  .chart__gear::after{right:6px}
+}
+
+/* ============================================================
+   Sources
+   ============================================================ */
+.sources{padding-block:calc(var(--s-lg) * 2)}
+.sources ol{
+  margin:0;padding:0;list-style:none;
+  counter-reset:src;
+  display:grid;
+  gap:var(--s-md);
+}
+@media (min-width:900px){
+  .sources ol{grid-template-columns:1fr 1fr;gap:var(--s-md) var(--s-lg)}
+}
+.sources li{
+  counter-increment:src;
+  position:relative;
+  padding:var(--s-md) 0 var(--s-md) 42px;
+  border-top:1px solid var(--line);
+  font-size:0.88rem;
+  line-height:1.6;
+  color:var(--secondary);
+  scroll-margin-top:var(--s-lg);
+}
+/* Arrived here from an image credit — mark which entry was meant */
+.sources li:target{border-top-color:var(--tertiary)}
+.sources li:target b{color:var(--tertiary)}
+.sources li::before{
+  content:counter(src,decimal-leading-zero);
+  position:absolute;left:0;top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.12em;
+  color:var(--tertiary);
+}
+.sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
+.sources li a{
+  display:inline-block;
+  font-size:0.8rem;
+  word-break:break-word;
+  border-bottom-color:transparent;
+  color:#7A7A7A;
+}
+.sources li a::before{content:"↗ ";color:var(--tertiary)}
+.sources li a:hover,.sources li a:focus-visible{color:var(--tertiary);border-bottom-color:var(--tertiary)}
+
+/* ============================================================
+   Foot
+   ============================================================ */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:var(--s-lg);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s-md);
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.is-in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.09s}
+.reveal[data-delay="2"]{transition-delay:.18s}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+}
+/* Never hide content if JS never runs */
+.no-js .reveal{opacity:1;transform:none}
+
+/* Above the fold: animate on paint, don't wait for the observer to boot. */
+.rise{
+  opacity:0;
+  animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.rise[data-delay="1"]{animation-delay:.12s}
+.rise[data-delay="2"]{animation-delay:.24s}
+@keyframes rise{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;animation:none}
+}
+
+/* ============================================================
+   Clutchless-manual additions
+   ============================================================ */
+h3{
+  font-family:var(--font-display);
+  font-size:clamp(1.25rem,2.2vw,1.6rem);
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:0.03em;
+  text-transform:uppercase;
+  margin:0 0 var(--s-md);
+}
+.subsection{margin-top:calc(var(--s-lg) * 1.75)}
+.section__text--wide p{max-width:none}
+</style>
+</head>
+
+<body class="no-js">
+
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__kicker rise">
+      <span class="masthead__rule"></span>
+      <a class="label masthead__home" href="../">Blogs by Bhavya Parekh</a>
+    </div>
+
+    <div class="masthead__grid">
+      <div class="masthead__lede">
+        <h1 class="rise" data-delay="1">Clutchless Manuals <em>Halfway to an Automatic</em></h1>
+      </div>
+
+      <figure class="figure masthead__art rise" data-delay="2">
+        <div class="figure__frame">
+          <img src="assets/fig-00-hero.png" alt="A clutchless manual gear lever with no clutch pedal beneath it.">
+          <div class="figure__ph">
+            <span class="label">Lead image coming soon</span>
+            <span class="figure__ph-file">assets/fig-00-hero.jpg or .png</span>
+          </div>
+        </div>
+        <figcaption><span class="figure__src">Image source: <a href="#src-38">[38]</a>, <a href="#src-39">[39]</a></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- 01 ------------------------------------------------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">01</span>
+        <h2>What is a clutchless-manual transmission?</h2>
+        <p>It is still very much a manual transmission, with a regular clutch. The term "clutchless" simply means that the driver doesn't operate the clutch, because there is no clutch pedal. It is not an automatic gearbox. It just aims to relieve the left leg of the person driving a manual car.</p>
+        <p>Only the clutch is operated automatically. The regular H-pattern gear lever stays, and it still moves the selector forks mechanically inside the gearbox, so choosing the gear remains entirely the driver's job. That is the line between a clutchless manual and an AMTs: an AMT automates the clutch <em>and</em> the gear selection, so its lever is a request, not a command. Here, the lever is still a lever.</p>
+        <p>Currently, this is used by Hyundai and Kia, who offer it as an option alongside the conventional manual, under the name iMT, which stands for Intelligent Manual Transmission. Hyundai has it on the Venue and i20, Kia on the Sonet, Seltos and Carens Clavis, mostly in India. On the Sonet's turbo-petrol, in fact, you can only pick between the iMT and a DCT. There is no conventional manual at all. </p>
+        <p>If you haven't heard of such transmissions, it's not your fault. But, it is by no means a novel idea. The South Koreans have revived a concept that has been invented, and reinvented, many times before. Over roughly seven decades, well over a dozen manufacturers have tried to bridge the gap between the "cumbersome" manual and the full-blown automatic, with something like twenty different systems between them. But, none of them ever managed to catch the fancy of the majority of drivers and ended up being forgotten.</p>
+        <p>Let's unturn a few stones then.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ------------------------------------------------------------ -->
+  <section class="section">
+    <div class="wrap section__grid">
+      <div class="section__text reveal">
+        <span class="section__num">02</span>
+        <h2>How does it work today, and how did it work back then?</h2>
+        <p>Today's electronics are good enough to make some of the best automatic transmissions we have ever known. The actuations, gearshifts are fast, smooth and reliable. Clutchless manuals borrow a very small slice of that technology. Sensors work out what the driver is up to, and a computer commands an electro-hydraulic actuator to disengage and re-engage the clutch at the right moment, every time. In the iMT, a sensor on the gear lever tells the control unit that a shift is coming, the control unit builds hydraulic pressure, and that pressure travels down a tube to a slave cylinder wrapped around the clutch shaft. The gearbox behind it is a stock six-speed manual.</p>
+        <p>But, as said before, this idea has been around for a long time, and so have the two problems it has to solve: how to sense the intent to change gear, and how to actually move the clutch. The answers to both have changed a lot over the decades.</p>
+        <p>The first systems appeared in the 1940s and 50s, long before anyone could put a computer in a car. Check out the timeline below to see how, when and who did what.</p>
+      </div>
+
+      <div class="section__media">
+        <figure class="figure reveal" data-delay="1">
+          <div class="figure__frame figure__frame--imt-chain">
+            <img src="assets/shift-mechanism.png" alt="Diagram of the iMT chain: shift lever sensor, control unit, hydraulic actuator, clutch tube and slave cylinder.">
+            <div class="figure__ph">
+              <span class="label">Image coming soon</span>
+              <span class="figure__ph-file">assets/shift-mechanism.jpg or .png</span>
+            </div>
+          </div>
+          <figcaption>Comparison of iMT versus traditional clutch operation.<span class="figure__src">Image source: <a href="#src-40">[40]</a>, <a href="#src-38">[38]</a></span></figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <div class="wrap" style="margin-top:calc(var(--s-lg) * 1.5)">
+      <div class="shift">
+        <div class="shift__hint reveal">
+          <span class="label shift__hint-text">Scroll to shift through the timeline, or drag the knob</span>
+          <button type="button" class="label shift__toggle" aria-pressed="false">See all at once</button>
+        </div>
+
+        <div class="shift__spacer">
+          <div class="shift__stage reveal" data-delay="1">
+            <div class="shift__meta">
+              <span class="label shift__title">Clutchless manuals, 1941 to today</span>
+              <div class="shift__nav">
+                <button type="button" class="shift__step" data-step="-1" aria-label="Previous system">&lsaquo;</button>
+                <span class="shift__count"><b>01</b> / <span>16</span></span>
+                <button type="button" class="shift__step" data-step="1" aria-label="Next system">&rsaquo;</button>
+              </div>
+            </div>
+
+            <div class="shift__body">
+              <div class="shift__top">
+                <div class="shift__lever">
+                  <div class="gate">
+                    <svg class="gate__svg" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+                      <path class="gate__edge" d="M22 24V76M50 24V76M78 24V76M22 50H78"/>
+                      <path class="gate__slot" d="M22 24V76M50 24V76M78 24V76M22 50H78"/>
+                    </svg>
+                    <button type="button" class="gate__gear" data-gear="1" style="--x:22%;--y:24%;--dir:-1">1</button>
+                    <button type="button" class="gate__gear" data-gear="2" style="--x:22%;--y:76%;--dir:1">2</button>
+                    <button type="button" class="gate__gear" data-gear="3" style="--x:50%;--y:24%;--dir:-1">3</button>
+                    <button type="button" class="gate__gear" data-gear="4" style="--x:50%;--y:76%;--dir:1">4</button>
+                    <button type="button" class="gate__gear" data-gear="5" style="--x:78%;--y:24%;--dir:-1">5</button>
+                    <span class="gate__rev" style="--x:78%;--y:76%;--dir:1" aria-hidden="true">R</span>
+                    <span class="gate__knob" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path d="M6 5v10M10 5v10M14 5v10M6 10h8"/></svg></span>
+                  </div>
+                  <div class="dash" aria-hidden="true">
+                    <div class="dash__cell">
+                      <span class="label">Gear</span>
+                      <span class="dash__row"><b class="dash__digit">1</b><span class="dash__era">1941</span></span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="read__head" aria-hidden="true">
+                  <span class="read__years"></span>
+                  <strong class="read__name"></strong>
+                  <span class="read__aka"></span>
+                  <span class="read__model"></span>
+                  <span class="read__supplier"><span class="label">Supplier</span><span class="read__supplier-v"></span></span>
+                </div>
+
+                <div class="shift__chain" aria-hidden="true">
+                  <div class="shift__cell"><span class="label">Gearshift intent sensing</span><p class="read__senses"></p></div>
+                  <span class="shift__arrow">&rarr;</span>
+                  <div class="shift__cell"><span class="label">Clutch moved by</span><p class="read__moves"></p></div>
+                </div>
+              </div>
+
+              <div class="shift__chart">
+                <div class="chart__head">
+                  <span class="label">Years offered</span>
+                </div>
+                <div class="chart__groups">
+                  <div class="chart__grid" aria-hidden="true"></div>
+                  <div class="chart__over" aria-hidden="true"><span class="chart__playhead"></span></div>
+                </div>
+                <div class="chart__axis" aria-hidden="true"></div>
+                <div class="chart__tip" aria-hidden="true"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <ol class="shift__list">
+          <li class="shift__sys" data-start="1941" data-end="open" data-gear="1">
+            <span class="shift__years">1941–</span>
+            <strong class="shift__name">Electro-Matic</strong>
+            <span class="shift__model">Packard Clipper, 180</span>
+            <dl class="shift__specs">
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Accelerator</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Vacuum</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1953" data-end="1954" data-gear="2">
+            <span class="shift__years">1953–54</span>
+            <strong class="shift__name">Manumatic</strong>
+            <span class="shift__model">Ford Anglia 100E</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Automotive Products</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Gear stick</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Vacuum</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1955" data-end="open" data-gear="2">
+            <span class="shift__years">Mid-1950s–</span>
+            <strong class="shift__name">Saxomat</strong>
+            <span class="shift__aka">Also sold as Olymat and Hycomat</span>
+            <span class="shift__model">Fiat, Lancia, Saab, Borgward, BMW, Opel, NSU, VW, DKW, Glas, Steyr-Puch and others</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Fichtel &amp; Sachs</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Electric switch on the lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Centrifugal (launch) + vacuum servo (shifts)</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1956" data-end="1963" data-gear="2">
+            <span class="shift__years">1956–63</span>
+            <strong class="shift__name">Ferlec</strong>
+            <span class="shift__model">Renault Dauphine</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Ferodo</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electromagnetic</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1957" data-end="1958" data-gear="2">
+            <span class="shift__years">1957–58</span>
+            <strong class="shift__name">Newtondrive</strong>
+            <span class="shift__model">Ford Anglia</span>
+            <dl class="shift__specs">
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Vacuum + choke control</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1959" data-end="open" data-gear="2">
+            <span class="shift__years">1959–</span>
+            <strong class="shift__name">Trafficlutch</strong>
+            <span class="shift__model">Citroën 2CV, Dyane, Ami</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Citroën</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Engine revs only</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Centrifugal (1st and 2nd only)</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1962" data-end="1964" data-gear="3">
+            <span class="shift__years">1962–64</span>
+            <strong class="shift__name">E-Stick</strong>
+            <span class="shift__model">Rambler American, Classic</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>AMC</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Engine oil pressure</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1965" data-end="1990" data-gear="3">
+            <span class="shift__years">1965–1990</span>
+            <strong class="shift__name">Hycomat</strong>
+            <span class="shift__model">Trabant 601</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>VEB Sachsenring</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electro-hydraulic</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1968" data-end="1971" data-gear="3">
+            <span class="shift__years">1968–71</span>
+            <strong class="shift__name">Autoclutch</strong>
+            <span class="shift__model">Subaru 360</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Subaru</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electromagnetic</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1991" data-end="1993" data-gear="4">
+            <span class="shift__years">1991–93</span>
+            <strong class="shift__name">Valeo</strong>
+            <span class="shift__model">Ferrari Mondial t (~20 built) + one F40</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Valeo</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Dedicated “intent to shift” sensor + 5 more channels</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electro-mechanical servo</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1992" data-end="1998" data-gear="4">
+            <span class="shift__years">1992–98</span>
+            <strong class="shift__name">EKS</strong>
+            <span class="shift__model">RUF BTR, BTR2</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>RUF + Fichtel &amp; Sachs</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Sensors in the gearbox linkage</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electro-hydraulic</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1993" data-end="1998" data-gear="4">
+            <span class="shift__years">1993–98</span>
+            <strong class="shift__name">Sensonic</strong>
+            <span class="shift__model">Saab 900 NG Turbo</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Fichtel &amp; Sachs</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever-movement sensors + accelerator pressure</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Electric motor + worm gear → clutch master cylinder</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1994" data-end="1997" data-gear="4" data-label="Twingo Easy">
+            <span class="shift__years">1994–97</span>
+            <strong class="shift__name">Easy</strong>
+            <span class="shift__model">Renault Twingo</span>
+            <dl class="shift__specs">
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever sensor</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Hydraulic pump</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="1998" data-end="2004" data-gear="4">
+            <span class="shift__years">1998–2004</span>
+            <strong class="shift__name">ACS / AKS</strong>
+            <span class="shift__model">Mercedes-Benz A-Class (W168)</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Bosch module</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Lever</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Combined ECU + actuator → concentric slave cylinder</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="2019" data-end="open" data-gear="5" data-label="iMT · i30, Kona">
+            <span class="shift__years">2019–</span>
+            <strong class="shift__name">iMT</strong>
+            <span class="shift__model">Hyundai i30, Kona (Europe, 48V mild hybrid)</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Hyundai Motor Europe Technical Centre, Offenbach</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Intention sensor on the gear lever (TGS)</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Hydraulic actuator → concentric slave cylinder (CSC)</dd></div>
+            </dl>
+          </li>
+          <li class="shift__sys" data-start="2020" data-end="today" data-gear="5" data-label="iMT · Hyundai, Kia">
+            <span class="shift__years">2020–</span>
+            <strong class="shift__name">iMT</strong>
+            <span class="shift__model">Hyundai Venue, i20; Kia Ceed, Sonet, Seltos, Carens Clavis</span>
+            <dl class="shift__specs">
+              <div data-k="supplier"><dt>Supplier</dt><dd>Hyundai, Kia</dd></div>
+              <div data-k="senses"><dt>Gearshift intent sensing</dt><dd>Intention sensor on the gear lever (TGS)</dd></div>
+              <div data-k="moves"><dt>Clutch moved by</dt><dd>Hydraulic actuator → concentric slave cylinder (CSC)</dd></div>
+            </dl>
+          </li>
+        </ol>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="section__text section__text--wide reveal">
+        <div class="subsection">
+          <h3>Sensing the driver's intent</h3>
+          <p>It is not that difficult to operate a clutch with a computer. What's more difficult is letting the car know <em>when</em> to operate it. How can the driver's intent to change gear be detected reliably, every time?</p>
+          <p>Obviously, part of this detection has always been built into the gear lever itself. Mercedes' Hydrak in 1957 used a simple microswitch at the base of the shift lever, and Porsche and Volkswagen a decade later moved the switch into the gear knob. Modern iMT still uses a so called "intention sensor" on the lever, and Ford has even patented a pressure sensor in the knob that lets you modulate the clutch by squeezing it (quite strange, no wonder there are no real-world applications on this patent yet).</p>
+          <p>But as you might imagine, a system relying only on the lever would be quite dumb. What if the driver shifts down into a gear that would overrev the engine and damage it? That is why the smarter systems couple the lever with additional inputs from sensors all over the vehicle. Saab's Sensonic in the 1990s also read accelerator pressure, and flooring the throttle locked out gear selection altogether. Around the same time, Valeo's electronic clutch on the Ferrari Mondial t cross-checked the lever against engine speed, throttle position, and the speeds of the gearbox input and output shafts. It could even refuse a shift that would harm the engine or gearbox.</p>
+        </div>
+
+        <div class="subsection">
+          <h3>Operating the clutch</h3>
+          <p>Before electronics were capable of what they are today, manufacturers used vacuum to generate the force needed to move the clutch. This was quite common. By pulling air from the intake manifold, partial vacuum can be generated in a chamber with diaphragm. By manipulating this, older cars used the force generated by vacuum to operate their pop-up headlights and many other things. </p>
+          <p>The very early Saxomat, sold by Fichtel &amp; Sachs to a whole host of carmakers from the mid-1950s, combined a centrifugal clutch for pulling away (it only engages above a certain engine speed, and below that it stays disengaged, so the car can sit at idle without stalling) with a vacuum servo for the gear changes. Citroën, on their DS, used its high-pressure hydraulics for the job, thanks to the tremendous force those can deliver. Some even tried playing with electromagnetism, as Renault's Ferlec on the Dauphine and the Subaru 360 did, and AMC ended up using engine oil pressure to control the clutch. By 1960, nearly every way of automatically operating a clutch had already been tried. But, what was missing was anything smart enough to decide how fast or slow to close it.</p>
+          <p>Some of these early cars also cheated a little. Porsche's Sportomatic and Volkswagen's Automatic Stick Shift removed the clutch pedal but bolted a torque converter in front of the clutch, so the car couldn't stall when stopping. The converter did the hard part (moving off from rest), and the switch in the knob only took care of the clutch during shifts.</p>
+          <p>In recent times, though, electro-hydraulic actuation has stood the test of time. An electric motor drives a piston, which sends pressure down a closed hydraulic line to the clutch, and sensors measure how far the clutch has travelled. That is how Saab did it in the 90s (an electric motor and worm gear turning the clutch master cylinder), and it is how the iMT still does it today.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ------------------------------------------------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">03</span>
+        <h2>Why it never took off?</h2>
+        <p>In theory, clutchless manuals offer the good of many worlds. Firstly, they are based on a completely regular manual transmission, with minimal modifications. They aim to remove probably the most cumbersome part of driving a manual, whilst keeping the "feel" of shifting the same. They are only marginally more expensive than a manual, and nowhere near as expensive as an automatic.</p>
+        <p>Over the past decades, though, each iteration has met its end for its own reasons, and they sound remarkably alike. Mercedes dropped the Hydrak around 1961, after only a few years, because it depended on a combination of vacuum and electrical components that proved failure-prone, and owners were thus unhappy. In the 70s, Porsche's Sportomatic was also phased out after a modest run. It simply never took off with buyers, its performance was slightly behind the ordinary manual, and many cars had their transmissions swapped for the five-speed manual later on.</p>
+        <p>By the late 90s, Saab and Renault also found themselves shelving their respective clutchless manuals. The Saab Sensonic's public image took a beating from Top Gear, where James May tried to parallel-park one and ended up hitting a parked car. The reason: there is a small delay between releasing the brake and the clutch biting, and that is exactly the kind of slow manoeuvre a clutch pedal exists to modulate. Everything from the sensors on the lever to the electric motor, the hydraulic actuator and the microprocessor had to work perfectly, and a fault anywhere in the chain could leave the car immobile. Repairs were costly, and many owners went back to a normal manual. Renault's Twingo Easy had a similar story, being slow between gears and prone to breakdowns thanks to a flimsy plastic part, before it was replaced by a conventional automatic in 1997. The pattern repeats all the way to Mercedes' A-Class in the 2000s where the actuator was the weak link and a replacement costed more than the car is worth.</p>
+        <p>Today, Hyundai and Kia still offer their iMTs and, honestly, it does not seem like they are suffering the same fate as the earlier ones. Reviewers find it easy to live with. You cannot stall it and it crawls in traffic without touching the accelerator, just like a manual car. It doesn't have the lazy shifts of an AMT, because they are still in the driver's hands. Moreover, it costs just a negligible amount over the manual (the Venue iMT was only about 20,000 INR more than the equivalent manual when it launched). It isn't flawless, of course. An owner reported three roadside breakdowns in a month on a three-year-old Venue, all traced to parts in the very chain described above (the actuator, the clutch bearing and the clutch tube). That is one owner and not a failure rate, but it shows the weak link has not gone away entirely.</p>
+        <p>There is one more reason this time is different, and it isn't comfort. Modern iMT is designed to work with a 48V mild-hybrid system. A manual gearbox can't coast with the engine off, because the driver's foot is the only thing that can open the clutch. With the clutch now automated, the engine can switch off early while you coast, which apparently helps to cut CO2 by up to 3% in real-world driving. In other words, earlier attempts removed the pedal for the driver's comfort. This time there's an additional benefit in terms of emissions, at least on paper.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ------------------------------------------------------------ -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">04</span>
+        <h2>Final Verdict</h2>
+        <p>It was interesting to see a concept being introduced and axed multiple times in the past, and now witnessing its revival. Although manual purists still might hate a clutchless manual transmission, you cannot deny that it is not half bad. The fact that it has been selling quietly for the past six years is the proof. But I completely imagine why driving one would feel weird.</p>
+        <p>In my opinion, it's not the technology, it's the way we are accustomed to our cars that makes trying out and adapting to a new concept tricky and difficult. And it is exactly the reason why depite their strengths, we tend to ignore such innovations.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -------------------------------------------------------- -->
+  <section class="sources">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="section__num">05</span>
+        <h2>Sources</h2>
+      </div>
+      <ol class="reveal" data-delay="1">
+        <li id="src-1"><b>“Hyundai intelligent Manual Transmission (iMT): Tech Explained” — CarWale</b><a href="https://www.carwale.com/news/hyundai-intelligent-manual-transmission-imt-tech-explained/" target="_blank" rel="noopener">carwale.com — iMT tech explained</a></li>
+        <li id="src-2"><b>“Using Kia iMT Without a Clutch” — Kia India</b><a href="https://www.kia.com/in/service/customer-awareness/imt.html" target="_blank" rel="noopener">kia.com — using Kia iMT without a clutch</a></li>
+        <li id="src-3"><b>“Clutchless Manual Transmission &amp; IMT: How Does It Work?” — CarBikeTech</b><a href="https://carbiketech.com/clutchless-manual-transmission-imt/" target="_blank" rel="noopener">carbiketech.com — clutchless manual and iMT</a></li>
+        <li id="src-4"><b>“Saxomat” — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Saxomat" target="_blank" rel="noopener">en.wikipedia.org/wiki/Saxomat</a></li>
+        <li id="src-5"><b>“Mercedes-Benz Ponton Hydrak Automatic Clutch” — mbzponton.org</b><a href="https://www.mbzponton.org/valueadded/maintenance/hydrak.htm" target="_blank" rel="noopener">mbzponton.org — Hydrak automatic clutch</a></li>
+        <li id="src-6"><b>“Semi-automatic transmission” — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Semi-automatic_transmission" target="_blank" rel="noopener">en.wikipedia.org/wiki/Semi-automatic_transmission</a></li>
+        <li id="src-7"><b>“Semi-Automatic Transmission” — Citroën Car Club</b><a href="https://citroencarclub.org.uk/semi-automatic-transmission/" target="_blank" rel="noopener">citroencarclub.org.uk — semi-automatic transmission</a></li>
+        <li id="src-8"><b>“Let’s Talk About Those Weird Clutchless Manual Gearboxes From Ferrari and Porsche” — The Drive</b><a href="https://www.thedrive.com/guides-and-gear/clutchless-manual-gearboxes-ferrari-and-porsche" target="_blank" rel="noopener">thedrive.com — clutchless manual gearboxes from Ferrari and Porsche</a></li>
+        <li id="src-9"><b>“1970 911T Sportomatic: Porsche’s First Move Toward Self-Shifting” — Hagerty</b><a href="https://www.hagerty.com/media/opinion/klockau-classics/1970-911t-sportomatic-porsches-first-move-towards-self-shifting/" target="_blank" rel="noopener">hagerty.com — 1970 911T Sportomatic</a></li>
+        <li id="src-10"><b>“Autostick” — Wikipedia</b><a href="https://en.wikipedia.org/wiki/Autostick" target="_blank" rel="noopener">en.wikipedia.org/wiki/Autostick</a></li>
+        <li id="src-11"><b>“Ferrari Mondial t Cabriolet Valeo, now available with the Valeo electronic clutch” — Remember Road</b><a href="https://rememberroad.com/ferrari-mondial-t-cabriolet-valeo-now-available-with-the-valeo-electronic-clutch/" target="_blank" rel="noopener">rememberroad.com — Ferrari Mondial t Valeo</a></li>
+        <li id="src-12"><b>“A brief history of missing clutch pedals and almost-automatics” — Hagerty</b><a href="https://www.hagerty.com/media/automotive-history/a-brief-history-of-missing-clutch-pedals-and-almost-automatics/" target="_blank" rel="noopener">hagerty.com — missing clutch pedals and almost-automatics</a></li>
+        <li id="src-13"><b>“How Stuff Works: Saab 900 NG Sensonic” — SaabPlanet</b><a href="https://www.saabplanet.com/how-stuff-works-saab-900-ng-sensonic-clutchless-technology-in-practice/" target="_blank" rel="noopener">saabplanet.com — how Sensonic works</a></li>
+        <li id="src-14"><b>“Why Saab’s Sensonic Clutchless Manual Was Brilliant — And Doomed” — SaabPlanet</b><a href="https://www.saabplanet.com/saab-sensonic-model-a-special-car-with-a-manual-transmission-but-without-a-clutch-pedal/" target="_blank" rel="noopener">saabplanet.com — Sensonic, brilliant and doomed</a></li>
+        <li id="src-15"><b>“RUF” — Love for Porsche</b><a href="https://www.loveforporsche.com/ruf/" target="_blank" rel="noopener">loveforporsche.com/ruf</a></li>
+        <li id="src-16"><b>“RUF” — Autopedia (Fandom)</b><a href="https://automobile.fandom.com/wiki/RUF" target="_blank" rel="noopener">automobile.fandom.com/wiki/RUF</a></li>
+        <li id="src-17"><b>“1995 Renault Twingo Easy” — Curbside Classic</b><a href="https://www.curbsideclassic.com/curbside-classics-european/curbside-classic-1995-renault-twingo-easy-renaults-most-intelligent-small-car/" target="_blank" rel="noopener">curbsideclassic.com — 1995 Renault Twingo Easy</a></li>
+        <li id="src-18"><b>Mercedes A-Class ECU transmission combined clutch actuator — ECU Testing</b><a href="https://www.ecutesting.com/product-catalogue/mercedes/a-class/ecu-transmission-combined-clutch-actuator/etc180670/" target="_blank" rel="noopener">ecutesting.com — A-Class clutch actuator</a></li>
+        <li id="src-19"><b>“W168 A140 A160 A190 ACS Actuator Repair” — Australian ECU Repair</b><a href="https://australianecurepair.com.au/product/w168-a140-a160-a190-acs-actuator-repair/" target="_blank" rel="noopener">australianecurepair.com.au — W168 ACS actuator repair</a></li>
+        <li id="src-20"><b>“Automated Manual Transmission (AMT)” — x-engineer.org</b><a href="https://x-engineer.org/automated-manual-transmissions-amt/" target="_blank" rel="noopener">x-engineer.org — automated manual transmission</a></li>
+        <li id="src-21"><b>“Easytronic transmission: design peculiarities, pros and cons, typical problems” — go4trans</b><a href="https://shop.go4trans.com/technical-transmission-general-articles/easytronic-transmission-design-peculiarities-pros-and-cons-typical-problems-and-tips-on-easytronic/" target="_blank" rel="noopener">go4trans.com — Easytronic design and problems</a></li>
+        <li id="src-22"><b>“Hyundai-Kia’s Intelligent Manual Transmission Explained” — autoevolution</b><a href="https://www.autoevolution.com/news/hyundai-kias-intelligent-manual-transmission-explained-150049.html" target="_blank" rel="noopener">autoevolution.com — iMT explained</a></li>
+        <li id="src-23"><b>“48V mild hybrid power and Kia’s new intelligent Manual Transmission for Ceed model family” — Hyundai Motor Group</b><a href="https://tech.hyundaimotorgroup.com/press-release/48v-mild-hybrid-power-and-kias-new-intelligent-manual-transmission-for-ceed-model-family/" target="_blank" rel="noopener">tech.hyundaimotorgroup.com — 48V mild hybrid and iMT press release</a></li>
+        <li id="src-24"><b>Kia iMT range — Kia India</b><a href="https://www.kia.com/in/our-vehicles/iMT.html" target="_blank" rel="noopener">kia.com — iMT range</a></li>
+        <li id="src-25"><b>Kia Sonet — CarWale</b><a href="https://www.carwale.com/kia-cars/sonet/" target="_blank" rel="noopener">carwale.com/kia-cars/sonet</a></li>
+        <li id="src-26"><b>Kia Seltos — CarWale</b><a href="https://www.carwale.com/kia-cars/seltos/" target="_blank" rel="noopener">carwale.com/kia-cars/seltos</a></li>
+        <li id="src-27"><b>“Kia Sonet turbo-petrol to offer only 7-speed DCT and iMT clutchless manual” — CarDekho</b><a href="https://www.cardekho.com/india-car-news/kia-sonet-turbopetrol-to-offer-only-7speed-dct-and-imt-clutchless-manual-no-manual-25965.htm" target="_blank" rel="noopener">cardekho.com — Sonet turbo-petrol, iMT and DCT only</a></li>
+        <li id="src-28"><b>“Ford designs manual transmission without a clutch” — WhichCar</b><a href="https://www.whichcar.com.au/news/ford-designs-manual-transmission-without-a-clutch" target="_blank" rel="noopener">whichcar.com.au — Ford clutchless manual</a></li>
+        <li id="src-29"><b>“Ford developing clutchless manual gearbox for ICE cars” — Auto Express</b><a href="https://www.autoexpress.co.uk/ford/357351/ford-developing-clutchless-manual-gearbox-ice-cars" target="_blank" rel="noopener">autoexpress.co.uk — Ford clutchless manual gearbox</a></li>
+        <li id="src-30"><b>Honda E-Clutch — Honda Global</b><a href="https://global.honda/en/tech/Honda_E-Clutch/" target="_blank" rel="noopener">global.honda — Honda E-Clutch</a></li>
+        <li id="src-31"><b>“Honda E-Clutch first ride review” — RevZilla</b><a href="https://www.revzilla.com/common-tread/honda-e-clutch-first-ride-review" target="_blank" rel="noopener">revzilla.com — Honda E-Clutch first ride</a></li>
+        <li id="src-32"><b>“How Honda’s Innovative E-Clutch System Works” — Jalopnik</b><a href="https://www.jalopnik.com/2189740/how-hondas-innovative-e-clutch-system-works/" target="_blank" rel="noopener">jalopnik.com — how the E-Clutch works</a></li>
+        <li id="src-33"><b>“Porsche Sportomatic 911 (914.6)” — A. Bauer Porsche</b><a href="https://abauerporsche.wordpress.com/2011/05/26/porsche-sportomatic-911-9146/" target="_blank" rel="noopener">abauerporsche.wordpress.com — Porsche Sportomatic 911</a></li>
+        <li id="src-34"><b>“Renault Twingo and its piloted clutch change” — actualidadmotor</b><a href="https://en.actualidadmotor.com/renault-twingo-and-its-piloted-clutch-change/" target="_blank" rel="noopener">en.actualidadmotor.com — Twingo piloted clutch</a></li>
+        <li id="src-35"><b>A-Class information — Bert Rowe</b><a href="http://www.aclassinfo.co.uk/mypage.59a1.htm" target="_blank" rel="noopener">aclassinfo.co.uk — A-Class ACS</a></li>
+        <li id="src-36"><b>“3 breakdowns in 3 years with my Venue iMT” — Team-BHP</b><a href="https://www.team-bhp.com/news/3-breakdowns-3-years-my-venue-imt-exchanging-it-elevate" target="_blank" rel="noopener">team-bhp.com — 3 breakdowns in 3 years, Venue iMT</a></li>
+        <li id="src-37"><b>“Hyundai Venue Turbo iMT review: is the clutchless manual better than an AMT?” — evo India</b><a href="https://www.evoindia.com/cars/car-reviews/hyundai-venue-turbo-imt-review-is-the-clutchless-manual-transmission-better-than-an-amt" target="_blank" rel="noopener">evoindia.com — Venue Turbo iMT review</a></li>
+        <li id="src-38"><b>Kia India</b><a href="https://www.kia.com/in/" target="_blank" rel="noopener">kia.com/in</a></li>
+        <li id="src-39"><b>Motown India</b><a href="https://www.motownindia.com/" target="_blank" rel="noopener">motownindia.com</a></li>
+        <li id="src-40"><b>autoevolution</b><a href="https://www.autoevolution.com/" target="_blank" rel="noopener">autoevolution.com</a></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="label" href="https://www.linkedin.com/in/bhavyaparekh919/">Connect with me on LinkedIn</a>
+    <span class="label">Webpage theme design from <a href="https://getdesign.md/" target="_blank" rel="noopener">getdesign.md</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  document.body.classList.remove("no-js");
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------------
+     Scroll-triggered reveals
+     --------------------------------------------------------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------
+     Reading progress
+     --------------------------------------------------------- */
+  var bar = document.getElementById("progressBar");
+  var ticking = false;
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct * 100)).toFixed(2) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+  updateProgress();
+
+  /* ---------------------------------------------------------
+     Missing-asset handling — placeholders instead of broken icons.
+     Drop the real file into /assets and it just appears; no code change.
+     The extension in the markup is only a first guess: if it 404s we work
+     through the others, so a .png fills a slot written as .jpg.
+     --------------------------------------------------------- */
+  var IMG_EXTS = ["jpg", "jpeg", "png", "webp", "avif"];
+
+  function markMissing(img) {
+    var host = img.closest(".figure");
+    if (!host) { return; }
+    // A figure can hold more than one <img> (the alternating pair below) —
+    // only show the placeholder once every image in it has failed; a lone
+    // failure just hides that one frame and leaves its sibling showing.
+    var total = host.querySelectorAll(".figure__frame img").length;
+    var failed = (parseInt(host.getAttribute("data-img-failed") || "0", 10)) + 1;
+    host.setAttribute("data-img-failed", String(failed));
+    if (failed >= total) {
+      host.classList.add("is-missing");
+    } else {
+      img.style.display = "none";
+    }
+  }
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    if (dot === -1) { markMissing(img); return; }
+    var base = src.slice(0, dot);
+    // Extensions not yet attempted for this element, in IMG_EXTS order.
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { markMissing(img); return; }
+    tried.push(next);
+    img.src = base + "." + next;
+  }
+  document.querySelectorAll(".figure img").forEach(function (img) {
+    img.addEventListener("error", function () { tryNextExt(img); });
+    // Already failed before this script ran, or is a 0-byte/undecodable file.
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
+  });
+
+  /* ---------------------------------------------------------
+     Alternating figure — crosses between two images every 2s,
+     like a two-frame GIF. Holds on the first frame if the reader
+     prefers reduced motion, same as every other animation here.
+     --------------------------------------------------------- */
+  if (!reduceMotion) {
+    document.querySelectorAll(".figure__frame").forEach(function (frame) {
+      var altImgs = Array.prototype.slice.call(frame.querySelectorAll(".alt-img"));
+      if (altImgs.length < 2) { return; }
+      var activeIndex = 0;
+      window.setInterval(function () {
+        altImgs[activeIndex].classList.remove("is-active");
+        activeIndex = (activeIndex + 1) % altImgs.length;
+        altImgs[activeIndex].classList.add("is-active");
+      }, 2000);
+    });
+  }
+
+  /* Opening a shared #src-N link directly: the browser scrolls before the
+     images above have laid out, so it lands short. Re-aim once loaded. */
+  if (/^#src-\d+$/.test(window.location.hash)) {
+    window.addEventListener("load", function () {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView(); }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Gear-gate timeline (Section 02).
+     The list of systems in the markup is the data. This reads
+     it, builds the chart, then hides the list visually (screen
+     readers keep it, and it becomes the card view when static).
+     Scrolling through the pinned stage steps through the list.
+     The playhead runs across the years, and whenever the next
+     system belongs to a new era the knob shifts gear through
+     neutral. Gear numbers, chart rows, the arrows and dragging
+     the knob all jump by scrolling the page to the chosen system.
+     --------------------------------------------------------- */
+  var shiftEl = document.querySelector(".shift");
+  if (shiftEl) {
+    try {
+      initShift(shiftEl);
+    } catch (err) {
+      // Anything unexpected: fall back to the plain card list.
+      shiftEl.classList.remove("is-ready", "is-static");
+    }
+  }
+
+  function initShift(root) {
+    var MIN_YEAR = 1938, MAX_YEAR = 2028;   // chart domain
+    var TODAY = 2026.7;                      // where bars for systems still on sale end
+    var HOLD = 0.55;                         // share of each scroll step parked on one system
+    var LEAVE_AT = 0.2, SEAT_AT = 0.8;       // in a gear change the lever leaves its gear, then seats in the next
+    var COLS = [22, 50, 78], TOP = 24, MID = 50, BOT = 76;   // gate geometry, % of the gate box
+
+    function find(sel) { return root.querySelector(sel); }
+    function findAll(sel) { return Array.prototype.slice.call(root.querySelectorAll(sel)); }
+    function make(tag, cls, parent) {
+      var node = document.createElement(tag);
+      if (cls) { node.className = cls; }
+      if (parent) { parent.appendChild(node); }
+      return node;
+    }
+    function textOf(scope, sel) {
+      var node = scope.querySelector(sel);
+      return node ? node.textContent.replace(/\s+/g, " ").trim() : "";
+    }
+    function clamp(v, lo, hi) { return Math.min(hi, Math.max(lo, v)); }
+    function ease(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+    function pct(year) { return (year - MIN_YEAR) / (MAX_YEAR - MIN_YEAR) * 100; }
+    function pad(i) { return (i < 10 ? "0" : "") + i; }
+
+    var list = find(".shift__list");
+    var spacer = find(".shift__spacer");
+    var stage = find(".shift__stage");
+    var gate = find(".gate");
+    var lever = find(".shift__lever");
+    var meta = find(".shift__meta");
+    var dash = find(".dash");
+    var phone = window.matchMedia("(max-width: 699px)");
+    var knob = find(".gate__knob");
+    var gearBtns = findAll(".gate__gear");
+    var digit = find(".dash__digit");
+    var eraOut = find(".dash__era");
+    var head = find(".read__head");
+    var chain = find(".shift__chain");
+    var out = {
+      years: find(".read__years"),
+      name: find(".read__name"),
+      aka: find(".read__aka"),
+      model: find(".read__model"),
+      supplier: find(".read__supplier-v"),
+      supplierRow: find(".read__supplier"),
+      senses: find(".read__senses"),
+      moves: find(".read__moves")
+    };
+    var countNow = find(".shift__count b");
+    var stepBtns = findAll(".shift__step");
+    var toggle = find(".shift__toggle");
+    var hintText = find(".shift__hint-text");
+    var chartEl = find(".shift__chart");
+    var groupsEl = find(".chart__groups");
+    var gridEl = find(".chart__grid");
+    var overEl = find(".chart__over");
+    var playhead = find(".chart__playhead");
+    var axis = find(".chart__axis");
+    var tip = find(".chart__tip");
+
+    /* ---- Data, read straight from the list ---- */
+    var systems = Array.prototype.slice.call(list.querySelectorAll(".shift__sys")).map(function (li, i) {
+      var start = parseFloat(li.getAttribute("data-start"));
+      var end = li.getAttribute("data-end");
+      var kind = end === "open" || end === "today" ? end : "closed";
+      var sys = {
+        li: li, i: i, start: start, kind: kind,
+        gear: parseInt(li.getAttribute("data-gear"), 10),
+        // Right-hand end of the bar. A range like 1956–63 covers all of 1963;
+        // an open one like 1941– shows only the year it started.
+        stop: kind === "closed" ? parseFloat(end) + 1 : kind === "today" ? TODAY : start + 1,
+        years: textOf(li, ".shift__years"),
+        name: textOf(li, ".shift__name"),
+        aka: textOf(li, ".shift__aka"),
+        model: textOf(li, ".shift__model"),
+        supplier: textOf(li, '[data-k="supplier"] dd'),
+        senses: textOf(li, '[data-k="senses"] dd'),
+        moves: textOf(li, '[data-k="moves"] dd')
+      };
+      sys.label = li.getAttribute("data-label") || sys.name;
+      if (!li.id) { li.id = "system-" + (i + 1); }
+      return sys;
+    });
+    var n = systems.length;
+    if (!n) { return; }
+
+    // One gear per era, in the order the list gives them.
+    var eras = {};
+    var gearList = [];
+    systems.forEach(function (sys) {
+      var era = eras[sys.gear];
+      if (!era) {
+        era = eras[sys.gear] = { gear: sys.gear, first: sys.i, count: 0, lo: sys.start, hi: sys.start };
+        gearList.push(sys.gear);
+      }
+      era.count += 1;
+      era.lo = Math.min(era.lo, sys.start);
+      era.hi = Math.max(era.hi, sys.start);
+    });
+    gearList.forEach(function (g) {
+      var era = eras[g];
+      var sameCentury = Math.floor(era.lo / 100) === Math.floor(era.hi / 100);
+      era.label = era.lo === era.hi ? String(era.lo)
+        : era.lo + "–" + (sameCentury ? String(era.hi).slice(2) : String(era.hi));
+    });
+
+    root.classList.add("is-ready");
+    find(".shift__count span").textContent = pad(n);
+
+    /* ---- Chart ---- */
+    var tipYears = make("b", "", tip);
+    var tipName = make("span", "", tip);
+
+    function showTip(sys, clientX) {
+      tipYears.textContent = sys.years;
+      tipName.textContent = sys.name + " · " + sys.model;
+      tip.classList.add("is-on");
+      var box = chartEl.getBoundingClientRect();
+      var mark = sys.track.getBoundingClientRect();
+      var row = sys.row.getBoundingClientRect();
+      var x = clientX == null ? mark.left + mark.width / 2 : clientX;
+      var left = clamp(x - box.left - tip.offsetWidth / 2, 8, box.width - tip.offsetWidth - 8);
+      var top = row.top - box.top - tip.offsetHeight - 6;
+      if (top < 4) { top = row.bottom - box.top + 6; }
+      tip.style.transform = "translate(" + Math.round(left) + "px," + Math.round(top) + "px)";
+    }
+    function hideTip() { tip.classList.remove("is-on"); }
+
+    function buildRow(sys, parent) {
+      var row = make("button", "chart__row", parent);
+      var x0 = pct(sys.start);
+      var reach = pct(sys.stop);
+      row.type = "button";
+      row.setAttribute("aria-label", sys.years + " " + sys.name + ", " + sys.model);
+      sys.track = make("span", "chart__seg chart__seg--track", row);
+      sys.track.style.left = x0 + "%";
+      sys.track.style.width = (reach - x0) + "%";
+      sys.fill = make("span", "chart__seg chart__seg--fill", row);
+      sys.fill.style.left = x0 + "%";
+      var label = make("span", "chart__label", row);
+      label.textContent = sys.label;
+      // Labels sit after the bar, or before it near the right-hand edge.
+      if (reach > 78) {
+        label.style.right = "calc(" + (100 - x0).toFixed(3) + "% + 6px)";
+      } else {
+        label.style.left = "calc(" + reach.toFixed(3) + "% + 6px)";
+      }
+      row.addEventListener("click", function () { jump(sys.i); });
+      row.addEventListener("pointermove", function (e) {
+        if (e.pointerType === "mouse") { showTip(sys, e.clientX); }
+      });
+      row.addEventListener("pointerleave", hideTip);
+      row.addEventListener("focus", function () { showTip(sys, null); });
+      row.addEventListener("blur", hideTip);
+      sys.row = row;
+    }
+
+    gearList.forEach(function (g) {
+      var era = eras[g];
+      var group = make("div", "chart__group");
+      var rows;
+      group.style.setProperty("--rows", era.count);
+      make("span", "chart__gear", group).textContent = g;
+      rows = make("div", "chart__rows", group);
+      systems.forEach(function (sys) {
+        if (sys.gear === g) { buildRow(sys, rows); }
+      });
+      groupsEl.insertBefore(group, overEl);
+      era.group = group;
+    });
+
+    for (var decade = 1940; decade <= 2020; decade += 10) {
+      make("span", "chart__line", gridEl).style.left = pct(decade) + "%";
+      if (decade === 2020) { continue; }   // "Today" sits right beside it
+      var tick = make("span", "chart__tick" + (decade % 20 ? " is-minor" : ""), axis);
+      tick.style.left = pct(decade) + "%";
+      tick.textContent = decade;
+    }
+    make("span", "chart__line chart__line--today", gridEl).style.left = pct(TODAY) + "%";
+    var todayTick = make("span", "chart__tick chart__tick--today", axis);
+    todayTick.style.left = pct(TODAY) + "%";
+    todayTick.textContent = "Today";
+
+    var lastYear = null;
+    function drawYear(year) {
+      if (year === lastYear) { return; }
+      lastYear = year;
+      playhead.style.left = pct(year) + "%";
+      systems.forEach(function (sys) {
+        sys.fill.style.width = (pct(clamp(year, sys.start, sys.stop)) - pct(sys.start)) + "%";
+      });
+    }
+
+    /* ---- Gate ---- */
+    var gateW = 1, gateH = 1;
+    var knobAt = { x: COLS[0], y: TOP };
+
+    function seat(g) { return { x: COLS[(g - 1) >> 1], y: g % 2 ? TOP : BOT }; }
+    // Distance in pixels between two points given in gate percentages.
+    function gap(a, b) {
+      var dx = (a.x - b.x) * gateW / 100, dy = (a.y - b.y) * gateH / 100;
+      return Math.sqrt(dx * dx + dy * dy);
+    }
+    function seatedIn(p) {
+      for (var i = 0; i < gearList.length; i++) {
+        if (gap(p, seat(gearList[i])) < 1) { return gearList[i]; }
+      }
+      return 0;
+    }
+    function nearestGear(p) {
+      var best = gearList[0], bestD = Infinity;
+      gearList.forEach(function (g) {
+        var d = gap(p, seat(g));
+        if (d < bestD) { bestD = d; best = g; }
+      });
+      return best;
+    }
+    // A free pointer, pulled onto the nearest slot or the neutral rail.
+    function snapToGate(p) {
+      var best = null, bestD = Infinity;
+      function consider(q) {
+        var d = gap(p, q);
+        if (d < bestD) { bestD = d; best = q; }
+      }
+      COLS.forEach(function (x) { consider({ x: x, y: clamp(p.y, TOP, BOT) }); });
+      consider({ x: clamp(p.x, COLS[0], COLS[2]), y: MID });
+      return best;
+    }
+    // The way a real lever travels: out along its slot to neutral,
+    // across the rail, then into the other slot.
+    function route(a, b) {
+      var pts = [a];
+      if (Math.abs(a.x - b.x) > 0.01) {
+        if (Math.abs(a.y - MID) > 0.01) { pts.push({ x: a.x, y: MID }); }
+        if (Math.abs(b.y - MID) > 0.01) { pts.push({ x: b.x, y: MID }); }
+      }
+      pts.push(b);
+      return pts;
+    }
+    function lengthOf(pts) {
+      var len = 0;
+      for (var i = 1; i < pts.length; i++) { len += gap(pts[i - 1], pts[i]); }
+      return len;
+    }
+    function along(pts, t) {
+      var left = t * lengthOf(pts);
+      for (var i = 1; i < pts.length; i++) {
+        var seg = gap(pts[i - 1], pts[i]);
+        if (left <= seg || i === pts.length - 1) {
+          var f = seg > 0 ? clamp(left / seg, 0, 1) : 1;
+          return {
+            x: pts[i - 1].x + (pts[i].x - pts[i - 1].x) * f,
+            y: pts[i - 1].y + (pts[i].y - pts[i - 1].y) * f
+          };
+        }
+        left -= seg;
+      }
+      return pts[pts.length - 1];
+    }
+    function placeKnob(p, force) {
+      if (!force && p.x === knobAt.x && p.y === knobAt.y) { return; }
+      knobAt = p;
+      knob.style.transform = "translate3d(" + (p.x * gateW / 100).toFixed(1) + "px," +
+        (p.y * gateH / 100).toFixed(1) + "px,0)";
+    }
+
+    /* ---- Gear display ---- */
+    var dashGear = -1;
+    function renderDash(g) {
+      if (g === dashGear) { return; }
+      dashGear = g;
+      digit.textContent = g ? String(g) : "N";
+      eraOut.textContent = g ? eras[g].label : "Neutral";
+      gearBtns.forEach(function (btn) {
+        var on = parseInt(btn.getAttribute("data-gear"), 10) === g;
+        btn.classList.toggle("is-on", on);
+        if (on) { btn.setAttribute("aria-current", "true"); } else { btn.removeAttribute("aria-current"); }
+      });
+    }
+
+    /* ---- Readout ---- */
+    var active = -1;
+    function fillReadout(sys) {
+      out.years.textContent = sys.years;
+      out.name.textContent = sys.name;
+      out.aka.textContent = sys.aka;
+      out.model.textContent = sys.model;
+      out.supplier.textContent = sys.supplier;
+      out.supplierRow.hidden = !sys.supplier;
+      out.senses.textContent = sys.senses;
+      out.moves.textContent = sys.moves;
+    }
+    function markActive(a) {
+      if (active >= 0) {
+        systems[active].row.classList.remove("is-active");
+        systems[active].row.removeAttribute("aria-current");
+      }
+      if (a >= 0) {
+        systems[a].row.classList.add("is-active");
+        systems[a].row.setAttribute("aria-current", "true");
+      }
+      gearList.forEach(function (g) {
+        eras[g].group.classList.toggle("is-on", a >= 0 && systems[a].gear === g);
+      });
+      active = a;
+    }
+    function show(a, dir) {
+      fillReadout(systems[a]);
+      countNow.textContent = pad(a + 1);
+      stepBtns.forEach(function (btn) {
+        var to = a + parseInt(btn.getAttribute("data-step"), 10);
+        btn.setAttribute("aria-disabled", String(to < 0 || to > n - 1));
+      });
+      [head, chain].forEach(function (node) {
+        node.classList.remove("is-up", "is-down");
+        void node.offsetWidth;   // restart the entrance animation
+        node.classList.add(dir < 0 ? "is-down" : "is-up");
+      });
+      markActive(a);
+    }
+
+    /* ---- Scroll mapping ---- */
+    var stepPx = 180, stickyTop = 0;
+    var isStatic = false, userStatic = false, cramped = false;
+    var anim = null, holdLever = false, dragging = false, moved = false, dragFrom = null;
+    var ticking = false, idleTimer = 0, heading = -1;
+
+    function range() { return Math.max(1, spacer.offsetHeight - stage.offsetHeight); }
+    function progress() { return clamp((stickyTop - spacer.getBoundingClientRect().top) / range(), 0, 1); }
+    // Each system owns one step of scroll: parked for HOLD of it,
+    // then travelling towards the next system for the rest.
+    function stateAt(p) {
+      var s = Math.min(n - 1e-6, Math.max(0, p * n));
+      var i = Math.floor(s), u = s - i;
+      var travel = i < n - 1 && u > HOLD;
+      return { i: i, travel: travel, t: travel ? (u - HOLD) / (1 - HOLD) : 0 };
+    }
+    function scrollTargetFor(k) {
+      var s = k === n - 1 ? k + 0.5 : k + HOLD / 2;
+      var spacerTop = spacer.getBoundingClientRect().top + window.pageYOffset;
+      return spacerTop - stickyTop + (s / n) * range();
+    }
+    function leverFor(st) {
+      var g1 = systems[st.i].gear;
+      var g2 = st.travel ? systems[st.i + 1].gear : g1;
+      if (g1 === g2 || st.t <= LEAVE_AT) { return { p: seat(g1), gear: g1 }; }
+      if (st.t >= SEAT_AT) { return { p: seat(g2), gear: g2 }; }
+      return { p: along(route(seat(g1), seat(g2)), ease((st.t - LEAVE_AT) / (SEAT_AT - LEAVE_AT))), gear: 0 };
+    }
+
+    function update() {
+      ticking = false;
+      if (isStatic) { return; }
+      var st = stateAt(progress());
+      var a = st.travel && st.t >= 0.5 ? st.i + 1 : st.i;
+      var from = systems[st.i].start;
+      var year = st.travel ? from + (systems[st.i + 1].start - from) * ease(st.t) : from;
+      if (!holdLever && !dragging) {
+        var lever = leverFor(st);
+        placeKnob(lever.p);
+        renderDash(lever.gear);
+      }
+      if (a !== active) { show(a, a > active ? 1 : -1); }
+      drawYear(year);
+    }
+
+    /* ---- The lever moved by hand: gear numbers, drags, jumps ---- */
+    function animateLever(target) {
+      var path = route(knobAt, target);
+      anim = { path: path, t0: 0, dur: 160 + lengthOf(path) * 1.3 };
+      holdLever = true;
+      window.requestAnimationFrame(stepLever);
+    }
+    function stepLever(now) {
+      if (!anim) { return; }
+      if (!anim.t0) { anim.t0 = now; }
+      var t = clamp((now - anim.t0) / anim.dur, 0, 1);
+      var p = along(anim.path, ease(t));
+      placeKnob(p);
+      renderDash(seatedIn(p));
+      if (t < 1) { window.requestAnimationFrame(stepLever); }
+      else { anim = null; scheduleIdle(); }
+    }
+    function scheduleIdle() {
+      window.clearTimeout(idleTimer);
+      idleTimer = window.setTimeout(settle, 180);
+    }
+    // Once the page stops moving, hand the lever back to the scroll position.
+    function settle() {
+      if (!anim) { heading = -1; }
+      if (anim || dragging || !holdLever || isStatic) { return; }
+      var lever = leverFor(stateAt(progress()));
+      if (gap(lever.p, knobAt) > 1) { animateLever(lever.p); return; }
+      holdLever = false;
+      update();
+    }
+    function jump(k) {
+      k = clamp(k, 0, n - 1);
+      if (isStatic) { flash(systems[k]); return; }
+      heading = k;
+      var target = seat(systems[k].gear);
+      if (anim || gap(knobAt, target) > 1) { animateLever(target); }
+      window.scrollTo({ top: scrollTargetFor(k), behavior: "smooth" });
+      scheduleIdle();
+    }
+
+    knob.addEventListener("pointerdown", function (e) {
+      if (isStatic || (e.pointerType === "mouse" && e.button !== 0)) { return; }
+      dragging = true;
+      moved = false;
+      dragFrom = { x: e.clientX, y: e.clientY };
+      anim = null;
+      holdLever = true;
+      knob.classList.add("is-dragging");
+      if (knob.setPointerCapture) { knob.setPointerCapture(e.pointerId); }
+      e.preventDefault();
+    });
+    knob.addEventListener("pointermove", function (e) {
+      if (!dragging) { return; }
+      if (!moved && Math.abs(e.clientX - dragFrom.x) + Math.abs(e.clientY - dragFrom.y) < 4) { return; }
+      moved = true;
+      var box = gate.getBoundingClientRect();
+      var p = snapToGate({
+        x: (e.clientX - box.left) / box.width * 100,
+        y: (e.clientY - box.top) / box.height * 100
+      });
+      placeKnob(p);
+      renderDash(seatedIn(p));
+    });
+    function endDrag() {
+      if (!dragging) { return; }
+      dragging = false;
+      knob.classList.remove("is-dragging");
+      if (!moved) { holdLever = false; update(); return; }
+      jump(eras[nearestGear(knobAt)].first);
+    }
+    knob.addEventListener("pointerup", endDrag);
+    knob.addEventListener("pointercancel", endDrag);
+    knob.addEventListener("lostpointercapture", endDrag);
+
+    gearBtns.forEach(function (btn) {
+      var era = eras[parseInt(btn.getAttribute("data-gear"), 10)];
+      if (!era) { btn.hidden = true; return; }
+      btn.title = "Gear " + era.gear + " · " + era.label;
+      btn.setAttribute("aria-label", "Gear " + era.gear + ", " + era.label + ", " +
+        era.count + (era.count === 1 ? " system" : " systems"));
+      btn.addEventListener("click", function () { jump(era.first); });
+    });
+    // Repeated steps count from the system the page is already heading to.
+    function step(dir) { jump((heading >= 0 ? heading : active) + dir); }
+    stepBtns.forEach(function (btn) {
+      btn.addEventListener("click", function () { step(parseInt(btn.getAttribute("data-step"), 10)); });
+    });
+    stage.addEventListener("keydown", function (e) {
+      if (e.key !== "ArrowLeft" && e.key !== "ArrowRight") { return; }
+      e.preventDefault();
+      step(e.key === "ArrowRight" ? 1 : -1);
+    });
+
+    /* ---- Static view ---- */
+    function canScrub() { return !reduceMotion && window.innerHeight >= 480; }
+    function flash(sys) {
+      sys.li.scrollIntoView({ block: "center" });
+      sys.li.classList.add("is-flash");
+      window.setTimeout(function () { sys.li.classList.remove("is-flash"); }, 1600);
+    }
+    function setStatic(on) {
+      isStatic = on;
+      root.classList.toggle("is-static", on);
+      hideTip();
+      if (toggle) {
+        toggle.hidden = !canScrub() || cramped;
+        toggle.textContent = on ? "Back to the shifter" : "See all " + n + " at once";
+        toggle.setAttribute("aria-pressed", on ? "true" : "false");
+      }
+      hintText.textContent = on ? "All " + n + " systems, oldest first"
+        : "Scroll to shift through the timeline, or drag the knob";
+      markActive(-1);   // the readout repaints on the next update
+      lastYear = null;
+      if (on) {
+        spacer.style.height = "";
+        anim = null;
+        holdLever = false;
+        dragging = false;
+        drawYear(MAX_YEAR);
+      } else {
+        measure();
+      }
+    }
+
+    function measure() {
+      if (isStatic) { return; }
+      // The gear display sits beside the gate, or in the top strip on phones.
+      var home = phone.matches ? meta : lever;
+      if (dash.parentNode !== home) { home.insertBefore(dash, phone.matches ? meta.firstChild : null); }
+      fitReadout();
+      gateW = gate.clientWidth || 1;
+      gateH = gate.clientHeight || 1;
+      stickyTop = parseFloat(window.getComputedStyle(stage).top) || 0;
+      stepPx = Math.round(clamp(window.innerHeight * 0.22, 140, 200));
+      chartEl.classList.toggle("is-narrow", axis.clientWidth < 480);
+      var topEl = head.parentNode;
+      if (chartEl.clientHeight < 140 || topEl.scrollHeight > topEl.clientHeight + 2) {
+        // Not enough room for the chart or the readout: show everything statically instead.
+        cramped = true;
+        setStatic(true);
+        return;
+      }
+      spacer.style.height = (stage.offsetHeight + n * stepPx) + "px";
+      root.classList.toggle("is-dense", systems[0].row.offsetHeight < 12);
+      placeKnob(knobAt, true);
+      update();
+    }
+    // Lock the readout and the chain to the height of their tallest system,
+    // so the gate and the chart keep one size while the text changes.
+    function fitReadout() {
+      var tallHead = 0, tallChain = 0;
+      head.style.minHeight = "";
+      chain.style.minHeight = "";
+      systems.forEach(function (sys) {
+        fillReadout(sys);
+        tallHead = Math.max(tallHead, head.offsetHeight);
+        tallChain = Math.max(tallChain, chain.offsetHeight);
+      });
+      head.style.minHeight = tallHead + "px";
+      chain.style.minHeight = tallChain + "px";
+      if (active >= 0) { fillReadout(systems[active]); }
+    }
+
+    window.addEventListener("scroll", function () {
+      if (isStatic) { return; }
+      if (holdLever || heading >= 0) { scheduleIdle(); }
+      if (!ticking) { ticking = true; window.requestAnimationFrame(update); }
+    }, { passive: true });
+
+    var lastW = window.innerWidth, lastH = window.innerHeight, resizeTick = false;
+    window.addEventListener("resize", function () {
+      if (resizeTick) { return; }
+      resizeTick = true;
+      window.requestAnimationFrame(function () {
+        resizeTick = false;
+        var w = window.innerWidth, h = window.innerHeight;
+        // Mobile toolbars resize the viewport while scrolling; only a real
+        // change (rotation, a resized window) is worth measuring again.
+        if (w === lastW && Math.abs(h - lastH) < 120) { return; }
+        lastW = w;
+        lastH = h;
+        cramped = false;
+        var want = userStatic || !canScrub();
+        if (want !== isStatic) { setStatic(want); }
+        else if (!isStatic) { measure(); }
+        else if (toggle) { toggle.hidden = !canScrub(); }
+      });
+    }, { passive: true });
+
+    if (toggle) {
+      toggle.addEventListener("click", function () {
+        userStatic = !isStatic;
+        setStatic(userStatic || !canScrub());
+        // Land back at the top of the timeline in either view.
+        var html = document.documentElement, before = html.style.scrollBehavior;
+        html.style.scrollBehavior = "auto";
+        window.scrollTo(0, root.getBoundingClientRect().top + window.pageYOffset - 24);
+        html.style.scrollBehavior = before;
+      });
+    }
+
+    setStatic(userStatic || !canScrub());
+    window.addEventListener("load", function () { if (!isStatic) { measure(); } });
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { if (!isStatic) { measure(); } });
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -26,6 +26,10 @@ pdk/
   index.html
   DESIGN.md                   design system this post was built against
   assets/
+clutchless-manual/
+  index.html
+  DESIGN.md                   design system this post was built against
+  assets/
 ```
 
 One folder per post, each self-contained: the page and its assets travel together, and the root `index.html` links to it.
@@ -39,6 +43,7 @@ One folder per post, each self-contained: the page and its assets travel togethe
 | 03 | Italian Twist to an Automatic Transmission — the Formula 1-inspired robotized manual behind the Aventador's brutal gearshifts | [`lamborghini-single-clutch/`](lamborghini-single-clutch/) |
 | 04 | What's in a Name? — TipTronic was never its own transmission, just Porsche's trademark for an ordinary torque-converter automatic with a manual override gate | [`tiptronic/`](tiptronic/) |
 | 05 | Best of German Tech? — the dual-clutch idea sat shelved for two decades before it ever reached a customer, then proved itself at Monza before Porsche put it in a road car | [`pdk/`](pdk/) |
+| 06 | A manual with no clutch pedal — clutchless manuals automate only the clutch, an idea tried and dropped for seventy years before Hyundai and Kia's iMT | [`clutchless-manual/`](clutchless-manual/) |
 
 ## Design
 
