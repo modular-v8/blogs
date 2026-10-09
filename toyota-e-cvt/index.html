@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Toyota's e-CVT, One Planetary Gearset With Endless Ratios</title>
+<meta name="description" content="How Toyota's e-CVT uses a single planetary gearset, an engine and two motor-generators to deliver an endless range of gear ratios, explained for readers without an engineering background.">
+<meta name="theme-color" content="#0B0B0B">
+<meta property="og:title" content="Toyota's e-CVT, One Planetary Gearset With Endless Ratios">
+<meta property="og:description" content="Toyota exploited the capabilities of an existing concept to invent the e-CVT, which made the Prius, one of the world's first hybrid cars, a household name.">
+<meta property="og:type" content="article">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ============================================================
+   Design tokens — DESIGN.md "Motorsport Livery"
+   ============================================================ */
+:root{
+  --primary:#F2F2F2;
+  --secondary:#8C8C8C;
+  --tertiary:#E10600;
+  --neutral:#0B0B0B;
+  --surface:#151515;
+  --on-primary:#0B0B0B;
+
+  --line:#2A2A2A;
+
+  --font-display:"Oswald","Arial Narrow","Helvetica Neue Condensed",Impact,system-ui,sans-serif;
+  --font-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+
+  --r-sm:0px;
+  --r-md:2px;
+  --r-lg:4px;
+
+  --s-sm:8px;
+  --s-md:16px;
+  --s-lg:32px;
+
+  --maxw:1280px;
+  --gutter:clamp(20px,5vw,64px);
+}
+
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+body{
+  margin:0;
+  background:var(--neutral);
+  color:var(--primary);
+  font-family:var(--font-body);
+  font-size:0.95rem;
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+
+img{max-width:100%;display:block}
+a{color:var(--tertiary);text-decoration:none;border-bottom:1px solid rgba(225,6,0,.35)}
+a:hover,a:focus-visible{border-bottom-color:var(--tertiary)}
+:focus-visible{outline:2px solid var(--tertiary);outline-offset:3px}
+
+/* ============================================================
+   Reading progress
+   ============================================================ */
+.progress{
+  position:fixed;top:0;left:0;right:0;height:3px;
+  background:transparent;z-index:100;pointer-events:none;
+}
+.progress__bar{
+  height:100%;width:0%;
+  background:var(--tertiary);
+  transform-origin:left center;
+}
+
+/* ============================================================
+   Shell
+   ============================================================ */
+.wrap{
+  max-width:var(--maxw);
+  margin:0 auto;
+  padding-inline:var(--gutter);
+}
+
+.label{
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  font-weight:500;
+  letter-spacing:0.16em;
+  text-transform:uppercase;
+  color:var(--secondary);
+}
+
+/* ============================================================
+   Masthead / hero
+   ============================================================ */
+.masthead{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2.5) calc(var(--s-lg) * 2);
+  position:relative;
+}
+.masthead__kicker{
+  display:flex;align-items:center;gap:var(--s-md);
+  margin-bottom:var(--s-lg);
+}
+.masthead__home{
+  color:var(--secondary);
+  border-bottom:1px solid transparent;
+}
+.masthead__home:hover,.masthead__home:focus-visible{
+  color:var(--primary);
+  border-bottom-color:var(--tertiary);
+}
+.masthead__kicker::after{
+  content:"";height:1px;flex:1;background:var(--line);
+}
+.masthead__rule{
+  width:56px;height:3px;background:var(--tertiary);flex:none;
+}
+h1,.h1{
+  font-family:var(--font-display);
+  font-weight:700;
+  letter-spacing:0.02em;
+  line-height:1.02;
+  margin:0;
+  text-transform:uppercase;
+}
+.masthead h1{
+  font-size:clamp(2.2rem,6vw,5rem);
+  max-width:15ch;
+}
+.masthead h1 em{
+  font-style:normal;
+  display:block;
+  margin-top:0.5em;
+  font-size:clamp(0.95rem,1.7vw,1.5rem);
+  font-weight:500;
+  line-height:1.18;
+  letter-spacing:0.06em;
+  color:var(--secondary);
+  max-width:26ch;
+}
+.masthead__dek{
+  margin:var(--s-lg) 0 0;
+  max-width:60ch;
+  font-size:clamp(1rem,1.6vw,1.2rem);
+  line-height:1.6;
+  color:var(--primary);
+}
+
+.masthead__grid{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:end;
+}
+.masthead__art{align-self:end}
+.masthead__art .figure__frame{aspect-ratio:4/3}
+@media (max-width:900px){
+  .masthead__grid{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+}
+
+/* ============================================================
+   Sections and beats.
+   A section holds one or more "beats". A beat with media is a
+   60 / 40 text-to-media grid; successive media beats flip sides
+   (text left, then text right, and so on) for the staggered
+   rhythm. A beat with no media runs its text the full width of
+   .wrap instead of reserving an empty 40% column.
+   ============================================================ */
+.section{
+  border-bottom:1px solid var(--line);
+  padding-block:calc(var(--s-lg) * 2);
+}
+.section__text > *:first-child{margin-top:0}
+.section__text > *:last-child{margin-bottom:0}
+/* A section heading is the last child of its own text block, so the rule
+   above zeroed its bottom margin and pinned it to the first paragraph. */
+.section__text > h2:last-child{margin-bottom:calc(var(--s-lg) * 1.25)}
+
+.beat{
+  display:grid;
+  grid-template-columns:60fr 40fr;
+  gap:calc(var(--s-lg) * 1.5);
+  align-items:start;
+}
+.beat + .beat{margin-top:calc(var(--s-lg) * 1.5)}
+
+.section__media{
+  position:sticky;
+  top:calc(var(--s-lg) * 2);
+  display:flex;
+  flex-direction:column;
+  gap:var(--s-md);
+}
+
+.beat--reverse{grid-template-columns:40fr 60fr}
+.beat--reverse > .section__text{order:2}
+.beat--reverse > .section__media{order:1}
+
+.beat--full{display:block}
+.beat--full .section__text{max-width:none}
+.beat--full .section__text p{max-width:none}
+.section--full .section__text{max-width:none}
+.section--full .section__text p{max-width:none}
+
+@media (max-width:900px){
+  .beat,.beat--reverse{grid-template-columns:1fr;gap:calc(var(--s-lg) * 1.25)}
+  .beat--reverse > .section__text,
+  .beat--reverse > .section__media{order:0}
+  .section__media{position:static;top:auto}
+}
+
+/* ============================================================
+   Prose
+   ============================================================ */
+.section__num{
+  display:block;
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.16em;
+  color:var(--tertiary);
+  margin-bottom:var(--s-sm);
+}
+h2{
+  font-family:var(--font-display);
+  font-size:clamp(1.75rem,3.4vw,2.5rem);
+  font-weight:700;
+  line-height:1.08;
+  text-transform:uppercase;
+  margin:0 0 var(--s-lg);
+  max-width:26ch;
+}
+h3{
+  font-family:var(--font-display);
+  font-size:clamp(1.2rem,2.2vw,1.55rem);
+  font-weight:600;
+  line-height:1.15;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  color:var(--primary);
+  margin:calc(var(--s-lg) * 1.25) 0 calc(var(--s-md) * 1.25);
+}
+p{margin:0 0 var(--s-md);max-width:68ch}
+.section__text p,.section__text li{font-size:1.02rem;line-height:1.72;color:#DCDCDC}
+.section__text strong{color:var(--primary);font-weight:600}
+.section__text em{color:var(--primary)}
+
+.section__text ul{
+  margin:0 0 var(--s-md);
+  padding:0;
+  list-style:none;
+  max-width:68ch;
+}
+.section__text li{
+  position:relative;
+  padding-left:22px;
+  margin-bottom:var(--s-sm);
+}
+.section__text li::before{
+  content:"";
+  position:absolute;left:0;top:0.72em;
+  width:7px;height:7px;
+  background:var(--secondary);
+}
+.beat--full .section__text ul{max-width:none}
+
+/* ============================================================
+   Figures + graceful "coming soon" placeholders
+   ============================================================ */
+.figure{margin:0}
+.figure__frame{
+  position:relative;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  aspect-ratio:4/3;
+}
+.figure__frame img{
+  width:100%;height:100%;
+  object-fit:cover;
+}
+.figure__ph{
+  position:absolute;inset:0;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:var(--s-sm);
+  text-align:center;
+  padding:var(--s-lg);
+  background:var(--surface);
+  border:1px dashed var(--line);
+}
+.figure__ph .label{color:var(--secondary)}
+.figure__ph-file{
+  font-family:var(--font-body);
+  font-size:0.78rem;
+  color:#5E5E5E;
+  word-break:break-all;
+}
+/* JS marks the figure when the asset fails to load */
+.figure.is-missing img{display:none}
+.figure.is-missing .figure__ph{display:flex}
+.figure figcaption{
+  margin-top:var(--s-sm);
+  font-size:0.82rem;
+  line-height:1.5;
+  color:var(--secondary);
+}
+/* Credit line under every image, quieter than the caption */
+.figure__src{
+  display:block;
+  margin-top:var(--s-sm);
+  padding-top:var(--s-sm);
+  border-top:1px solid var(--line);
+  font-family:var(--font-display);
+  font-size:0.7rem;
+  font-weight:400;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:#5E5E5E;
+}
+figcaption > .figure__src:first-child{margin-top:0}
+/* The reference number links down to the matching entry in Sources */
+.figure__src a{
+  color:var(--secondary);
+  border-bottom-color:transparent;
+}
+.figure__src a:hover,.figure__src a:focus-visible{
+  color:var(--tertiary);
+  border-bottom-color:var(--tertiary);
+}
+
+/* ============================================================
+   Figure 02: animated e-CVT diagram (SVG, driven by JS below)
+   ============================================================ */
+/* Scroll-driven layout: the figure is pinned, vertically centred, and
+   each scenario's text is a full-screen-tall step with its words
+   centred, so the step being read sits level with the figure. */
+.scrolly{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:calc(var(--s-lg) * 1.5);
+  margin-top:calc(var(--s-lg) * 1.5);
+}
+.scrolly__media{
+  position:sticky;top:0;align-self:start;
+  height:100vh;height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+}
+.scrolly__media .ecvt{max-height:calc(100vh - 300px);max-height:calc(100svh - 300px);min-height:240px}
+.scrolly__step{
+  min-height:100vh;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;
+  opacity:.3;
+  transition:opacity .4s;
+}
+.scrolly__step.is-active,.no-js .scrolly__step{opacity:1}
+.scrolly__step > h3:first-child{margin-top:0}
+@media (prefers-reduced-motion:reduce){.scrolly__step{transition:none}}
+/* Short screens side by side (e.g. 1366 x 768 laptops): drop the long
+   caption so the pinned figure still fits in one screen. */
+@media (min-width:901px) and (max-height:800px){
+  .scrolly__caption-text{display:none}
+  .scrolly__media .ecvt{max-height:calc(100vh - 240px);max-height:calc(100svh - 240px);min-height:200px}
+}
+
+/* Stacked: the figure pins to the top of the screen, slimmed down to
+   the drawing and its controls, and the text scrolls up beneath it. */
+@media (max-width:900px){
+  .scrolly{grid-template-columns:1fr;gap:0}
+  .scrolly__media{
+    height:auto;z-index:2;
+    margin-inline:calc(var(--gutter) * -1);
+    padding:var(--s-sm) var(--gutter);
+    background:var(--neutral);
+    border-bottom:1px solid var(--line);
+  }
+  .scrolly__media .ecvt{max-height:38vh;max-height:38svh;min-height:0}
+  .scrolly__media .figure__frame--anim{padding:var(--s-sm)}
+  .scrolly__media .ecvt-ctrl{margin-top:var(--s-sm);padding-top:var(--s-sm)}
+  .scrolly__media .ecvt-status,
+  .scrolly__caption-text{display:none}
+  .scrolly__step{min-height:60vh;min-height:60svh;padding-block:var(--s-lg)}
+}
+.figure__frame--anim{aspect-ratio:auto;padding:var(--s-md)}
+.ecvt{display:block;width:100%;height:auto}
+.ecvt text{
+  font-family:var(--font-display);
+  letter-spacing:0.08em;
+  text-transform:uppercase;
+  fill:var(--secondary);
+  transition:fill .3s;
+}
+.ecvt .t-label{font-size:17px;font-weight:500;fill:var(--primary)}
+.ecvt .t-small{font-size:13px;letter-spacing:0.14em}
+.ecvt .t-num{font-size:16px;font-weight:600;fill:var(--primary)}
+.ecvt .leader{stroke:#4A4A4A;stroke-width:1}
+.ecvt .arrow{fill:none;stroke:var(--secondary);stroke-width:1.5}
+.ecvt .divider{stroke:var(--line);stroke-width:1}
+.ecvt .part{fill:#262626;stroke:#6A6A6A;stroke-width:1.5;transition:stroke .3s}
+.ecvt .part--dark{fill:#1C1C1C}
+.ecvt .stripe{stroke:var(--primary);stroke-width:1.5}
+.ecvt .gear{fill:#262626;stroke:#6A6A6A;stroke-width:1.2;fill-rule:evenodd;transition:stroke .3s}
+.ecvt .gear--sun{fill:#333}
+.ecvt .gear--planet{fill:#3D3D3D;stroke:#8C8C8C}
+.ecvt .gear-mark{fill:var(--neutral)}
+.ecvt .carrier-ring{fill:none;stroke:var(--primary);stroke-width:2;transition:stroke .3s}
+.ecvt .carrier-pin{fill:var(--primary);transition:fill .3s}
+.ecvt .nomo-axis{stroke:#4A4A4A;stroke-width:2}
+.ecvt .nomo-zero{stroke:#3A3A3A;stroke-width:1;stroke-dasharray:4 4}
+.ecvt .nomo-lever{fill:none;stroke:var(--primary);stroke-width:2.5}
+.ecvt .nomo-dot{fill:var(--primary);transition:fill .3s}
+/* The unit currently delivering power is picked out in red */
+.ecvt .is-driver .part,
+.ecvt .is-driver .gear,
+.ecvt .is-driver .carrier-ring{stroke:var(--tertiary)}
+.ecvt .is-driver .carrier-pin,
+.ecvt .is-driver .nomo-dot,
+.ecvt .is-driver .t-label{fill:var(--tertiary)}
+
+.ecvt-ctrl{
+  display:flex;flex-wrap:wrap;align-items:center;
+  gap:var(--s-sm) var(--s-md);
+  margin-top:var(--s-md);
+  padding-top:var(--s-md);
+  border-top:1px solid var(--line);
+}
+.ecvt-steps{display:flex;flex-wrap:wrap;gap:var(--s-sm);margin-left:auto}
+.ecvt-btn{
+  font-family:var(--font-display);
+  font-size:0.72rem;
+  font-weight:500;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--secondary);
+  background:transparent;
+  border:1px solid var(--line);
+  border-radius:var(--r-md);
+  padding:6px 10px;
+  cursor:pointer;
+}
+.ecvt-btn:hover{color:var(--primary);border-color:var(--secondary)}
+.ecvt-btn[aria-current="step"]{color:var(--primary);border-color:var(--primary)}
+.ecvt-btn--play{
+  min-width:5.5em;
+  color:var(--on-primary);
+  background:var(--tertiary);
+  border-color:var(--tertiary);
+}
+.ecvt-btn--play:hover{color:var(--on-primary);border-color:var(--tertiary)}
+.ecvt-status{
+  margin:var(--s-md) 0 0;
+  max-width:none;
+  min-height:6.25em;
+  font-size:0.86rem;
+  line-height:1.55;
+  color:#DCDCDC;
+}
+.ecvt-status b{color:var(--primary);font-weight:600}
+
+/* ============================================================
+   Sources
+   ============================================================ */
+.sources{padding-block:calc(var(--s-lg) * 2)}
+.sources ol{
+  margin:0;padding:0;list-style:none;
+  counter-reset:src;
+  display:grid;
+  gap:var(--s-md);
+}
+@media (min-width:900px){
+  .sources ol{grid-template-columns:1fr 1fr;gap:var(--s-md) var(--s-lg)}
+}
+.sources li{
+  counter-increment:src;
+  position:relative;
+  padding:var(--s-md) 0 var(--s-md) 42px;
+  border-top:1px solid var(--line);
+  font-size:0.88rem;
+  line-height:1.6;
+  color:var(--secondary);
+  scroll-margin-top:var(--s-lg);
+}
+/* Arrived here from an image credit, so mark which entry was meant */
+.sources li:target{border-top-color:var(--tertiary)}
+.sources li:target b{color:var(--tertiary)}
+.sources li::before{
+  content:counter(src,decimal-leading-zero);
+  position:absolute;left:0;top:var(--s-md);
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  letter-spacing:0.12em;
+  color:var(--tertiary);
+}
+.sources li b{display:block;color:var(--primary);font-weight:600;margin-bottom:4px}
+.sources li a{
+  display:inline-block;
+  font-size:0.8rem;
+  word-break:break-word;
+  border-bottom-color:transparent;
+  color:#7A7A7A;
+}
+.sources li a::before{content:"↗ ";color:var(--tertiary)}
+.sources li a:hover,.sources li a:focus-visible{color:var(--tertiary);border-bottom-color:var(--tertiary)}
+
+/* ============================================================
+   Foot
+   ============================================================ */
+.foot{
+  border-top:1px solid var(--line);
+  padding-block:var(--s-lg);
+  display:flex;
+  flex-wrap:wrap;
+  gap:var(--s-md);
+  justify-content:space-between;
+  align-items:center;
+}
+
+/* ============================================================
+   Scroll reveal
+   ============================================================ */
+.reveal{
+  opacity:0;
+  transform:translateY(22px);
+  transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1);
+  will-change:opacity,transform;
+}
+.reveal.is-in{opacity:1;transform:none}
+.reveal[data-delay="1"]{transition-delay:.09s}
+.reveal[data-delay="2"]{transition-delay:.18s}
+
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+}
+/* Never hide content if JS never runs */
+.no-js .reveal{opacity:1;transform:none}
+
+/* Above the fold: animate on paint, don't wait for the observer to boot. */
+.rise{
+  opacity:0;
+  animation:rise .8s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.rise[data-delay="1"]{animation-delay:.12s}
+.rise[data-delay="2"]{animation-delay:.24s}
+@keyframes rise{
+  from{opacity:0;transform:translateY(22px)}
+  to{opacity:1;transform:none}
+}
+@media (prefers-reduced-motion:reduce){
+  .rise{opacity:1;animation:none}
+}
+</style>
+</head>
+
+<body class="no-js">
+
+<div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="masthead__kicker rise">
+      <span class="masthead__rule"></span>
+      <a class="label masthead__home" href="../">Blogs by Bhavya Parekh</a>
+    </div>
+
+    <div class="masthead__grid">
+      <div class="masthead__lede">
+        <h1 class="rise" data-delay="1">Toyota e-CVT <em>just One Planetary Gearset and a clever strategy.</em></h1>
+        <p class="masthead__dek rise" data-delay="2">Toyota exploited the capabilities of an existing concept to invent the e-CVT, which made the Prius, one of the world's first hybrid cars, a household name.</p>
+      </div>
+
+      <figure class="figure masthead__art rise" data-delay="2">
+        <div class="figure__frame">
+          <img src="assets/fig-00-hero.png" alt="A Toyota Prius hybrid.">
+          <div class="figure__ph">
+            <span class="label">Lead image coming soon</span>
+            <span class="figure__ph-file">assets/fig-00-hero.jpg or .png</span>
+          </div>
+        </div>
+        <figcaption><span class="figure__src">Image sources: <a href="#src-4">[4]</a>, <a href="#src-5">[5]</a>, <a href="#src-6">[6]</a>, <a href="#src-7">[7]</a></span></figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- Intro continued. Split out of the hero so the hero image is visible
+       without scrolling. No heading: still the article's lede. -->
+  <section class="section section--full">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <p>I generally create blogs about the quirky and famous automatic transmissions used in exciting combustion-engined cars. Today, however, we shall explore a very interesting concept which I was first made aware of during one of my Master's course lectures. It is Toyota's e-CVT gearbox, which they have been using in their humble hybrid cars for decades.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 01 ------------------------------------------------------------ -->
+  <section class="section" id="what">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">01</span>
+        <h2>What is an e-CVT?</h2>
+      </div>
+
+      <div class="beat">
+        <div class="section__text reveal">
+          <p>To understand what an e-CVT is, we first need to understand what a CVT is.</p>
+          <p>CVT stands for Continuously Variable Transmission. Like torque converter automatics, dual clutch transmissions and automated manual gearboxes, CVTs try to eliminate the driver's need to shift gears.</p>
+          <p>The uniqueness of a CVT lies in its lack of fixed, stepped gears. As the name suggests, it allows an infinitely variable gear ratio between the engine and the wheels, and the aim is to keep the engine in its most efficient range most of the time, independent of the actual vehicle speed.</p>
+          <p>CVTs do this by transferring the power via a belt that rests on two cones, one representing the engine and the other the wheels. These cones can be visualized as a smoothened-out version of a set of thin gears of consecutively increasing or decreasing size, similar to the set found on geared bicycles. As the two cones move relative to each other, the gear ratio between them changes dynamically, from low gearing i.e. 1st gear, to high gearing. Since there is no fixed number of teeth here, any gear ratio can be achieved just by adjusting their relative positions.</p>
+          <p>Traditional CVTs are infamous for their "rubber-band" effect. They can be found inside gearless scooters, where one can notice that the actual speed of the scooter and the engine speed are not linearly related. In fact, most scooters do not even have an RPM gauge. The engine always tries to maintain its speed within a band, and the CVT does the job of translating it into the correct torque and speed at the wheels based on the conditions.</p>
+          <p>Now, for cars, the same concept is used, but it is made stronger by using a metal belt, and larger to suit the application.</p>
+          <p>However, this "gap" between the vehicle speed that a human perceives and the engine speed, which is not linearly related to it, makes for an unusual experience for many. This is especially so because we are used to a proportional increase in engine noise with vehicle speed, until we shift gears and then repeat the process.</p>
+        </div>
+
+        <div class="section__media">
+          <figure class="figure reveal" data-delay="1">
+            <div class="figure__frame">
+              <img src="assets/fig-01-speed-vs-engine-speed.png" alt="Graph of vehicle speed against engine speed for a regular geared transmission and for a CVT.">
+              <div class="figure__ph">
+                <span class="label">Diagram coming soon</span>
+                <span class="figure__ph-file">assets/fig-01-speed-vs-engine-speed.jpg or .png</span>
+              </div>
+            </div>
+            <figcaption>Vehicle speed against engine speed for a regular geared transmission and for a CVT.<span class="figure__src">Image source: <a href="#src-3">[3]</a></span></figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <div class="beat beat--full">
+        <div class="section__text reveal">
+          <p>But the e-CVT by Toyota does not use a belt and cones. It instead uses toothed gears and yet achieves a CVT-like effect, rubber-band feel included. It does so by creatively using the functionality of a planetary gearset.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 ------------------------------------------------------------ -->
+  <section class="section" id="how">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">02</span>
+        <h2>How does it work?</h2>
+      </div>
+
+      <div class="beat beat--full">
+        <div class="section__text reveal">
+          <p>But what is a planetary gearset? It is inspired by the "planetary" movement that we all know. There exists a central sun gear, and around it sit the planet gears, which mesh with the sun gear and can rotate around it. These planet gears are held together by a planet carrier, and the ring gear surrounds the planet gears.</p>
+          <p>The hybrid powertrain used in the Prius has three sources of rotation. The first is the engine itself, followed by MG1 (Motor-Generator 1) and MG2 (Motor-Generator 2).</p>
+          <p>These three are connected to the three rotating parts of the planetary gearset, namely the sun gear, the ring gear and the planet carrier, in the following manner:</p>
+          <ul>
+            <li>MG1 acts as an integrated starter and can also generate (recuperate) energy from the engine, which it either stores in the battery or directs to MG2. It sits between the engine and the planetary gearset, and is connected to the sun gear.</li>
+            <li>MG2 is connected to the ring gear, and it is also connected mechanically to the front wheels. This means that the speed of MG2 is directly related to the wheel speed.</li>
+            <li>The engine is connected to the planet gears via the planet carrier.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="beat beat--full">
+        <div class="section__text reveal">
+          <p>In a normal automatic transmission with planetary gears, one gear receives the input, one gear acts as the output, and the third is kept stationary. This means there exists a FIXED ratio between input and output. This ratio can change depending on which gear is the input, which is the output and which is held stationary, but it is still a constant ratio for a fixed operating scenario.</p>
+          <p>Toyota added the functionality of not keeping one gear stationary all the time. This means that for the same input gear (the engine) and output gear (the ring gear), a changing speed of the third gear, in this case the sun gear connected to MG1, gives variable ratios. None of the gears in the e-CVT are permanently "stationary", whereas in torque converter automatics each planetary gearset has brakes and clutches to hold one of its gears still to switch between ratios.</p>
+          <p>Let's look at a few operating scenarios and how they are realized:</p>
+        </div>
+      </div>
+
+      <!-- Scenarios: the figure stays pinned while each scenario's text
+           scrolls past it; the step level with the figure drives it. -->
+      <div class="scrolly">
+        <div class="scrolly__media">
+          <figure class="figure" id="fig-02">
+            <div class="figure__frame figure__frame--anim">
+              <svg class="ecvt" id="ecvt" viewBox="0 0 640 625" role="img" aria-labelledby="ecvtTitle ecvtDesc">
+                <title id="ecvtTitle">The e-CVT's planetary gearset, animated for each driving scenario</title>
+                <desc id="ecvtDesc">Top: side view of MG2, the ring gear, the sun gear, MG1 and the clutch to the engine, all on one axis. Bottom left: end view of the planetary gearset. Bottom right: a speed diagram for MG1, the engine and MG2. The animation changes with the scenario being read.</desc>
+
+                <!-- Side view. Every .rotor gets moving stripes from the script;
+                     data-speed says which shaft of the gearset it turns with. -->
+                <g data-unit="engine">
+                  <g class="rotor" data-speed="carrier" data-n="6"><rect class="part part--dark" x="250" y="159" width="382" height="12"/></g>
+                </g>
+
+                <g data-unit="mg2">
+                  <g class="rotor" data-speed="ring" data-n="6"><rect class="part part--dark" x="22" y="157" width="40" height="16"/></g>
+                  <g class="rotor" data-speed="ring" data-n="14"><rect class="part" x="50" y="65" width="160" height="200" rx="6"/></g>
+                  <rect class="part part--dark" x="50" y="70" width="10" height="190"/>
+                  <rect class="part part--dark" x="200" y="70" width="10" height="190"/>
+                  <g class="rotor" data-speed="ring" data-n="8"><rect class="part part--dark" x="210" y="135" width="16" height="60"/></g>
+                  <g class="rotor" data-speed="ring" data-n="12"><rect class="part" x="225" y="93" width="50" height="144" rx="4"/></g>
+                  <line class="leader" x1="130" y1="40" x2="130" y2="65"/>
+                  <text class="t-label" x="130" y="32" text-anchor="middle">MG2</text>
+                  <line class="leader" x1="250" y1="40" x2="250" y2="93"/>
+                  <text class="t-label" x="250" y="32" text-anchor="middle">Ring gear</text>
+                </g>
+
+                <g data-unit="mg1">
+                  <g class="rotor" data-speed="sun" data-n="6"><rect class="part part--dark" x="332" y="152" width="92" height="26"/></g>
+                  <g class="rotor" data-speed="sun" data-n="8"><rect class="part" x="300" y="139" width="34" height="52" rx="3"/></g>
+                  <g class="rotor" data-speed="sun" data-n="14"><rect class="part" x="420" y="90" width="95" height="150" rx="6"/></g>
+                  <rect class="part part--dark" x="420" y="95" width="8" height="140"/>
+                  <rect class="part part--dark" x="507" y="95" width="8" height="140"/>
+                  <line class="leader" x1="317" y1="191" x2="317" y2="296"/>
+                  <text class="t-label" x="317" y="314" text-anchor="middle">Sun gear</text>
+                  <line class="leader" x1="467" y1="40" x2="467" y2="90"/>
+                  <text class="t-label" x="467" y="32" text-anchor="middle">MG1</text>
+                </g>
+
+                <g data-unit="engine">
+                  <g class="rotor" data-speed="carrier" data-n="6"><rect class="part part--dark" x="515" y="147" width="32" height="36"/></g>
+                  <g class="rotor" data-speed="carrier" data-n="18"><rect class="part" x="545" y="50" width="18" height="230" rx="3"/></g>
+                  <line class="leader" x1="554" y1="40" x2="554" y2="50"/>
+                  <text class="t-label" x="554" y="32" text-anchor="middle">Clutch</text>
+                  <text class="t-label" x="603" y="148" text-anchor="middle">Engine</text>
+                  <path class="arrow" d="M576 192H626M619 186L626 192L619 198"/>
+                </g>
+
+                <line class="divider" x1="0" y1="335" x2="640" y2="335"/>
+
+                <!-- End view of the planetary gearset; gears are built by the script -->
+                <text class="t-small" x="0" y="362">End view</text>
+                <g transform="translate(150 478)">
+                  <g data-unit="mg2"><g id="evRing"></g></g>
+                  <g id="evPlanets"></g>
+                  <g data-unit="mg1"><g id="evSun"></g></g>
+                  <g data-unit="engine"><g id="evCarrier"></g></g>
+                </g>
+
+                <!-- Speed diagram: the three speeds always sit on one straight line -->
+                <text class="t-small" x="640" y="362" text-anchor="end">Speed diagram · rpm</text>
+                <line class="nomo-zero" x1="340" y1="516" x2="600" y2="516"/>
+                <text class="t-small" x="610" y="521">0</text>
+                <polyline class="nomo-lever" id="nLever" points="360,516 519,516 580,516"/>
+                <g data-unit="mg1">
+                  <line class="nomo-axis" x1="360" y1="415" x2="360" y2="592"/>
+                  <text class="t-label" x="360" y="388" text-anchor="middle">MG1</text>
+                  <text class="t-small" x="360" y="405" text-anchor="middle">Sun</text>
+                  <circle class="nomo-dot" id="nDotSun" cx="360" cy="516" r="6"/>
+                  <text class="t-num" id="nValSun" x="360" y="618" text-anchor="middle">0</text>
+                </g>
+                <g data-unit="engine">
+                  <line class="nomo-axis" x1="519" y1="415" x2="519" y2="592"/>
+                  <text class="t-label" x="519" y="388" text-anchor="middle">Engine</text>
+                  <text class="t-small" x="519" y="405" text-anchor="middle">Carrier</text>
+                  <circle class="nomo-dot" id="nDotCarrier" cx="519" cy="516" r="6"/>
+                  <text class="t-num" id="nValCarrier" x="519" y="618" text-anchor="middle">0</text>
+                </g>
+                <g data-unit="mg2">
+                  <line class="nomo-axis" x1="580" y1="415" x2="580" y2="592"/>
+                  <text class="t-label" x="580" y="388" text-anchor="middle">MG2</text>
+                  <text class="t-small" x="580" y="405" text-anchor="middle">Ring</text>
+                  <circle class="nomo-dot" id="nDotRing" cx="580" cy="516" r="6"/>
+                  <text class="t-num" id="nValRing" x="580" y="618" text-anchor="middle">0</text>
+                </g>
+              </svg>
+
+              <div class="ecvt-ctrl">
+                <button type="button" class="ecvt-btn ecvt-btn--play" id="ecvtPlay">Pause</button>
+                <div class="ecvt-steps" role="group" aria-label="Jump to step"></div>
+              </div>
+              <p class="ecvt-status" id="ecvtStatus" aria-live="polite"></p>
+            </div>
+            <figcaption><span class="scrolly__caption-text">Top: MG2, ring gear, sun gear, MG1 and the clutch to the engine, all on one axis. Bottom: the planetary gearset seen end-on, where the white or red ring with three pins is the planet carrier, and the speeds of its three shafts. The part delivering power is shown in red. Gear sizes follow the first- and second-generation Prius (30-tooth sun gear, 78-tooth ring gear), and the motion is slowed down.</span><span class="figure__src">Redrawn from: <a href="#src-1">[1]</a></span></figcaption>
+          </figure>
+        </div>
+
+        <div class="scrolly__steps">
+          <div class="scrolly__step section__text" data-scenario="standing" id="standing-still">
+            <h3>Standing still</h3>
+            <p>Consider a scenario where the vehicle is stopped. This means that MG2, and thus the ring gear, MUST be stationary. The engine, connected to the planet carrier, and MG1, connected to the sun gear, can then interchange roles as input and output. MG1 first acts as a starter to start the engine, and once the engine is running, MG1 charges the battery by recuperating energy from the running engine.</p>
+          </div>
+          <div class="scrolly__step section__text" data-scenario="ev">
+            <h3>Moving off on electric power</h3>
+            <p>Now, imagine a scenario where the engine is stopped and the car needs to move forward. This can be done purely electrically by rotating only MG2, which is connected to the ring gear and thus the wheels, with power supplied from the battery. Since the engine is stationary, the planet carrier does not move, which forces the sun gear, i.e. MG1, to rotate faster than MG2 and in the opposite direction due to their relative gear ratios. This time however, the recuperation or electrical load on MG1 is turned off to reduce parasitic losses and to avoid sapping the actual drive power.</p>
+          </div>
+          <div class="scrolly__step section__text" data-scenario="hybrid">
+            <h3>When the engine joins in</h3>
+            <p>After a certain vehicle speed, MG2 spins too fast, which in turn spins MG1 even faster. To reduce this overspeeding of MG1, and to make the engine also contribute to the tractive power, the engine is now started, which turns the planet carrier. This means that there now exists "split-power" delivery from both the engine and MG2 to the wheels. The desired side-effect is that MG1, connected to the sun gear, now starts to slow down, because the planet carrier, which was stationary, is no longer stationary.</p>
+            <p>On top of that, the engine power itself can be split further by turning up the recuperation in MG1. This makes MG1 act as a brake on the sun gear, and that resistance is what pushes the engine's torque onto the ring gear. The engine power is thus divided, with some of it used to overcome the electromagnetic braking of MG1 and charge the battery, and the rest used to turn the wheels. This way, the engine assists MG2, which is coupled to the wheels, and can therefore power the wheels partially.</p>
+            <p>The relative speed between the engine (planet carrier) and MG1 (sun gear) can now govern the gear reduction applied at the ring gear. By varying this relative speed, an infinite number of gear ratios can be achieved, thus fulfilling the purpose of a CVT.</p>
+          </div>
+          <div class="scrolly__step section__text" data-scenario="reverse">
+            <h3>Reverse</h3>
+            <p>There is one more functionality that needs to be achieved, which is a reverse gear. If the engine is stopped, MG2, being an electric motor at the end of the day, is simply rotated in the opposite direction. If the engine is running, it keeps turning forwards and drives MG1 as a generator. MG2 then uses that electricity to rotate the ring gear, and thus the wheels, in the opposite direction.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 ------------------------------------------------------------ -->
+  <section class="section" id="development">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">03</span>
+        <h2>How has it developed over the years?</h2>
+      </div>
+
+      <div class="beat beat--full">
+        <div class="section__text reveal">
+          <p>The first generation of such e-CVTs was introduced by Toyota in their revolutionary Prius in 1998. Over the years, a lot of small improvements have compounded and made the e-CVT a bulletproof piece of hardware.</p>
+          <p>For example, the first and second generations of the Prius used basically the same hardware, but for the third generation two additional planetary gearsets were added, one each for MG1 and MG2, to favour optimal speed reduction. Another change was that the ring gear, and with it MG2, was connected to the wheels via a gear drive instead of a chain drive.</p>
+          <p>In the latest models, even MG1 can support MG2 in providing tractive power. To do this without the engine being forced to rotate in reverse, sprag clutches are used. Consider them as one-way valves, which only permit rotation in one direction, and block the other. This eventually allows for a higher EV-only speed and power.</p>
+          <p>Today, this e-CVT technology has been adopted in a wide range of Toyota and Lexus hybrids, often using the same principle but with a different set of components and gear ratios.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ------------------------------------------------------------ -->
+  <section class="section" id="conclusion">
+    <div class="wrap">
+      <div class="section__text reveal">
+        <span class="section__num">04</span>
+        <h2>Conclusion</h2>
+      </div>
+
+      <div class="beat beat--full">
+        <div class="section__text reveal">
+          <p>In short, the e-CVT lets MG1 speed up or slow down freely, so a single planetary gearset can offer an endless range of ratios without any belt, clutch or gear shifter.</p>
+          <p>Although it is a very "boring" transmission, with nothing to hate or love about, I think it is a technological marvel. Toyota somehow managed to combine the best of both worlds, namely the nature of a CVT and the hardware of traditional gears. They created a transmission in which a single planetary gearset harmonizes the engine and two electric machines, backed it with their seal of reliability, and did all of that almost 30 years ago!</p>
+          <p>It still has the non-linear engine revving behaviour of a CVT, but this technology is aimed at people who do not care much about what the car does to get them from A to B. The fact that it can do that efficiently and reliably is all that matters to them, and for those people, this is a brilliant product. The sales numbers of Prius and other hybrids from the Toyota family are the greatest evidence.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sources -------------------------------------------------------- -->
+  <section class="sources">
+    <div class="wrap">
+      <div class="reveal">
+        <span class="section__num">05</span>
+        <h2>Sources</h2>
+      </div>
+      <ol class="reveal" data-delay="1">
+        <li id="src-1"><b>Weber Auto YouTube channel</b><a href="https://www.youtube.com/@WeberAuto" target="_blank" rel="noopener">youtube.com/@WeberAuto</a></li>
+        <li id="src-2"><b>driving 4 answers YouTube channel</b><a href="https://www.youtube.com/@d4a" target="_blank" rel="noopener">youtube.com/@d4a</a></li>
+        <li id="src-3"><b>KY Speaks: This saga is epic (2011)</b><a href="https://kyspeaks.com/2011/08/05/this-saga-is-epic/" target="_blank" rel="noopener">kyspeaks.com/2011/08/05/this-saga-is-epic</a></li>
+        <li id="src-4"><b>CarBuzz</b><a href="https://carbuzz.com/" target="_blank" rel="noopener">carbuzz.com</a></li>
+        <li id="src-5"><b>ADAC</b><a href="https://www.adac.de/" target="_blank" rel="noopener">adac.de</a></li>
+        <li id="src-6"><b>AutoScout24</b><a href="https://www.autoscout24.de/" target="_blank" rel="noopener">autoscout24.de</a></li>
+        <li id="src-7"><b>Edmunds</b><a href="https://www.edmunds.com/" target="_blank" rel="noopener">edmunds.com</a></li>
+      </ol>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <a class="label" href="https://www.linkedin.com/in/bhavyaparekh919/">Connect with me on LinkedIn</a>
+    <span class="label">Webpage theme design from <a href="https://getdesign.md/" target="_blank" rel="noopener">getdesign.md</a></span>
+  </div>
+</footer>
+
+<script>
+(function () {
+  "use strict";
+
+  document.body.classList.remove("no-js");
+
+  var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* ---------------------------------------------------------
+     Scroll-triggered reveals
+     --------------------------------------------------------- */
+  var revealables = document.querySelectorAll(".reveal");
+  if (!("IntersectionObserver" in window) || reduceMotion) {
+    revealables.forEach(function (el) { el.classList.add("is-in"); });
+  } else {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-in");
+          io.unobserve(entry.target);
+        }
+      });
+    }, { rootMargin: "0px 0px -12% 0px", threshold: 0.08 });
+    revealables.forEach(function (el) { io.observe(el); });
+  }
+
+  /* ---------------------------------------------------------
+     Reading progress
+     --------------------------------------------------------- */
+  var bar = document.getElementById("progressBar");
+  var ticking = false;
+  function updateProgress() {
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    var pct = max > 0 ? (h.scrollTop || document.body.scrollTop) / max : 0;
+    bar.style.width = Math.min(100, Math.max(0, pct * 100)).toFixed(2) + "%";
+    ticking = false;
+  }
+  window.addEventListener("scroll", function () {
+    if (!ticking) { ticking = true; window.requestAnimationFrame(updateProgress); }
+  }, { passive: true });
+  window.addEventListener("resize", updateProgress, { passive: true });
+  updateProgress();
+
+  /* ---------------------------------------------------------
+     Missing-asset handling: placeholders instead of broken icons.
+     Drop the real file into /assets and it just appears; no code change.
+     The extension in the markup is only a first guess: if it 404s we work
+     through the others, so a .jpg fills a slot written as .png.
+     --------------------------------------------------------- */
+  var IMG_EXTS = ["png", "jpg", "jpeg", "webp", "avif"];
+
+  function markMissing(img) {
+    var host = img.closest(".figure");
+    if (host) { host.classList.add("is-missing"); }
+  }
+  function tryNextExt(img) {
+    var src = img.getAttribute("src") || "";
+    var dot = src.lastIndexOf(".");
+    if (dot === -1) { markMissing(img); return; }
+    var base = src.slice(0, dot);
+    var tried = img._triedExts || (img._triedExts = [src.slice(dot + 1).toLowerCase()]);
+    var next = IMG_EXTS.find(function (ext) { return tried.indexOf(ext) === -1; });
+    if (!next) { markMissing(img); return; }
+    tried.push(next);
+    img.src = base + "." + next;
+  }
+  document.querySelectorAll(".figure img").forEach(function (img) {
+    img.addEventListener("error", function () { tryNextExt(img); });
+    // Already failed before this script ran, or is a 0-byte/undecodable file.
+    if (img.complete && img.naturalWidth === 0) { tryNextExt(img); }
+  });
+
+  /* Opening a shared #src-N link directly: the browser scrolls before the
+     images above have laid out, so it lands short. Re-aim once loaded. */
+  if (/^#src-\d+$/.test(window.location.hash)) {
+    window.addEventListener("load", function () {
+      var target = document.querySelector(window.location.hash);
+      if (target) { target.scrollIntoView(); }
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Figure 02: the e-CVT at a standstill.
+     One planetary gearset: sun = MG1, carrier = engine, ring = MG2.
+     The three speeds are tied by  sun = (1 + K) * carrier - K * ring,
+     with K = ring teeth / sun teeth. Only the engine speed and the ring
+     speed are set here; everything else follows from the gearing.
+     --------------------------------------------------------- */
+  var ecvt = document.getElementById("ecvt");
+  if (ecvt) {
+    var NS = "http://www.w3.org/2000/svg";
+    // Prius gen 1-2: 30-tooth sun, 78-tooth ring. Planets drawn with 24
+    // teeth so standard gear geometry closes ((78 - 30) / 2).
+    var ZS = 30, ZR = 78, ZP = 24, K = ZR / ZS, MOD = 3;
+    var VIS = 0.2 * 2 * Math.PI / 1000;  // on screen, 1000 rpm = 0.2 rev/s
+    var CY = 165;                         // side-view axis
+    var ENGINE_RPM = 1000;   // standstill charging
+    var EV_RING_RPM = 1000;  // electric driving, roughly 30 km/h in a gen 1 Prius
+    var HY_RING_RPM = 1100, HY_RING_FAST_RPM = 2000, HY_ENGINE_RPM = 1500;  // engine joins in
+    var REV_EV_RING_RPM = -600, REV_ENGINE_RPM = 600, REV_RING_RPM = -670;  // reverse
+
+    function ease(x) { return x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2; }
+
+    /* One entry per scenario, keyed by the data-scenario of its text step.
+       speeds(t) gives the engine (carrier) and MG2 (ring) rpm over one loop
+       of `cycle` seconds; `still` is the moment shown when motion is off.
+       A scenario without an entry yet shows the gearset at rest. */
+    var SCENARIOS = {
+      standing: {
+        cycle: 12,
+        still: 4.5,
+        steps: [
+          { start: 0, label: "Start", driver: "mg1",
+            text: "<b>MG1 starts the engine.</b> MG1 draws power from the battery and spins the sun gear. The wheels are stopped, so the ring gear and MG2 cannot move. The planet gears have to roll around the inside of the ring gear, and that turns the carrier and cranks the engine." },
+          { start: 3, label: "Charge", driver: "engine",
+            text: "<b>The engine charges the battery.</b> The engine is running and now drives the carrier itself. The ring gear is still held, so all of the engine's power goes to the sun gear, and MG1 works as a generator that charges the battery. The sun gear turns 3.6 times as fast as the engine." },
+          { start: 9, label: "Stop", driver: null,
+            text: "<b>The engine switches off.</b> Once the battery is charged, the engine stops and MG1 slows to a halt with it. Through all of this, the ring gear, MG2 and the wheels never moved." }
+        ],
+        speeds: function (t) {
+          var e = 0;
+          if (t < 3) { e = ENGINE_RPM * ease(t / 3); }
+          else if (t < 9) { e = ENGINE_RPM; }
+          else if (t < 11) { e = ENGINE_RPM * (1 - ease((t - 9) / 2)); }
+          return { carrier: e, ring: 0 };
+        }
+      },
+
+      ev: {
+        cycle: 12,
+        still: 5,
+        steps: [
+          { start: 0, label: "Pull away", driver: "mg2",
+            text: "<b>MG2 pulls away.</b> Battery power spins MG2, and with it the ring gear and the wheels. The engine is off, so the carrier stands still. The planet gears can only spin in place, and they turn the sun gear, and MG1 with it, backwards." },
+          { start: 3, label: "Cruise", driver: "mg2",
+            text: "<b>MG1 just freewheels.</b> MG1 spins backwards, 2.6 times as fast as MG2. Its electrical load is switched off, so it makes no electricity and takes no power away from the wheels." },
+          { start: 9, label: "Stop", driver: null,
+            text: "<b>The car comes to a stop.</b> MG2 slows down and MG1 slows down with it, still at 2.6 times the speed. The engine never turned at all." }
+        ],
+        speeds: function (t) {
+          var r = 0;
+          if (t < 3) { r = EV_RING_RPM * ease(t / 3); }
+          else if (t < 9) { r = EV_RING_RPM; }
+          else if (t < 11) { r = EV_RING_RPM * (1 - ease((t - 9) / 2)); }
+          return { carrier: 0, ring: r };
+        }
+      },
+
+      hybrid: {
+        cycle: 16,
+        still: 7,
+        steps: [
+          { start: 0, label: "EV", driver: "mg2",
+            text: "<b>Electric driving.</b> MG2 speeds the car up on its own while the engine is off. MG1 spins backwards at 2.6 times MG2's speed, faster and faster, and is heading for its speed limit." },
+          { start: 2.5, label: "Start", driver: "mg1",
+            text: "<b>The engine joins in.</b> MG1 pushes against its own backward spin. That turns the carrier and cranks the engine. As the engine speeds up, MG1 slows down, stops, and then turns forwards." },
+          { start: 5.5, label: "Split", driver: ["engine", "mg2"],
+            text: "<b>Power split.</b> The engine and MG2 now drive the wheels together. MG1 brakes the sun gear and turns part of the engine's power into electricity. That resistance pushes the rest of the engine's torque onto the ring gear and the wheels." },
+          { start: 8.5, label: "CVT", driver: ["engine", "mg2"],
+            text: "<b>Endless ratios.</b> The car keeps speeding up, yet the engine stays at the same speed. Only MG1 slows down. Changing MG1's speed changes the ratio between engine and wheels smoothly, with no gear shifts." },
+          { start: 13, label: "Stop", driver: null,
+            text: "<b>The car comes to a stop.</b> The engine switches off, and MG2, MG1 and the wheels slow down together." }
+        ],
+        speeds: function (t) {
+          var e = 0, r = 0;
+          if (t < 2.5) { r = HY_RING_RPM * ease(t / 2.5); }
+          else if (t < 5.5) { r = HY_RING_RPM; e = HY_ENGINE_RPM * ease((t - 2.5) / 3); }
+          else if (t < 8.5) { r = HY_RING_RPM; e = HY_ENGINE_RPM; }
+          else if (t < 13) {
+            r = HY_RING_RPM + (HY_RING_FAST_RPM - HY_RING_RPM) * ease(Math.min(1, (t - 8.5) / 3.5));
+            e = HY_ENGINE_RPM;
+          }
+          else if (t < 15) {
+            var k = 1 - ease((t - 13) / 2);
+            r = HY_RING_FAST_RPM * k; e = HY_ENGINE_RPM * k;
+          }
+          return { carrier: e, ring: r };
+        }
+      },
+
+      reverse: {
+        cycle: 15,
+        still: 11,
+        steps: [
+          { start: 0, label: "EV", driver: "mg2",
+            text: "<b>Reversing on electric power.</b> With the engine off, MG2 simply turns backwards, and the wheels with it. The carrier stands still, so MG1 spins forwards at 2.6 times MG2's speed." },
+          { start: 5, label: "Engine on", driver: "engine",
+            text: "<b>The engine is running.</b> With the car stopped, the engine turns the carrier and MG1 spins forwards at 3.6 times the engine speed, generating electricity, just as when standing still. The ring gear does not move." },
+          { start: 7.5, label: "Reverse", driver: ["engine", "mg2"],
+            text: "<b>MG2 drives the car backwards.</b> The engine keeps turning forwards and drives MG1 as a generator. MG2 uses that electricity to turn the ring gear and the wheels backwards. Because the ring gear now turns backwards, MG1 is pushed beyond 3.6 times the engine speed." },
+          { start: 12, label: "Stop", driver: null,
+            text: "<b>The car comes to a stop.</b> MG2 slows the wheels to a halt, the engine switches off and MG1 slows down with it." }
+        ],
+        speeds: function (t) {
+          if (t < 5) {
+            var r = 0;
+            if (t < 2) { r = REV_EV_RING_RPM * ease(t / 2); }
+            else if (t < 4) { r = REV_EV_RING_RPM; }
+            else { r = REV_EV_RING_RPM * (1 - ease(t - 4)); }
+            return { carrier: 0, ring: r };
+          }
+          // Engine running: it charges through MG1 while MG2 reverses the wheels.
+          var e = REV_ENGINE_RPM, rr = 0;
+          if (t < 7.5) { e = REV_ENGINE_RPM * ease((t - 5) / 2.5); }
+          else if (t < 12) { rr = REV_RING_RPM * ease(Math.min(1, (t - 7.5) / 2.5)); }
+          else {
+            var k = t < 14 ? 1 - ease((t - 12) / 2) : 0;
+            e *= k; rr = REV_RING_RPM * k;
+          }
+          return { carrier: e, ring: rr };
+        }
+      }
+    };
+    var AT_REST = {
+      cycle: 1, still: 0, steps: [],
+      speeds: function () { return { carrier: 0, ring: 0 }; }
+    };
+    var AT_REST_TEXT = "<b>Animation coming soon.</b> Until then, the gearset is shown at rest.";
+
+    var scn = AT_REST, scnKey = null;
+
+    function speedsAt(t) {
+      var s = scn.speeds(t);
+      s.sun = (1 + K) * s.carrier - K * s.ring;
+      return s;
+    }
+    function stepAt(t) {
+      for (var i = scn.steps.length - 1; i >= 0; i--) { if (t >= scn.steps[i].start) { return i; } }
+      return -1;
+    }
+
+    function el(tag, attrs, parent) {
+      var n = document.createElementNS(NS, tag);
+      for (var k in attrs) { n.setAttribute(k, attrs[k]); }
+      if (parent) { parent.appendChild(n); }
+      return n;
+    }
+    function f(n) { return n.toFixed(2); }
+
+    /* Side view: stripes across each rotor, as if painted along its
+       length; only the half facing the viewer is drawn. */
+    var rotors = [];
+    ecvt.querySelectorAll(".rotor").forEach(function (g) {
+      var r = g.querySelector("rect");
+      var x = +r.getAttribute("x"), w = +r.getAttribute("width"), h = +r.getAttribute("height");
+      var n = +g.getAttribute("data-n"), lines = [];
+      for (var i = 0; i < n; i++) {
+        lines.push(el("line", { "class": "stripe", x1: x + 3, x2: x + w - 3, y1: CY, y2: CY, opacity: 0 }, g));
+      }
+      rotors.push({ speed: g.getAttribute("data-speed"), R: h / 2 - 2, lines: lines });
+    });
+
+    /* End view: involute-ish trapezoid teeth are plenty at this size. */
+    function teethPath(z, internal) {
+      var r = MOD * z / 2, p = 2 * Math.PI / z;
+      var tip = internal ? r - MOD : r + MOD, root = internal ? r + 1.25 * MOD : r - 1.25 * MOD;
+      var d = "";
+      for (var i = 0; i < z; i++) {
+        [[root, -0.3], [tip, -0.15], [tip, 0.15], [root, 0.3]].forEach(function (q, j) {
+          var a = (i + q[1]) * p;
+          d += (i === 0 && j === 0 ? "M" : "L") + f(q[0] * Math.cos(a)) + " " + f(q[0] * Math.sin(a));
+        });
+      }
+      return d + "Z";
+    }
+    function circlePath(R) {
+      return "M" + R + " 0A" + R + " " + R + " 0 1 0 " + (-R) + " 0A" + R + " " + R + " 0 1 0 " + R + " 0Z";
+    }
+
+    var RS = MOD * ZS / 2, RP = MOD * ZP / 2, RR = MOD * ZR / 2, ORBIT = RS + RP;
+    var ringG = el("g", {}, document.getElementById("evRing"));
+    el("path", { "class": "gear", d: circlePath(RR + 1.25 * MOD + 10) + teethPath(ZR, true) }, ringG);
+
+    var sunG = el("g", {}, document.getElementById("evSun"));
+    el("path", { "class": "gear gear--sun", d: teethPath(ZS, false) }, sunG);
+    el("circle", { "class": "gear-mark", r: 9 }, sunG);
+    el("circle", { "class": "gear-mark", cx: 27, r: 4 }, sunG);
+
+    var planets = [];
+    for (var k = 0; k < 3; k++) {
+      var pg = el("g", {}, document.getElementById("evPlanets"));
+      el("path", { "class": "gear gear--planet", d: teethPath(ZP, false) }, pg);
+      el("circle", { "class": "gear-mark", cx: 20, r: 3.5 }, pg);
+      // Start half a tooth turned so each planet meshes with sun and ring.
+      planets.push({ g: pg, psi0: k * 2 * Math.PI / 3, phi0: k * 2 * Math.PI / 3 - Math.PI / ZP });
+    }
+
+    var carrierG = el("g", {}, document.getElementById("evCarrier"));
+    el("circle", { "class": "carrier-ring", r: ORBIT }, carrierG);
+    for (var c = 0; c < 3; c++) {
+      var a = c * 2 * Math.PI / 3;
+      el("circle", { "class": "carrier-pin", cx: f(ORBIT * Math.cos(a)), cy: f(ORBIT * Math.sin(a)), r: 7 }, carrierG);
+    }
+
+    var units = ecvt.querySelectorAll("[data-unit]");
+    var lever = document.getElementById("nLever");
+    var NOMO = {
+      sun: { x: 360, dot: document.getElementById("nDotSun"), val: document.getElementById("nValSun") },
+      carrier: { x: 519, dot: document.getElementById("nDotCarrier"), val: document.getElementById("nValCarrier") },
+      ring: { x: 580, dot: document.getElementById("nDotRing"), val: document.getElementById("nValRing") }
+    };
+    // Axes run from +4,000 rpm (y 415) down to -3,000 rpm (y 592).
+    function nomoY(rpm) { return 516 - rpm * 0.0253; }
+
+    var playBtn = document.getElementById("ecvtPlay");
+    var stepBox = document.querySelector("#fig-02 .ecvt-steps");
+    var status = document.getElementById("ecvtStatus");
+
+    var t = 0, th = { carrier: 0, ring: 0 }, shownStep = -1;
+    var playing = !reduceMotion, onScreen = !("IntersectionObserver" in window), rafId = null, last = null;
+
+    function render() {
+      var s = speedsAt(t);
+      var ang = { carrier: th.carrier, ring: th.ring, sun: (1 + K) * th.carrier - K * th.ring };
+      var deg = 180 / Math.PI;
+
+      rotors.forEach(function (r) {
+        var n = r.lines.length, base = ang[r.speed];
+        for (var i = 0; i < n; i++) {
+          var a = base + i * 2 * Math.PI / n, cs = Math.cos(a), line = r.lines[i];
+          if (cs <= 0) { line.setAttribute("opacity", 0); continue; }
+          var y = f(CY - r.R * Math.sin(a));
+          line.setAttribute("y1", y);
+          line.setAttribute("y2", y);
+          line.setAttribute("opacity", f(0.12 + 0.6 * cs));
+        }
+      });
+
+      ringG.setAttribute("transform", "rotate(" + f(ang.ring * deg) + ")");
+      sunG.setAttribute("transform", "rotate(" + f(ang.sun * deg) + ")");
+      carrierG.setAttribute("transform", "rotate(" + f(ang.carrier * deg) + ")");
+      planets.forEach(function (p) {
+        var psi = p.psi0 + ang.carrier;
+        // Planet spin follows from rolling inside the ring gear.
+        var phi = p.phi0 + ang.carrier + (ZR / ZP) * (ang.ring - ang.carrier);
+        p.g.setAttribute("transform", "translate(" + f(ORBIT * Math.cos(psi)) + " " + f(ORBIT * Math.sin(psi)) + ") rotate(" + f(phi * deg) + ")");
+      });
+
+      var pts = [];
+      ["sun", "carrier", "ring"].forEach(function (key) {
+        var y = f(nomoY(s[key]));
+        NOMO[key].dot.setAttribute("cy", y);
+        NOMO[key].val.textContent = (Math.round(s[key] / 10) * 10).toLocaleString("en-US");
+        pts.push(NOMO[key].x + "," + y);
+      });
+      lever.setAttribute("points", pts.join(" "));
+
+      var step = stepAt(t);
+      if (step !== shownStep) {
+        shownStep = step;
+        var info = scn.steps[step];
+        status.innerHTML = info ? info.text : AT_REST_TEXT;
+        // A step's driver is one unit or a list of them.
+        var drivers = info ? [].concat(info.driver) : [];
+        units.forEach(function (u) {
+          u.classList.toggle("is-driver", drivers.indexOf(u.getAttribute("data-unit")) !== -1);
+        });
+        Array.prototype.forEach.call(stepBox.children, function (b, i) {
+          if (i === step) { b.setAttribute("aria-current", "step"); } else { b.removeAttribute("aria-current"); }
+        });
+      }
+    }
+
+    function frame(now) {
+      rafId = null;
+      var dt = last === null ? 0 : Math.min(0.05, (now - last) / 1000);
+      last = now;
+      var s = speedsAt(t);
+      th.carrier += s.carrier * VIS * dt;
+      th.ring += s.ring * VIS * dt;
+      t = (t + dt) % scn.cycle;
+      render();
+      if (playing && onScreen && scn.steps.length) { rafId = window.requestAnimationFrame(frame); } else { last = null; }
+    }
+    function kick() {
+      if (playing && onScreen && scn.steps.length && rafId === null) { rafId = window.requestAnimationFrame(frame); }
+    }
+    function setPlaying(on) {
+      playing = on;
+      playBtn.textContent = on ? "Pause" : "Play";
+      kick();
+    }
+    playBtn.addEventListener("click", function () { setPlaying(!playing); });
+
+    // Swap the figure over to another scenario, starting from its step 1.
+    function setScenario(key) {
+      if (key === scnKey) { return; }
+      scnKey = key;
+      scn = SCENARIOS[key] || AT_REST;
+      stepBox.innerHTML = "";
+      scn.steps.forEach(function (st, i) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "ecvt-btn";
+        b.textContent = (i + 1) + " · " + st.label;
+        b.addEventListener("click", function () {
+          // Paused: land just inside the step so the readouts already show it.
+          t = st.start + (playing ? 0 : 1.5);
+          render();
+        });
+        stepBox.appendChild(b);
+      });
+      playBtn.hidden = !scn.steps.length;
+      t = playing ? 0 : scn.still;
+      shownStep = null;
+      render();
+      kick();
+    }
+
+    /* The scenario text level with the figure picks the scenario. Side by
+       side that is the middle of the screen; stacked, the figure is pinned
+       on top, so it is the middle of the space left beneath it. */
+    var scrollSteps = document.querySelectorAll(".scrolly__step[data-scenario]");
+    var pinned = document.querySelector(".scrolly__media");
+    var stacked = window.matchMedia("(max-width: 900px)");
+    var picking = false;
+    function pickStep() {
+      picking = false;
+      if (!scrollSteps.length) { return; }
+      var vh = window.innerHeight;
+      var line = stacked.matches ? (pinned.getBoundingClientRect().bottom + vh) / 2 : vh / 2;
+      var active = scrollSteps[0];
+      scrollSteps.forEach(function (st) { if (st.getBoundingClientRect().top <= line) { active = st; } });
+      scrollSteps.forEach(function (st) { st.classList.toggle("is-active", st === active); });
+      setScenario(active.getAttribute("data-scenario"));
+    }
+    function queuePick() {
+      if (!picking) { picking = true; window.requestAnimationFrame(pickStep); }
+    }
+    window.addEventListener("scroll", queuePick, { passive: true });
+    window.addEventListener("resize", queuePick, { passive: true });
+
+    if ("IntersectionObserver" in window) {
+      // Plays only while in view, and starts over from step 1 each time the
+      // reader scrolls back to the scenarios.
+      new IntersectionObserver(function (entries) {
+        var visible = entries[0].intersectionRatio >= 0.35;
+        var entering = visible && !onScreen;
+        onScreen = visible;
+        if (entering && playing) { t = 0; render(); }
+        kick();
+      }, { threshold: [0, 0.35] }).observe(ecvt);
+    }
+
+    // Reduced motion: hold a still frame until asked to play.
+    if (!playing) { playBtn.textContent = "Play"; }
+    pickStep();
+    if (scnKey === null) { setScenario("standing"); }
+  }
+})();
+</script>
+</body>
+</html>
