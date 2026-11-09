@@ -1,0 +1,8 @@
+.reading-time {
+  margin: 0 0 16px;
+  color: var(--secondary, var(--muted, #8C8C8C));
+}
+
+.reading-time__duration {
+  color: var(--tertiary, var(--accent, #E10600));
+}
