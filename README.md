@@ -23,6 +23,23 @@ Include these two lines when creating a new post (copying an existing post alrea
 
 The count includes the header introduction and main content, but skips sources, image credits, placeholders, navigation, hidden content, and interactive controls. Add `data-reading-time-exclude` to any other element that should be omitted. Posts use `header.masthead` or `header.hero`, with a `.masthead__kicker` or `.kicker` inside, and a `<main>` for the article. With JavaScript disabled, the estimate is simply omitted.
 
+## Private analytics (GoatCounter)
+
+The homepage and all published posts load `assets/analytics.js`, configured for `https://bhavyap.goatcounter.com`. Sign in there to view the statistics. For initial setup or a different account:
+
+1. Create an account at https://www.goatcounter.com/signup, using `modular-v8.github.io/blogs/` as the site domain.
+2. Set `site` near the top of `assets/analytics.js` to your GoatCounter site URL (for example, `https://yourname.goatcounter.com`). This collection address is public; no password or API token belongs in the repository.
+3. In GoatCounter's site settings, keep the dashboard private and public visitor counters disabled. These are account settings, not settings the blog's script can enforce.
+4. Commit and push. Open a published post, then sign in to your GoatCounter dashboard to check its statistics. Counts usually appear within about 10 seconds, unless the request is blocked by your browser or an extension.
+
+Only the production blog sends visits. Local previews, files opened directly, and forks do not load the external tracker. Each post is tracked separately; `index.html` and directory URLs share one entry, and query parameters do not split the count. GoatCounter's default session rules group repeated opens into visits; disable sessions under Settings → Data collection → Sessions if you want every page load counted instead.
+
+To exclude your own browser, open `https://modular-v8.github.io/blogs/#toggle-goatcounter`, reload, and follow GoatCounter's confirmation. Repeat for each browser/device; opening that URL again toggles tracking back on. Alternatively use GoatCounter's Ignore IPs setting. No counter or dashboard link is displayed to blog readers.
+
+For a new post, copy an existing page or include `<script src="../assets/analytics.js" defer></script>` in its `<head>`.
+
+Setup documentation: https://www.goatcounter.com/help/start and https://www.goatcounter.com/help/skip-dev.
+
 ## Posts
 
 The latest post, [Water injection systems](water-injection-systems/), explores how water injection helps cool an engine and why it remains uncommon. Its airflow illustration uses a canvas animation with assets in the post folder.
