@@ -135,7 +135,7 @@ h1,.h1{
 .masthead h1 em{
   font-style:normal;
   display:block;
-  margin-top:0.5em;
+  margin-top:16px;
   font-size:clamp(0.95rem,1.7vw,1.5rem);
   font-weight:500;
   line-height:1.18;
@@ -551,7 +551,7 @@ p{margin:0 0 var(--s-md);max-width:68ch}
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;animation:none}
 }
-</style>
+.masthead h1 + .reading-time,.hero h1 + .reading-time{margin:16px 0 0}</style>
 <link rel="stylesheet" href="../assets/reading-time.css">
 <script src="../assets/reading-time.js" defer></script>
 <script src="../assets/analytics.js" defer></script>
@@ -570,7 +570,7 @@ p{margin:0 0 var(--s-md);max-width:68ch}
 
     <div class="masthead__grid">
       <div class="masthead__lede">
-        <h1 class="rise" data-delay="1">PDK <em>Twenty Years Ahead of Its Time.</em></h1>
+        <h1 class="rise" data-delay="1">PDK <em>Twenty Years Ahead of Its Time.</em></h1><p class="reading-time label"><time datetime="2026-09-10"><span class="reading-time__duration">September 10th</span><span>, 2026</span></time></p>
         <p class="masthead__dek rise" data-delay="2">Porsche introduced PDK in 2008, and it has quickly become a fan-favourite. Some even prefer it over a Manual transmission! But, the PDK badge has a longer story than that, running from a shelved 1960s prototype through Le Mans to its market introduction in2008.</p>
       </div>
 

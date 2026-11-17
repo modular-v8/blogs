@@ -135,7 +135,7 @@ h1,.h1{
 .masthead h1 em{
   font-style:normal;
   display:block;
-  margin-top:0.5em;
+  margin-top:16px;
   font-size:clamp(0.95rem,1.7vw,1.5rem);
   font-weight:500;
   line-height:1.18;
@@ -690,7 +690,7 @@ kbd{
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;animation:none}
 }
-</style>
+.masthead h1 + .reading-time,.hero h1 + .reading-time{margin:16px 0 0}</style>
 <link rel="stylesheet" href="../assets/reading-time.css">
 <script src="../assets/reading-time.js" defer></script>
 <script src="../assets/analytics.js" defer></script>
@@ -709,7 +709,7 @@ kbd{
 
     <div class="masthead__grid">
       <div class="masthead__lede">
-        <h1 class="rise" data-delay="1">The AMG SpeedShift MCT <em>A torque converter automatic That threw away its torque converter</em></h1>
+        <h1 class="rise" data-delay="1">The AMG SpeedShift MCT <em>A torque converter automatic That threw away its torque converter</em></h1><p class="reading-time label"><time datetime="2026-07-20"><span class="reading-time__duration">July 20th</span><span>, 2026</span></time></p>
         <p class="masthead__dek rise" data-delay="2">How Mercedes-AMG got a torque-converter automatic gearbox to shift almost as fast as a dual-clutch by deleting one component.</p>
       </div>
 

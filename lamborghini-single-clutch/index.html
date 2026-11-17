@@ -135,7 +135,7 @@ h1,.h1{
 .masthead h1 em{
   font-style:normal;
   display:block;
-  margin-top:0.5em;
+  margin-top:16px;
   font-size:clamp(0.95rem,1.7vw,1.5rem);
   font-weight:500;
   line-height:1.18;
@@ -508,7 +508,7 @@ tbody td:first-child{
 @media (prefers-reduced-motion:reduce){
   .rise{opacity:1;animation:none}
 }
-</style>
+.masthead h1 + .reading-time,.hero h1 + .reading-time{margin:16px 0 0}</style>
 <link rel="stylesheet" href="../assets/reading-time.css">
 <script src="../assets/reading-time.js" defer></script>
 <script src="../assets/analytics.js" defer></script>
@@ -527,7 +527,7 @@ tbody td:first-child{
 
     <div class="masthead__grid">
       <div class="masthead__lede">
-        <h1 class="rise" data-delay="1">The Lamborghini e-gear <em> The gearbox concept Ferrari, Maserati, and Lamborghini all shared</em></h1>
+        <h1 class="rise" data-delay="1">The Lamborghini e-gear <em> The gearbox concept Ferrari, Maserati, and Lamborghini all shared</em></h1><p class="reading-time label"><time datetime="2026-08-21"><span class="reading-time__duration">August 21st</span><span>, 2026</span></time></p>
         <p class="masthead__dek rise" data-delay="2">Lamborghini's answer to the early-2000s obsession with paddle-shifted supercars. It was the same Magneti Marelli and Graziano engineering underneath Ferrari's F1 gearbox and Maserati's Cambiocorsa.</p>
       </div>
 
